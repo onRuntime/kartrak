@@ -1,10 +1,10 @@
 import React from 'react';
-import BrowserTab from './BrowserTabs/Tab';
+import BrowserTabs from './BrowserTabs';
 
 const Screen: React.FC = () => {
   return (
     <>
-      <BrowserTab />
+      <BrowserTabs />
     </>
   );
 };
