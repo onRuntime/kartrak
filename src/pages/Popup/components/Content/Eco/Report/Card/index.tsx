@@ -21,17 +21,18 @@ const ReportCard: React.FC<ReportCardProps> = ({
 const Container = styled.div`
   width: 100%;
   display: flex;
-  background-color: #faf7f7;
+  background-color: #f1faf1;
   color: #909090;
-  padding: 7px 10px;
+  padding: 10px 10px;
   flex-direction: column;
   border-radius: 3.45px;
 `;
 
 const Title = styled.span`
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
-  color: inherit;
+  font-family: 'neulis-cursive';
+  color: #009245;
 
   svg {
     vertical-align: middle;
@@ -41,7 +42,7 @@ const Title = styled.span`
 const Description = styled.span`
   font-size: 9px;
   font-weight: 500;
-  color: inherit;
+  color: #014335;
 `;
 
 export default ReportCard;

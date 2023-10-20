@@ -4,7 +4,9 @@ import styled from 'styled-components';
 const DateTime: React.FC = () => {
   return (
     <Container>
-      <Date>Aujourd’hui, 19 oct. 2023</Date>
+      <Name>
+        Temps d'activité :<span>onRuntime Studio</span>
+      </Name>
       <Time>3h 20min</Time>
     </Container>
   );
@@ -17,15 +19,25 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const Date = styled.span`
+const Name = styled.span`
+  display: inline-flex;
+  flex-direction: column;
   font-size: 10px;
   font-weight: 600;
   color: #909090;
+
+  span {
+    font-size: 10px;
+    font-weight: 600;
+    color: #014335;
+  }
 `;
 
 const Time = styled.span`
   font-size: 13px;
   font-weight: 600;
+  font-family: 'neulis-cursive';
+  color: #014335;
 `;
 
 export default DateTime;
