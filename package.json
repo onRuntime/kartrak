@@ -13,8 +13,11 @@
     "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,json,css,scss,md}'"
   },
   "dependencies": {
+    "@fontsource/figtree": "^5.0.15",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.11.0",
+    "styled-components": "^6.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",
