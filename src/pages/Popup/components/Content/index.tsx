@@ -27,7 +27,8 @@ const Container = styled.div`
   align-items: center;
   padding: 15px;
   gap: 10px;
-  border-bottom: 1px solid #dedede;
+  border: 1px solid rgba(1, 67, 53, 0.1);
+  border-radius: 10px;
 `;
 
 export default Content;

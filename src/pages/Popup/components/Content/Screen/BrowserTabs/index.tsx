@@ -33,6 +33,7 @@ const BrowserTabs = () => {
           return (
             <BrowserTab
               key={tab.id}
+              id={tab.id}
               favicon={tab.favIconUrl}
               name={tab.title}
               url={tab.url}
@@ -48,7 +49,7 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 3.5px;
 `;
 
 const Title = styled.span`
@@ -61,7 +62,7 @@ const Row = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 3.5px;
 `;
 
 export default BrowserTabs;

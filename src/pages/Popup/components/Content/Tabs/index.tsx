@@ -16,7 +16,7 @@ const Tabs: React.FC<TabsProps> = ({ tab, setTab }: TabsProps) => {
           setTab(TabType.Eco);
         }}
       >
-        Empreinte eco'
+        Empreinte éco’
       </Tab>
       <Tab
         active={tab === TabType.Screen}

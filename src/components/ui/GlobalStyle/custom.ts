@@ -3,8 +3,7 @@ import { css } from "styled-components";
 const customCss = css`
   html {
     width: 380px;
-    height: 600px;
-    padding: 10px;
+    height: auto;
   }
 
   body,
@@ -17,8 +16,6 @@ const customCss = css`
     font-family: -apple-system, BlinkMacSystemFont, Roboto, "Segoe UI",
       "Fira Sans", Avenir, "Helvetica Neue", "Lucida Grande", sans-serif;
     background-color: #fff;
-    border-radius: 10px;
-    border: 1px solid rgba(1, 67, 53, 0.1);
   }
 
   body,

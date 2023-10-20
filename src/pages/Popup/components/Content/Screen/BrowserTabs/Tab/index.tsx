@@ -4,18 +4,20 @@ import { extractDomainFromUrl } from '../../../../../utils/__layout';
 import { RiWindowLine } from 'react-icons/ri';
 
 export type BrowserTabProps = {
+  id?: number;
   favicon?: string;
   name?: string;
   url?: string;
 };
 
 const BrowserTab: React.FC<BrowserTabProps> = ({
+  id,
   favicon,
   name,
   url,
 }: BrowserTabProps) => {
   return (
-    <Container>
+    <Container onClick={() => chrome.tabs.update(id || 0, { active: true })}>
       {favicon ? (
         <Favicon src={favicon} alt={name} width={8} height={8} />
       ) : (
@@ -23,7 +25,7 @@ const BrowserTab: React.FC<BrowserTabProps> = ({
       )}
       <Name>{name || ''}</Name>
       <Url>{`- ${extractDomainFromUrl(url || '')}`}</Url>
-      <Time>{'05:23'}</Time>
+      <Time>{'5m'}</Time>
     </Container>
   );
 };
@@ -34,6 +36,10 @@ const Container = styled.div`
   align-items: center;
   color: #909090;
   gap: 3px;
+  padding: 5px 7px;
+  background-color: #faf7f7;
+  border-radius: 3.5px;
+  cursor: pointer;
 `;
 
 const Favicon = styled.img`
