@@ -35,8 +35,8 @@ const Container = styled.div`
 `;
 
 const Smiley = styled.img`
-  height: 35px;
-  width: 35px;
+  height: 50px;
+  width: 50px;
 `;
 
 const EcoIndex = styled.div`
@@ -47,7 +47,7 @@ const EcoIndex = styled.div`
 `;
 
 const Note = styled.div`
-  font-size: 30px;
+  font-size: 36px;
   font-weight: 600;
   color: #009245;
   font-family: 'neulis-cursive';
@@ -61,13 +61,13 @@ const Content = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 600;
   color: #014335;
 `;
 
 const Description = styled.div`
-  font-size: 10px;
+  font-size: 13px;
   color: #909090;
 `;
 

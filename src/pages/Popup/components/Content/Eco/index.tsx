@@ -26,7 +26,7 @@ const Eco: React.FC = () => {
 };
 
 const About = styled.div`
-  font-size: 10px;
+  font-size: 13px;
   color: #909090;
 
   a {

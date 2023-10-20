@@ -39,7 +39,7 @@ const Container = styled.div`
 `;
 
 const Tab = styled.button<{ active?: boolean }>`
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 600;
   padding: 5px 7px;
   border: none;

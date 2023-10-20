@@ -7,7 +7,7 @@ const Header: React.FC = () => {
   return (
     <Container>
       <BrandContainer>
-        <BrandImage src={logo} width={28} height={28} />
+        <BrandImage src={logo} width={32} height={32} />
       </BrandContainer>
       <Content>
         <Title>Kartrak - Tracking carbone & activité</Title>
@@ -23,10 +23,10 @@ const Header: React.FC = () => {
 };
 
 const Container = styled.header`
-  padding: 10px 15px;
+  padding: 10px 5px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
 `;
 
 const BrandContainer = styled.div`
@@ -42,14 +42,14 @@ const Content = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 600;
   color: #014335;
   font-family: 'neulis-cursive';
 `;
 
 const Description = styled.p`
-  font-size: 8px;
+  font-size: 11px;
   color: #909090;
   font-weight: 500;
 `;

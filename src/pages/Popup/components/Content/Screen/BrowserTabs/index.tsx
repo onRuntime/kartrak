@@ -53,7 +53,7 @@ const Container = styled.div`
 `;
 
 const Title = styled.span`
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   color: #014335;
 `;

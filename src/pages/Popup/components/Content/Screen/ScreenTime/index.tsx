@@ -23,14 +23,14 @@ const Container = styled.div`
 `;
 
 const Time = styled.span`
-  font-size: 20px;
+  font-size: 23px;
   font-family: 'neulis-cursive';
   font-weight: 600;
   color: #014335;
 `;
 
 const RangeSelect = styled.select`
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 600;
   color: #909090;
   border: none;

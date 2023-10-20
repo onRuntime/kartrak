@@ -19,7 +19,7 @@ const BrowserTab: React.FC<BrowserTabProps> = ({
   return (
     <Container onClick={() => chrome.tabs.update(id || 0, { active: true })}>
       {favicon ? (
-        <Favicon src={favicon} alt={name} width={8} height={8} />
+        <Favicon src={favicon} alt={name} width={10} height={10} />
       ) : (
         <RiWindowLine size={8} />
       )}
@@ -43,13 +43,13 @@ const Container = styled.div`
 `;
 
 const Favicon = styled.img`
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 2px;
 `;
 
 const Name = styled.span`
-  font-size: 8px;
+  font-size: 12px;
   font-weight: 600;
   color: #014335;
   text-overflow: ellipsis;
@@ -59,12 +59,12 @@ const Name = styled.span`
 `;
 
 const Url = styled.span`
-  font-size: 8px;
+  font-size: 12px;
   color: inherit;
 `;
 
 const Time = styled.span`
-  font-size: 8px;
+  font-size: 12px;
   font-weight: 600;
   color: #909090;
   margin-left: auto;
