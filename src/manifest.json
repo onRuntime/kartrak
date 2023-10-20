@@ -38,5 +38,9 @@
       ],
       "matches": []
     }
+  ],
+  "permissions": [
+    "activeTab",
+    "tabs"
   ]
 }
