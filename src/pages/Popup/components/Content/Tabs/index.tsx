@@ -1,11 +1,31 @@
 import React from 'react';
 import styled from 'styled-components';
+import { TabType } from '..';
 
-const Tabs: React.FC = () => {
+export type TabsProps = {
+  tab: TabType;
+  setTab: (tab: TabType) => void;
+};
+
+const Tabs: React.FC<TabsProps> = ({ tab, setTab }: TabsProps) => {
   return (
     <Container>
-      <Tab active>Empreinte eco'</Tab>
-      <Tab>Temps d’écran</Tab>
+      <Tab
+        active={tab === TabType.Eco}
+        onClick={() => {
+          setTab(TabType.Eco);
+        }}
+      >
+        Empreinte eco'
+      </Tab>
+      <Tab
+        active={tab === TabType.Screen}
+        onClick={() => {
+          setTab(TabType.Screen);
+        }}
+      >
+        Temps d’écran
+      </Tab>
     </Container>
   );
 };

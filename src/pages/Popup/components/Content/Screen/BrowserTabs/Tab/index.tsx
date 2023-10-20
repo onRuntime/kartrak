@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { extractDomainFromUrl } from '../../../../utils/__layout';
+import { extractDomainFromUrl } from '../../../../../utils/__layout';
 import { RiWindowLine } from 'react-icons/ri';
 
 export type BrowserTabProps = {

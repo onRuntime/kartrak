@@ -1,17 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
 import Tabs from './Tabs';
-import DateTime from './DateTime';
-import Report from './Report';
-import BrowserTabs from './BrowserTabs';
+import Eco from './Eco';
+import { useLocalStorage } from 'usehooks-ts';
+import Screen from './Screen';
+
+export enum TabType {
+  Eco = 'eco',
+  Screen = 'screen',
+}
 
 const Content: React.FC = () => {
+  const [tab, setTab] = useLocalStorage<TabType>('tab', TabType.Eco);
+
   return (
     <Container>
-      <Tabs />
-      <DateTime />
-      <Report />
-      <BrowserTabs />
+      <Tabs tab={tab} setTab={setTab} />
+      {tab === 'eco' ? <Eco /> : <Screen />}
     </Container>
   );
 };
