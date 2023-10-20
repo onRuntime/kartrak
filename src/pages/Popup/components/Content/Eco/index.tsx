@@ -1,6 +1,6 @@
 import React from 'react';
-import DateTime from '../DateTime';
-import Report from '../Report';
+import DateTime from './DateTime';
+import Report from './Report';
 
 const Eco: React.FC = () => {
   return (
