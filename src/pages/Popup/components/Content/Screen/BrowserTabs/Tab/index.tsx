@@ -1,31 +1,53 @@
 import React from 'react';
 import styled from 'styled-components';
-import { extractDomainFromUrl } from '../../../../../utils/__layout';
+import {
+  extractDomainFromUrl,
+  getFormattedTime,
+} from '../../../../../utils/__layout';
 import { RiWindowLine } from 'react-icons/ri';
+import { TabTime } from '../../../../../../../types';
 
 export type BrowserTabProps = {
-  id?: number;
-  favicon?: string;
-  name?: string;
-  url?: string;
+  tab: chrome.tabs.Tab;
+  tabtimes: TabTime[];
 };
 
 const BrowserTab: React.FC<BrowserTabProps> = ({
-  id,
-  favicon,
-  name,
-  url,
+  tab,
+  tabtimes,
 }: BrowserTabProps) => {
+  const [formattedTime, setFormattedTime] = React.useState<string>();
+
+  React.useEffect(() => {
+    let intervalId: NodeJS.Timeout | null = null;
+
+    const updateFormattedTime = () => {
+      setFormattedTime(getFormattedTime(tabtimes));
+    };
+
+    // Update the formatted time every second (1000ms)
+    intervalId = setInterval(updateFormattedTime, 1000);
+
+    // Clear the interval when the component unmounts
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+  }, [tabtimes]);
+
   return (
-    <Container onClick={() => chrome.tabs.update(id || 0, { active: true })}>
-      {favicon ? (
-        <Favicon src={favicon} alt={name} width={8} height={8} />
+    <Container
+      onClick={() => chrome.tabs.update(tab.id || 0, { active: true })}
+    >
+      {tab.favIconUrl ? (
+        <Favicon src={tab.favIconUrl} alt={tab.title} width={8} height={8} />
       ) : (
         <RiWindowLine size={8} />
       )}
-      <Name>{name || ''}</Name>
-      <Url>{`- ${extractDomainFromUrl(url || '')}`}</Url>
-      <Time>{'5m'}</Time>
+      <Name>{tab.title}</Name>
+      <Url>{`- ${extractDomainFromUrl(tab.url || '')}`}</Url>
+      <Time>{formattedTime ? formattedTime : getFormattedTime(tabtimes)}</Time>
     </Container>
   );
 };
@@ -70,4 +92,4 @@ const Time = styled.span`
   margin-left: auto;
 `;
 
-export default BrowserTab;
+export default React.memo(BrowserTab);

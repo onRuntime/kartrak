@@ -1,15 +1,56 @@
 import React from 'react';
 import styled from 'styled-components';
+import { TabTime } from '../../../../../../types';
+import { useLocalStorage } from 'usehooks-ts';
+import { getFormattedTime } from '../../../../utils/__layout';
 
-const ScreenTime: React.FC = () => {
+export type ScreenTimeProps = {
+  tabtimes: TabTime[];
+};
+
+export enum Range {
+  Day = 'day',
+  Week = 'week',
+  Month = 'month',
+  Year = 'year',
+}
+
+const ScreenTime: React.FC<ScreenTimeProps> = ({
+  tabtimes,
+}: ScreenTimeProps) => {
+  const [range, setRange] = useLocalStorage<Range>('range', Range.Day);
+
+  const [formattedTime, setFormattedTime] = React.useState<string>();
+
+  React.useEffect(() => {
+    let intervalId: NodeJS.Timeout | null = null;
+
+    const updateFormattedTime = () => {
+      setFormattedTime(getFormattedTime(tabtimes));
+    };
+
+    // Update the formatted time every second (1000ms)
+    intervalId = setInterval(updateFormattedTime, 1000);
+
+    // Clear the interval when the component unmounts
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+  }, [tabtimes]);
+
   return (
     <Container>
-      <Time>37h 26min</Time>
-      <RangeSelect>
-        <option value="day">Aujourd'hui</option>
-        <option value="week">Cette semaine</option>
-        <option value="month">Ce mois-ci</option>
-        <option value="year">Cette année</option>
+      <Time>{formattedTime ? formattedTime : getFormattedTime(tabtimes)}</Time>
+      <RangeSelect
+        value={range}
+        onChange={(e) => setRange(e.target.value as Range)}
+      >
+        <option value={Range.Day}>Aujourd'hui</option>
+        <option value={Range.Week}>Cette semaine</option>
+        <option value={Range.Month}>Ce mois-ci</option>
+        <option value={Range.Year}>Cette année</option>
       </RangeSelect>
     </Container>
   );
