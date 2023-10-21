@@ -29,7 +29,7 @@ const Container = styled.div`
 `;
 
 const Title = styled.span`
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 600;
   font-family: 'neulis-cursive';
   color: #009245;
@@ -40,7 +40,7 @@ const Title = styled.span`
 `;
 
 const Description = styled.span`
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 500;
   color: #014335;
 `;

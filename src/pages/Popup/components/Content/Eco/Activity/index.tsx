@@ -51,19 +51,19 @@ const Container = styled.div`
 const Name = styled.span`
   display: inline-flex;
   flex-direction: column;
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 600;
   color: #909090;
 
   span {
-    font-size: 10px;
+    font-size: 13px;
     font-weight: 600;
     color: #014335;
   }
 `;
 
 const Time = styled.span`
-  font-size: 13px;
+  font-size: 18px;
   font-weight: 600;
   font-family: 'neulis-cursive';
   color: #014335;

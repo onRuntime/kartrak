@@ -11,47 +11,42 @@ const Report = () => {
         <ReportCard
           title={
             <>
-              <RiContrastDrop2Line size={15} />
+              <RiContrastDrop2Line size={18} />
               <br />
               2,45cl
             </>
           }
           description={
             <>
-              consommation
-              <br />
-              d'eau bleue
+              consommation d'eau bleue
             </>
           }
         />
         <ReportCard
           title={
             <>
-              <RiCloudLine size={15} />
+              <RiCloudLine size={18} />
               <br />
               0,67g
             </>
           }
           description={
             <>
-              émission de gaz
-              <br />à effet de serre
+              émission de gaz à effet de serre
             </>
           }
         />
         <ReportCard
           title={
             <>
-              <RiStackLine size={15} />
+              <RiStackLine size={18} />
               <br />
               2,05Mo
             </>
           }
           description={
             <>
-              poids de la page
-              <br />
-              visitée
+              poids de la page visitée
             </>
           }
         />
@@ -73,7 +68,7 @@ const Content = styled.div`
 `;
 
 const Description = styled.span`
-  font-size: 10px;
+  font-size: 13px;
   color: #909090;
 `;
 

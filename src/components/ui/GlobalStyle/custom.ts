@@ -26,7 +26,7 @@ const customCss = css`
   select,
   option {
     font-family: "Figtree", sans-serif;
-    font-size: 16px;
+    font-size: 19px;
     font-weight: 400;
     text-align: left;
     color: #101010;
