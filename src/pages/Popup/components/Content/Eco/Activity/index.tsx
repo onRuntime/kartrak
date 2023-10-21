@@ -1,9 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import { extractDomainFromUrl } from '../../../../utils/__layout';
+import {
+  extractDomainFromUrl,
+  getFormattedTime,
+} from '../../../../utils/__layout';
+import useTabTimes from '../../../../hooks/useTabTimes';
 
 const DateTime: React.FC = () => {
   const [tab, setTab] = React.useState<chrome.tabs.Tab>();
+  const domain = extractDomainFromUrl(tab?.url || '');
 
   React.useEffect(() => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -31,12 +36,34 @@ const DateTime: React.FC = () => {
     });
   }, []);
 
+  const tabtimes = useTabTimes().filter(
+    (tab) => extractDomainFromUrl(tab.url) === domain
+  );
+  const [formattedTime, setFormattedTime] = React.useState<string>();
+  React.useEffect(() => {
+    let intervalId: NodeJS.Timeout | null = null;
+
+    const updateFormattedTime = () => {
+      setFormattedTime(getFormattedTime(tabtimes));
+    };
+
+    // Update the formatted time every second (1000ms)
+    intervalId = setInterval(updateFormattedTime, 1000);
+
+    // Clear the interval when the component unmounts
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+  }, [tabtimes]);
+
   return (
     <Container>
       <Name>
-        Temps d'activité : <span>{extractDomainFromUrl(tab?.url || '')}</span>
+        Temps d'activité : <span>{domain}</span>
       </Name>
-      <Time>3h 20min</Time>
+      <Time>{formattedTime ? formattedTime : getFormattedTime(tabtimes)}</Time>
     </Container>
   );
 };

@@ -59,7 +59,7 @@ const main = async () => {
   });
 
   chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
-    if (message === 'getTabtimes') {
+    if (message === 'getTabTimes') {
       sendResponse(tabtimes);
     }
   });

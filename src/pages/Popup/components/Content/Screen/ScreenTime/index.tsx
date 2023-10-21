@@ -3,10 +3,7 @@ import styled from 'styled-components';
 import { TabTime } from '../../../../../../types';
 import { useLocalStorage } from 'usehooks-ts';
 import { getFormattedTime } from '../../../../utils/__layout';
-
-export type ScreenTimeProps = {
-  tabtimes: TabTime[];
-};
+import useTabTimes from '../../../../hooks/useTabTimes';
 
 export enum Range {
   Day = 'day',
@@ -15,9 +12,8 @@ export enum Range {
   Year = 'year',
 }
 
-const ScreenTime: React.FC<ScreenTimeProps> = ({
-  tabtimes,
-}: ScreenTimeProps) => {
+const ScreenTime: React.FC = () => {
+  const tabtimes = useTabTimes();
   const [range, setRange] = useLocalStorage<Range>('range', Range.Day);
 
   const [formattedTime, setFormattedTime] = React.useState<string>();

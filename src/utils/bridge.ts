@@ -1,7 +1,7 @@
 import { TabTime } from "../types";
 
-export const getTabtimes = async (): Promise<TabTime[]> => {
+export const getTabTimes = async (): Promise<TabTime[]> => {
   return new Promise(resolve => {
-    chrome.runtime.sendMessage('getTabtimes', resolve);
+    chrome.runtime.sendMessage('getTabTimes', resolve);
   });
 }

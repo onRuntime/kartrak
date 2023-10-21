@@ -1,18 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import BrowserTab from './Tab';
-import { TabTime } from '../../../../../../types';
-import { getTabtimes } from '../../../../../../utils/bridge';
-import dayjs from 'dayjs';
+import useTabTimes from '../../../../hooks/useTabTimes';
 
-export type BrowserTabsProps = {
-  tabtimes: TabTime[];
-};
-
-const BrowserTabs: React.FC<BrowserTabsProps> = ({
-  tabtimes,
-}: BrowserTabsProps) => {
+const BrowserTabs: React.FC = () => {
   const [tabs, setTabs] = React.useState<chrome.tabs.Tab[]>([]);
+  const tabtimes = useTabTimes();
 
   React.useEffect(() => {
     chrome.tabs.query({ currentWindow: true }, async function (t) {
