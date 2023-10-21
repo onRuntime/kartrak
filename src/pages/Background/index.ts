@@ -52,6 +52,12 @@ const main = async () => {
     await setChromeLocalStorage('tabtimes', tabtimes);
   });
 
+  chrome.webNavigation.onHistoryStateUpdated.addListener(details => {
+    if (details.tabId) {
+      handleTabChange();
+    }
+  });
+
   chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     if (message === 'getTabtimes') {
       sendResponse(tabtimes);

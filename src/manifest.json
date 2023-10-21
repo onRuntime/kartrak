@@ -43,6 +43,7 @@
     "activeTab",
     "tabs",
     "storage",
-    "unlimitedStorage"
+    "unlimitedStorage",
+    "webNavigation"
   ]
 }
