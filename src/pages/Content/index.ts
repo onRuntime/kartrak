@@ -1,17 +1,8 @@
-import { printLine } from './modules/print';
+import analyzeDomSize from "./analyze/domSize"
 
-console.log('Content script works!');
-console.log('Must reload extension for modifications to take effect.');
+const main = async () => {
+  console.log('kartrak - initialize content script');
+  analyzeDomSize();
+}
 
-printLine("Using the 'printLine' function from the Print Module");
-
-window.addEventListener('popstate', function (event) {
-  // React to route changes
-  console.log("popstate")
-});
-
-// Or for hash-based routing
-window.addEventListener('hashchange', function (event) {
-  // React to route changes
-  console.log("hashchange")
-});
+main();

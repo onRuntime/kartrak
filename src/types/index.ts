@@ -7,6 +7,8 @@ export type TabTime = {
 
 export type Analyze = {
   url: string;
-  requestAmount: number;
+  requestAmount?: number;
+  domSize?: number;
+  pageWeight?: number;
   updatedAt?: string;
 };

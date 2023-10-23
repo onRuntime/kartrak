@@ -1,5 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Analyze } from '../../../../../../types';
+import {
+  extractDomainFromUrl,
+  getEcoIndexGrade,
+} from '../../../../utils/__collection';
 
 export enum SmileyType {
   Happy = 'happy',
@@ -8,7 +13,18 @@ export enum SmileyType {
   Smile = 'smile',
 }
 
-const Score: React.FC = () => {
+export type ScoreProps = {
+  analyze?: Analyze;
+  ecoIndex?: number;
+  tab?: chrome.tabs.Tab;
+};
+
+const Score: React.FC<ScoreProps> = ({
+  analyze,
+  ecoIndex,
+  tab,
+}: ScoreProps) => {
+  const domain = extractDomainFromUrl(tab?.url || '');
   return (
     <Container>
       <EcoIndex>
@@ -17,10 +33,13 @@ const Score: React.FC = () => {
           alt={SmileyType.Happy}
           draggable={false}
         />
-        <Note>93/100</Note>
+        <Note>{ecoIndex ? ecoIndex.toFixed(2) : '-'}/100</Note>
       </EcoIndex>
       <Content>
-        <Title>Youpi! onRuntime est classé “A”</Title>
+        <Title>
+          Youpi! {domain} est classé “
+          {ecoIndex ? getEcoIndexGrade(ecoIndex) : '-'}”
+        </Title>
         <Description>Calculé la dernière fois le : 18/10/2023</Description>
       </Content>
     </Container>

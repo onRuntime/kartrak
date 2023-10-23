@@ -83,6 +83,10 @@ const Name = styled.span`
 const Url = styled.span`
   font-size: 12px;
   color: inherit;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 100%;
 `;
 
 const Time = styled.span`
@@ -90,6 +94,7 @@ const Time = styled.span`
   font-weight: 600;
   color: #909090;
   margin-left: auto;
+  white-space: nowrap;
 `;
 
 export default React.memo(BrowserTab);
