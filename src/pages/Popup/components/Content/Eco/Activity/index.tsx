@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import {
   extractDomainFromUrl,
   getFormattedTime,
-} from '../../../../utils/__layout';
+} from '../../../../utils/__collection';
 import useTabTimes from '../../../../hooks/useTabTimes';
 
 const DateTime: React.FC = () => {

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import {
   extractDomainFromUrl,
   getFormattedTime,
-} from '../../../../../utils/__layout';
+} from '../../../../../utils/__collection';
 import { RiWindowLine } from 'react-icons/ri';
 import { TabTime } from '../../../../../../../types';
 

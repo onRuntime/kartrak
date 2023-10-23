@@ -15,6 +15,7 @@ const Score: React.FC = () => {
         <Smiley
           src={require(`../../../../../../assets/img/smileys/${SmileyType.Happy}.svg`)}
           alt={SmileyType.Happy}
+          draggable={false}
         />
         <Note>93/100</Note>
       </EcoIndex>
