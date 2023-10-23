@@ -5,6 +5,9 @@ import {
   extractDomainFromUrl,
   getEcoIndexGrade,
 } from '../../../../utils/__collection';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime);
 
 export enum SmileyType {
   Happy = 'happy',
@@ -40,7 +43,10 @@ const Score: React.FC<ScoreProps> = ({
           Youpi! {domain} est classé “
           {ecoIndex ? getEcoIndexGrade(ecoIndex) : '-'}”
         </Title>
-        <Description>Calculé la dernière fois le : 18/10/2023</Description>
+        <Description>
+          Calculé la dernière fois le :{' '}
+          {analyze ? dayjs(analyze.updatedAt).fromNow() : '-'}
+        </Description>
       </Content>
     </Container>
   );
