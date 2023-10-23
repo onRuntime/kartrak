@@ -12,8 +12,9 @@ dayjs.extend(relativeTime);
 export enum SmileyType {
   Happy = 'happy',
   Good = 'good',
+  Neutral = 'neutral',
   Sad = 'sad',
-  Smile = 'smile',
+  Bad = 'bad',
 }
 
 export type ScoreProps = {
@@ -28,12 +29,27 @@ const Score: React.FC<ScoreProps> = ({
   tab,
 }: ScoreProps) => {
   const domain = extractDomainFromUrl(tab?.url || '');
+
+  const getSmileyType = (ecoIndex: number | undefined) => {
+    return ecoIndex === undefined
+    ? SmileyType.Neutral
+    : ecoIndex >= 80
+    ? SmileyType.Happy
+    : ecoIndex >= 60
+    ? SmileyType.Good
+    : ecoIndex >= 40
+    ? SmileyType.Neutral
+    : ecoIndex >= 20
+    ? SmileyType.Sad
+    : SmileyType.Bad;
+  };
+
   return (
     <Container>
       <EcoIndex>
         <Smiley
-          src={require(`../../../../../../assets/img/smileys/${SmileyType.Happy}.svg`)}
-          alt={SmileyType.Happy}
+          src={require(`../../../../../../assets/img/smileys/${getSmileyType(ecoIndex)}.svg`)}
+          alt={getSmileyType(ecoIndex)}
           draggable={false}
         />
         <Note>{ecoIndex ? Math.round(ecoIndex) : '-'}/100</Note>
