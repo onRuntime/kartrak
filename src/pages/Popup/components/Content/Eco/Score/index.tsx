@@ -33,7 +33,7 @@ const Score: React.FC<ScoreProps> = ({
           alt={SmileyType.Happy}
           draggable={false}
         />
-        <Note>{ecoIndex ? ecoIndex.toFixed(2) : '-'}/100</Note>
+        <Note>{ecoIndex ? Math.round(ecoIndex) : '-'}/100</Note>
       </EcoIndex>
       <Content>
         <Title>
