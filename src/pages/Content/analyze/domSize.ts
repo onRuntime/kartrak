@@ -40,14 +40,14 @@ const updateAnalyzeDomSize = async () => {
   console.log('analyze', analyze?.url, currentUrl);
   const domSize = getDomSizeWithoutSvg();
   if (analyze) {
-    console.log('kartrak - update analyze dom size')
     analyze.domSize = domSize;
     analyze.updatedAt = new Date().toISOString();
+    console.log('kartrak - update analyze DS', analyze);
   } else {
-    console.log('kartrak - create analyze dom size')
+    console.log('kartrak - create analyze DS');
     analyzes.push({
       url: currentUrl,
-      domSize: getDomSizeWithoutSvg(),
+      domSize,
       updatedAt: new Date().toISOString(),
     });
   }
