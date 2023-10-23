@@ -44,6 +44,12 @@
     "tabs",
     "storage",
     "unlimitedStorage",
-    "webNavigation"
+    "webNavigation",
+    "webRequest"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*",
+    "<all_urls>"
   ]
 }
