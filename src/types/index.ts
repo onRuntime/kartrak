@@ -4,3 +4,9 @@ export type TabTime = {
   startAt: string;
   endAt?: string;
 };
+
+export type Analyze = {
+  url: string;
+  requestAmount: number;
+  updatedAt?: string;
+};
