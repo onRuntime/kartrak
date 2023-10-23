@@ -8,9 +8,9 @@ const analyzes = async () => {
       let analyzes = await getChromeLocalStorage<Analyze[]>('analyzes') || [];
       const analyze = analyzes.find(analyze => analyze.url === tab.url);
       if (analyze) {
-        delete analyze.domSize;
-        delete analyze.pageWeight;
-        delete analyze.requestAmount;
+        analyze.requestAmount = 0;
+        analyze.pageWeight = 0;
+        analyze.domSize = 0;
         analyze.updatedAt = new Date().toISOString();
         console.log('kartrak - reset analyze', analyze)
       }

@@ -53,7 +53,9 @@ const Report: React.FC<ReportProps> = ({ analyze, ecoIndex }) => {
               <RiStackLine size={18} />
               <br />
               {/* 2,05Mo */}
-              {analyze?.pageWeight ? bytes.format(analyze?.pageWeight) : '-'}
+              {analyze?.pageWeight !== undefined
+                ? bytes.format(analyze?.pageWeight)
+                : '-'}
             </>
           }
           description={<>poids de la page visitée</>}

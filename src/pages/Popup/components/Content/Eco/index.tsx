@@ -99,7 +99,9 @@ const Eco: React.FC = () => {
   );
 
   const ecoIndex =
-    analyze?.domSize && analyze?.pageWeight && analyze?.requestAmount
+    analyze?.domSize !== undefined &&
+    analyze?.pageWeight !== undefined &&
+    analyze?.requestAmount !== undefined
       ? computeEcoIndex(
           analyze?.domSize,
           analyze?.pageWeight,
