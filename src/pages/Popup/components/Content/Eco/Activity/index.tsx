@@ -63,6 +63,10 @@ const Name = styled.span`
     font-size: 13px;
     font-weight: 600;
     color: #014335;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 100%;
   }
 `;
 
@@ -71,6 +75,7 @@ const Time = styled.span`
   font-weight: 600;
   font-family: 'neulis-cursive';
   color: #014335;
+  white-space: nowrap;
 `;
 
 export default Activity;

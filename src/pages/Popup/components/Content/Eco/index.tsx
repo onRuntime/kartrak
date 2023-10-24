@@ -110,7 +110,7 @@ const Eco: React.FC = () => {
       : undefined;
 
   return (
-    <>
+    <Container ecoIndex={ecoIndex}>
       <Activity tab={tab} />
       <Score analyze={analyze} ecoIndex={ecoIndex} tab={tab} />
       <Report analyze={analyze} ecoIndex={ecoIndex} />
@@ -125,9 +125,62 @@ const Eco: React.FC = () => {
           Cliquez ici
         </a>
       </About>
-    </>
+    </Container>
   );
 };
+
+const getCurrentEcoIndexColor = (ecoIndex?: number) => {
+  if (ecoIndex === undefined) {
+    return 'var(--primary)';
+  }
+
+  if (ecoIndex >= 75) {
+    return 'var(--green)';
+  }
+
+  if (ecoIndex >= 50) {
+    return 'var(--yellow)';
+  }
+
+  if (ecoIndex >= 25) {
+    return 'var(--orange)';
+  }
+
+  return 'var(--red)';
+};
+
+const getCurrentEcoIndexBackgroundColor = (ecoIndex?: number) => {
+  if (ecoIndex === undefined) {
+    return 'var(--green-10)';
+  }
+
+  if (ecoIndex >= 75) {
+    return 'var(--green-80)';
+  }
+
+  if (ecoIndex >= 50) {
+    return 'var(--yellow-80)';
+  }
+
+  if (ecoIndex >= 25) {
+    return 'var(--orange-80)';
+  }
+
+  return 'var(--red-80)';
+};
+
+const Container = styled.div<{
+  ecoIndex?: number;
+}>`
+  --current-ecoindex-color: ${({ ecoIndex }) =>
+    `${getCurrentEcoIndexColor(ecoIndex)}`};
+  --current-ecoindex-background-color: ${({ ecoIndex }) =>
+    `${getCurrentEcoIndexBackgroundColor(ecoIndex)}`};
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
 
 const About = styled.div`
   font-size: 13px;

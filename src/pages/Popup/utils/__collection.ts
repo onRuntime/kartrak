@@ -115,3 +115,24 @@ export const computeWaterConsumptionfromEcoIndex = (ecoIndex: number) => {
   return (3 + 3 * (50 - ecoIndex) / 100);
 }
 
+export enum SmileyType {
+  Happy = 'happy',
+  Good = 'good',
+  Neutral = 'neutral',
+  Sad = 'sad',
+  Bad = 'bad',
+}
+
+export const getSmileyType = (ecoIndex?: number) => {
+  return ecoIndex === undefined
+    ? SmileyType.Neutral
+    : ecoIndex >= 80
+      ? SmileyType.Happy
+      : ecoIndex >= 60
+        ? SmileyType.Good
+        : ecoIndex >= 40
+          ? SmileyType.Neutral
+          : ecoIndex >= 20
+            ? SmileyType.Sad
+            : SmileyType.Bad;
+};

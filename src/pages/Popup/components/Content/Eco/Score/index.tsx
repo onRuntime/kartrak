@@ -4,18 +4,11 @@ import { Analyze } from '../../../../../../types';
 import {
   extractDomainFromUrl,
   getEcoIndexGrade,
+  getSmileyType,
 } from '../../../../utils/__collection';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(relativeTime);
-
-export enum SmileyType {
-  Happy = 'happy',
-  Good = 'good',
-  Neutral = 'neutral',
-  Sad = 'sad',
-  Bad = 'bad',
-}
 
 export type ScoreProps = {
   analyze?: Analyze;
@@ -30,25 +23,13 @@ const Score: React.FC<ScoreProps> = ({
 }: ScoreProps) => {
   const domain = extractDomainFromUrl(tab?.url || '');
 
-  const getSmileyType = (ecoIndex: number | undefined) => {
-    return ecoIndex === undefined
-    ? SmileyType.Neutral
-    : ecoIndex >= 80
-    ? SmileyType.Happy
-    : ecoIndex >= 60
-    ? SmileyType.Good
-    : ecoIndex >= 40
-    ? SmileyType.Neutral
-    : ecoIndex >= 20
-    ? SmileyType.Sad
-    : SmileyType.Bad;
-  };
-
   return (
     <Container>
       <EcoIndex>
         <Smiley
-          src={require(`../../../../../../assets/img/smileys/${getSmileyType(ecoIndex)}.svg`)}
+          src={require(`../../../../../../assets/img/smileys/${getSmileyType(
+            ecoIndex
+          )}.svg`)}
           alt={getSmileyType(ecoIndex)}
           draggable={false}
         />
@@ -91,7 +72,7 @@ const EcoIndex = styled.div`
 const Note = styled.div`
   font-size: 36px;
   font-weight: 600;
-  color: #009245;
+  color: var(--current-ecoindex-color, #009245);
   font-family: 'neulis-cursive';
 `;
 
