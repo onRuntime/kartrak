@@ -17,21 +17,13 @@ export const extractDomainFromUrl = (url: string): string | null => {
   }
 }
 
-export const getFormattedTime = (tabtimes: TabTime[]) => {
-  const totalTabTime = tabtimes
-    .reduce((total, worktime) => {
-      const startAt = dayjs(worktime.startAt);
-      const endAt = worktime.endAt ? dayjs(worktime.endAt) : dayjs();
-      const timeDiff = endAt.diff(startAt);
-      return total + timeDiff;
-    }, 0);
-
-  const seconds = Math.floor(totalTabTime / 1000);
+export const formatTime = (time: number): string => {
+  const seconds = Math.floor(time / 1000);
   const minutes = Math.floor(seconds / 60);
   const hours = Math.floor(minutes / 60);
   const remainingMinutes = minutes % 60;
   const remainingSeconds = seconds % 60;
-  const milliseconds = totalTabTime % 1000;
+  const milliseconds = time % 1000;
 
   let formattedTime = '';
 
@@ -46,6 +38,18 @@ export const getFormattedTime = (tabtimes: TabTime[]) => {
   }
 
   return formattedTime;
+}
+
+export const getFormattedTime = (tabtimes: TabTime[]) => {
+  const totalTabTime = tabtimes
+    .reduce((total, worktime) => {
+      const startAt = dayjs(worktime.startAt);
+      const endAt = worktime.endAt ? dayjs(worktime.endAt) : dayjs();
+      const timeDiff = endAt.diff(startAt);
+      return total + timeDiff;
+    }, 0);
+
+  return formatTime(totalTabTime);
 }
 
 export enum EcoIndexGrade {
