@@ -17,7 +17,7 @@ const Tracking: React.FC = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Besoin d'aide <RiInformationLine />
+          Besoin d'aide <RiInformationLine size={18} />
         </a>
       </Help>
     </Container>
