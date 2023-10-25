@@ -98,7 +98,7 @@ const Close = styled(RiCloseLine)`
 `;
 
 const Content = styled.p`
-  font-size: 10px;
+  font-size: 13px;
   color: var(--grey);
   line-height: 1.5;
 `;
