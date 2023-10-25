@@ -1,5 +1,5 @@
 import { TabTime } from "../../types";
-import { getChromeLocalStorage, setChromeLocalStorage } from "./utils/asyncChromeLocalStorage";
+import { getChromeLocalStorage, setChromeLocalStorage } from "../../utils/asyncChromeStorage";
 
 const tabtimes = async () => {// await setChromeLocalStorage('tabtimes', []);
   let tabtimes = await getChromeLocalStorage<TabTime[]>('tabtimes') || [];

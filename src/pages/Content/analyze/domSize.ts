@@ -1,5 +1,5 @@
 import { Analyze } from "../../../types";
-import { getChromeLocalStorage, setChromeLocalStorage } from "../../Background/utils/asyncChromeLocalStorage";
+import { getChromeLocalStorage, setChromeLocalStorage } from "../../../utils/asyncChromeStorage";
 
 const getDomSizeWithoutSvg = (): number => {
   let dom_size = document.getElementsByTagName("*").length;

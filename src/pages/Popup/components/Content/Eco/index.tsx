@@ -4,7 +4,7 @@ import Report from './Report';
 import Score from './Score';
 import styled from 'styled-components';
 import { Analyze } from '../../../../../types';
-import { getChromeLocalStorage } from '../../../../Background/utils/asyncChromeLocalStorage';
+import { getChromeLocalStorage } from '../../../../../utils/asyncChromeStorage';
 import { computeEcoIndex } from '../../../utils/__collection';
 
 const Eco: React.FC = () => {
@@ -185,6 +185,7 @@ const Container = styled.div<{
 const About = styled.div`
   font-size: 13px;
   color: #909090;
+  text-align: center;
 
   a {
     color: #009245;

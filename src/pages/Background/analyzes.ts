@@ -1,5 +1,5 @@
 import { Analyze } from "../../types";
-import { getChromeLocalStorage, setChromeLocalStorage } from "./utils/asyncChromeLocalStorage";
+import { getChromeLocalStorage, setChromeLocalStorage } from "../../utils/asyncChromeStorage";
 
 const analyzes = async () => {
 
