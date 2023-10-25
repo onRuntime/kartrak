@@ -3,6 +3,7 @@ import { css } from "styled-components";
 const customCss = css`
   :root {
     --primary: #014335;
+    --grey: #909090;
     --red: #E40000;
     --red-80: #FFCFCF;
     --yellow: #DCB903;
@@ -11,6 +12,7 @@ const customCss = css`
     --orange-80: #FEF0C7;
     --green: #009245;
     --green-80: #CCE9DA;
+    --green-40: #EFF8F3;
     --green-10: #F1FAF1;
   }
 
