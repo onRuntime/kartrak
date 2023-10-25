@@ -4,6 +4,7 @@ import { Analyze } from '../../../../../../types';
 import {
   extractDomainFromUrl,
   getEcoIndexGrade,
+  getEcoIndexText,
   getSmileyType,
 } from '../../../../utils/__collection';
 import dayjs from 'dayjs';
@@ -37,7 +38,7 @@ const Score: React.FC<ScoreProps> = ({
       </EcoIndex>
       <Content>
         <Title>
-          Youpi! {domain} est classé “
+          {ecoIndex ? getEcoIndexText(ecoIndex) : ''} Cette page de {domain} est classée “
           {ecoIndex ? getEcoIndexGrade(ecoIndex) : '-'}”
         </Title>
         <Description>
@@ -86,7 +87,7 @@ const Content = styled.div`
 const Title = styled.div`
   font-size: 18px;
   font-weight: 600;
-  color: #014335;
+  color: var(--current-ecoindex-color, #014335);
 `;
 
 const Description = styled.div`
