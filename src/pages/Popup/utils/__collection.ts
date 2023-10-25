@@ -71,6 +71,18 @@ export const getEcoIndexGrade = (ecoIndex: number): string => {
   if (ecoIndex > 10) return EcoIndexGrade.F;
   return EcoIndexGrade.G;
 }
+
+export const getEcoIndexText = (ecoIndex: number): string => {
+  if (ecoIndex > 80) return "Excellent!";
+  if (ecoIndex > 70) return "Bravo.";
+  if (ecoIndex > 55) return "Pas mal.";
+  if (ecoIndex > 40) return "Peut mieux faire.";
+  if (ecoIndex > 25) return "Aïe aïe...";
+  if (ecoIndex > 10) return "Y'a du boulot...";
+  return "Que dire ?";
+}
+
+
 export const computeQuantile = (quantiles: number[], value: number): number => {
   for (let i = 1; i < quantiles.length; i++) {
     if (value < quantiles[i]) {
