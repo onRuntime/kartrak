@@ -3,38 +3,15 @@ import styled from 'styled-components';
 import {
   extractDomainFromUrl,
   getFormattedTime,
-} from '../../../../utils/__layout';
+} from '../../../../utils/__collection';
 import useTabTimes from '../../../../hooks/useTabTimes';
 
-const DateTime: React.FC = () => {
-  const [tab, setTab] = React.useState<chrome.tabs.Tab>();
+export type ActivityProps = {
+  tab?: chrome.tabs.Tab;
+};
+
+const Activity: React.FC<ActivityProps> = ({ tab }: ActivityProps) => {
   const domain = extractDomainFromUrl(tab?.url || '');
-
-  React.useEffect(() => {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      setTab(tabs[0]);
-    });
-
-    chrome.tabs.onActivated.addListener((activeInfo) => {
-      chrome.tabs.get(activeInfo.tabId, (tab) => {
-        setTab(tab);
-      });
-    });
-
-    chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-      if (changeInfo.status === 'complete') {
-        setTab(tab);
-      }
-    });
-
-    chrome.tabs.onCreated.addListener((tab) => {
-      setTab(tab);
-    });
-
-    chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
-      setTab(undefined);
-    });
-  }, []);
 
   const tabtimes = useTabTimes().filter(
     (tab) => extractDomainFromUrl(tab.url) === domain
@@ -86,6 +63,10 @@ const Name = styled.span`
     font-size: 13px;
     font-weight: 600;
     color: #014335;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 100%;
   }
 `;
 
@@ -94,6 +75,7 @@ const Time = styled.span`
   font-weight: 600;
   font-family: 'neulis-cursive';
   color: #014335;
+  white-space: nowrap;
 `;
 
-export default DateTime;
+export default Activity;

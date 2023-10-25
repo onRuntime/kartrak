@@ -1,6 +1,21 @@
 import { css } from "styled-components";
 
 const customCss = css`
+  :root {
+    --primary: #014335;
+    --grey: #909090;
+    --red: #E40000;
+    --red-80: #FFCFCF;
+    --yellow: #DCB903;
+    --yellow-80: #FEF2C7;
+    --orange: #DC6803;
+    --orange-80: #FEF0C7;
+    --green: #009245;
+    --green-80: #CCE9DA;
+    --green-40: #EFF8F3;
+    --green-10: #F1FAF1;
+  }
+
   html {
     width: 380px;
     height: auto;

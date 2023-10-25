@@ -1,26 +1,49 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Analyze } from '../../../../../../types';
+import {
+  extractDomainFromUrl,
+  getEcoIndexGrade,
+  getSmileyType,
+} from '../../../../utils/__collection';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime);
 
-export enum SmileyType {
-  Happy = 'happy',
-  Good = 'good',
-  Sad = 'sad',
-  Smile = 'smile',
-}
+export type ScoreProps = {
+  analyze?: Analyze;
+  ecoIndex?: number;
+  tab?: chrome.tabs.Tab;
+};
 
-const Score: React.FC = () => {
+const Score: React.FC<ScoreProps> = ({
+  analyze,
+  ecoIndex,
+  tab,
+}: ScoreProps) => {
+  const domain = extractDomainFromUrl(tab?.url || '');
+
   return (
     <Container>
       <EcoIndex>
         <Smiley
-          src={require(`../../../../../../assets/img/smileys/${SmileyType.Happy}.svg`)}
-          alt={SmileyType.Happy}
+          src={require(`../../../../../../assets/img/smileys/${getSmileyType(
+            ecoIndex
+          )}.svg`)}
+          alt={getSmileyType(ecoIndex)}
+          draggable={false}
         />
-        <Note>93/100</Note>
+        <Note>{ecoIndex ? Math.round(ecoIndex) : '-'}/100</Note>
       </EcoIndex>
       <Content>
-        <Title>Youpi! onRuntime est classé “A”</Title>
-        <Description>Calculé la dernière fois le : 18/10/2023</Description>
+        <Title>
+          Youpi! {domain} est classé “
+          {ecoIndex ? getEcoIndexGrade(ecoIndex) : '-'}”
+        </Title>
+        <Description>
+          Calculé la dernière fois le :{' '}
+          {analyze ? dayjs(analyze.updatedAt).fromNow() : '-'}
+        </Description>
       </Content>
     </Container>
   );
@@ -49,7 +72,7 @@ const EcoIndex = styled.div`
 const Note = styled.div`
   font-size: 36px;
   font-weight: 600;
-  color: #009245;
+  color: var(--current-ecoindex-color, #009245);
   font-family: 'neulis-cursive';
 `;
 
