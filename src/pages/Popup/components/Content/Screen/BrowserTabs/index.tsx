@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import BrowserTab from './Tab';
 import useTabTimes from '../../../../hooks/useTabTimes';
+import { cleanUrl } from '../../../../../../utils/url';
 
 const BrowserTabs: React.FC = () => {
   const [tabs, setTabs] = React.useState<chrome.tabs.Tab[]>([]);
@@ -36,7 +37,9 @@ const BrowserTabs: React.FC = () => {
             <BrowserTab
               key={tab.id}
               tab={tab}
-              tabtimes={tabtimes.filter((t) => t.url === tab.url)}
+              tabtimes={tabtimes.filter(
+                (t) => cleanUrl(t.url) === cleanUrl(tab.url || '')
+              )}
             />
           );
         })}

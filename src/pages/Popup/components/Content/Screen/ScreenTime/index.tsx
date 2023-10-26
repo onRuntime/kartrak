@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { TabTime } from '../../../../../../types';
 import { useLocalStorage } from 'usehooks-ts';
 import { getFormattedTime } from '../../../../utils/__collection';
 import useTabTimes from '../../../../hooks/useTabTimes';

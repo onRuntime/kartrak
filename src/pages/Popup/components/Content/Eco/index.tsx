@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { Analyze } from '../../../../../types';
 import { getChromeLocalStorage } from '../../../../../utils/asyncChromeStorage';
 import { computeEcoIndex } from '../../../utils/__collection';
+import { cleanUrl } from '../../../../../utils/url';
 
 const Eco: React.FC = () => {
   const [tab, setTab] = React.useState<chrome.tabs.Tab>();
@@ -52,8 +53,9 @@ const Eco: React.FC = () => {
       return;
     }
 
-    const analyze = analyzes.find((analyze) => analyze.url === tab.url);
-    console.log('analyze', analyze, tab.url, analyzes.length);
+    const analyze = analyzes.find(
+      (analyze) => cleanUrl(analyze.url) === cleanUrl(tab.url || '')
+    );
     if (!analyze) {
       return;
     }

@@ -1,5 +1,6 @@
 import { TabTime } from "../../types";
 import { getChromeLocalStorage, setChromeLocalStorage } from "../../utils/asyncChromeStorage";
+import { cleanUrl } from "../../utils/url";
 
 const tabtimes = async () => {// await setChromeLocalStorage('tabtimes', []);
   let tabtimes = await getChromeLocalStorage<TabTime[]>('tabtimes') || [];
@@ -26,11 +27,11 @@ const tabtimes = async () => {// await setChromeLocalStorage('tabtimes', []);
     console.log('kartrak - handle tab change', tab.title)
 
     // find the tabtime for the current tab
-    const tabtime = tabtimes.find(tabtime => tabtime.url === tab.url && tabtime.endAt === undefined);
+    const tabtime = tabtimes.find(tabtime => cleanUrl(tabtime.url) === cleanUrl(tab.url || '') && tabtime.endAt === undefined);
     if (!tabtime) {
       // if there is no tabtime for the current tab, create one
       tabtimes.push({
-        url: tab.url!,
+        url: cleanUrl(tab.url || ''),
         favIconUrl: tab.favIconUrl,
         startAt: now.toISOString(),
       });

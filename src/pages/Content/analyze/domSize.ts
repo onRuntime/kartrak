@@ -1,5 +1,6 @@
 import { Analyze } from "../../../types";
 import { getChromeLocalStorage, setChromeLocalStorage } from "../../../utils/asyncChromeStorage";
+import { cleanUrl } from "../../../utils/url";
 
 const getDomSizeWithoutSvg = (): number => {
   let dom_size = document.getElementsByTagName("*").length;
@@ -36,8 +37,7 @@ const updateAnalyzeDomSize = async () => {
   let analyzes = await getChromeLocalStorage<Analyze[]>('analyzes') || [];
 
   const currentUrl = window.location.href;
-  const analyze = analyzes.find(analyze => analyze.url === currentUrl);
-  console.log('analyze', analyze?.url, currentUrl);
+  const analyze = analyzes.find(analyze => cleanUrl(analyze.url) === currentUrl);
   const domSize = getDomSizeWithoutSvg();
   if (analyze) {
     analyze.domSize = domSize;
@@ -46,7 +46,7 @@ const updateAnalyzeDomSize = async () => {
   } else {
     console.log('kartrak - create analyze DS');
     analyzes.push({
-      url: currentUrl,
+      url: cleanUrl(currentUrl),
       domSize,
       updatedAt: new Date().toISOString(),
     });

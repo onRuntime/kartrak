@@ -1,12 +1,13 @@
 import { Analyze } from "../../types";
 import { getChromeLocalStorage, setChromeLocalStorage } from "../../utils/asyncChromeStorage";
+import { cleanUrl } from "../../utils/url";
 
 const analyzes = async () => {
 
   chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
     if (changeInfo.status === 'loading') {
       let analyzes = await getChromeLocalStorage<Analyze[]>('analyzes') || [];
-      const analyze = analyzes.find(analyze => analyze.url === tab.url);
+      const analyze = analyzes.find(analyze => cleanUrl(analyze.url) === cleanUrl(tab.url || ''));
       if (analyze) {
         analyze.requestAmount = 0;
         analyze.pageWeight = 0;
@@ -33,13 +34,13 @@ const analyzes = async () => {
     }
 
     let analyzes = await getAnalyzes();
-    const analyze = analyzes.find(a => a.url === tab.url);
+    const analyze = analyzes.find(a => cleanUrl(a.url) === cleanUrl(tab.url || ''));
 
     if (analyze) {
       analyze.requestAmount = (analyze.requestAmount || 0) + 1;
     } else {
       analyzes.push({
-        url: tab.url!,
+        url: cleanUrl(tab.url || ''),
         requestAmount: 1,
       });
     }
@@ -56,13 +57,13 @@ const analyzes = async () => {
     const contentLengthHeader = details.responseHeaders?.find(header => header.name === 'content-length')?.value;
     if (contentLengthHeader) {
       let analyzes = await getAnalyzes();
-      const analyze = analyzes.find(a => a.url === tab.url);
+      const analyze = analyzes.find(a => cleanUrl(a.url) === cleanUrl(tab.url || ''));
 
       if (analyze) {
         analyze.pageWeight = (analyze.pageWeight || 0) + parseInt(contentLengthHeader);
       } else {
         analyzes.push({
-          url: tab.url!,
+          url: cleanUrl(tab.url || ''),
           pageWeight: parseInt(contentLengthHeader),
         });
       }
