@@ -7,7 +7,7 @@ const Screen: React.FC = () => {
   return (
     <>
       <ScreenTime />
-      <DomainTime />
+      {/* <DomainTime /> */}
       <BrowserTabs />
     </>
   );

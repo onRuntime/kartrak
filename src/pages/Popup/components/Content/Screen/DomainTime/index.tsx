@@ -4,6 +4,7 @@ import useTabTimes from '../../../../hooks/useTabTimes';
 import dayjs from 'dayjs';
 import { extractDomainFromUrl } from '../../../../utils/__collection';
 import DomainItem from './DomainItem';
+import { TabTime } from '../../../../../../types';
 
 const DomainTime: React.FC = () => {
   const tabtimes = useTabTimes().map((tabtime) => {
@@ -12,46 +13,77 @@ const DomainTime: React.FC = () => {
     }
     return tabtime;
   });
-  const domainMap = new Map<
-    string,
-    {
-      time: number;
-      favIconUrl?: string;
-    }
+
+  const [domainMap, setDomainMap] = React.useState<
+    Map<
+      string,
+      {
+        time: number;
+        favIconUrl?: string;
+      }
+    >
   >();
 
-  tabtimes.map(async (tabtime) => {
-    const domain = extractDomainFromUrl(tabtime.url) || '';
-    const existingDomainData = domainMap.get(domain);
+  const getSortedDomainMap = React.useCallback((tabtimes: TabTime[]) => {
+    const domainMap = new Map<
+      string,
+      {
+        time: number;
+        favIconUrl?: string;
+      }
+    >();
 
-    if (existingDomainData) {
-      // If data exists for the domain, update the time property
-      existingDomainData.time += dayjs(new Date(tabtime.endAt as string)).diff(
-        dayjs(new Date(tabtime.startAt as string))
-      );
+    tabtimes.map(async (tabtime) => {
+      const domain = extractDomainFromUrl(tabtime.url) || '';
+      const existingDomainData = domainMap.get(domain);
 
-      // Set the updated data back in the map
-      domainMap.set(domain, existingDomainData);
-    } else {
-      // If no data exists for the domain, create a new object and add it to the map
-      domainMap.set(domain, {
-        time: dayjs(new Date(tabtime.endAt as string)).diff(
-          dayjs(new Date(tabtime.startAt as string))
-        ),
-        favIconUrl: tabtime.favIconUrl,
-      });
-    }
-  });
+      if (existingDomainData) {
+        // If data exists for the domain, update the time property
+        existingDomainData.time += dayjs(
+          new Date(tabtime.endAt as string)
+        ).diff(dayjs(new Date(tabtime.startAt as string)));
 
-  const sortedDomainMap = new Map(
-    Array.from(domainMap.entries()).sort((a, b) => b[1].time - a[1].time)
-  );
+        // Set the updated data back in the map
+        domainMap.set(domain, existingDomainData);
+      } else {
+        // If no data exists for the domain, create a new object and add it to the map
+        domainMap.set(domain, {
+          time: dayjs(new Date(tabtime.endAt as string)).diff(
+            dayjs(new Date(tabtime.startAt as string))
+          ),
+          favIconUrl: tabtime.favIconUrl,
+        });
+      }
+    });
 
-  console.log('domainMap', sortedDomainMap);
+    const sortedDomainMap = new Map(
+      Array.from(domainMap.entries()).sort((a, b) => b[1].time - a[1].time)
+    );
+
+    return sortedDomainMap;
+  }, []);
+
+  React.useEffect(() => {
+    let intervalId: NodeJS.Timeout | null = null;
+
+    const updateDomainMap = () => {
+      setDomainMap(getSortedDomainMap(tabtimes));
+    };
+
+    // Update the formatted time every second (1000ms)
+    intervalId = setInterval(updateDomainMap, 1000);
+
+    // Clear the interval when the component unmounts
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+  }, [getSortedDomainMap, tabtimes]);
 
   return (
     <Container>
-      {Array.from(sortedDomainMap.entries())
+      {Array.from((domainMap || getSortedDomainMap(tabtimes)).entries())
         .slice(0, 4)
         .map(([domain, { time, favIconUrl }]) => {
           return (
