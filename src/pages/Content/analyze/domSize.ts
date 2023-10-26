@@ -36,7 +36,7 @@ const getNbChildsExcludingNestedSvg = (element: Element): number => {
 const updateAnalyzeDomSize = async () => {
   let analyzes = await getChromeLocalStorage<Analyze[]>('analyzes') || [];
 
-  const currentUrl = window.location.href;
+  const currentUrl = cleanUrl(window.location.href);
   const analyze = analyzes.find(analyze => cleanUrl(analyze.url) === currentUrl);
   const domSize = getDomSizeWithoutSvg();
   if (analyze) {
