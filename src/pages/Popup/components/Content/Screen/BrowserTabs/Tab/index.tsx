@@ -20,19 +20,20 @@ const BrowserTab: React.FC<BrowserTabProps> = ({
   const [formattedTime, setFormattedTime] = React.useState<string>();
 
   React.useEffect(() => {
-    let intervalId: NodeJS.Timeout | null = null;
+    let animationFrameId: number | null = null;
 
     const updateFormattedTime = () => {
       setFormattedTime(getFormattedTime(tabtimes));
+      animationFrameId = requestAnimationFrame(updateFormattedTime);
     };
 
     // Update the formatted time every second (1000ms)
-    intervalId = setInterval(updateFormattedTime, 1000);
+    animationFrameId = requestAnimationFrame(updateFormattedTime);
 
     // Clear the interval when the component unmounts
     return () => {
-      if (intervalId) {
-        clearInterval(intervalId);
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
       }
     };
   }, [tabtimes]);

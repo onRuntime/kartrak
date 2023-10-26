@@ -19,19 +19,20 @@ const Activity: React.FC<ActivityProps> = ({ tab }: ActivityProps) => {
   );
   const [formattedTime, setFormattedTime] = React.useState<string>();
   React.useEffect(() => {
-    let intervalId: NodeJS.Timeout | null = null;
+    let animationFrameId: number | null = null;
 
     const updateFormattedTime = () => {
       setFormattedTime(getFormattedTime(tabtimes));
+      animationFrameId = requestAnimationFrame(updateFormattedTime);
     };
 
-    // Update the formatted time every second (1000ms)
-    intervalId = setInterval(updateFormattedTime, 1000);
+    // Start the animation frame loop when the component mounts
+    animationFrameId = requestAnimationFrame(updateFormattedTime);
 
-    // Clear the interval when the component unmounts
+    // Clear the animation frame loop when the component unmounts
     return () => {
-      if (intervalId) {
-        clearInterval(intervalId);
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
       }
     };
   }, [tabtimes]);
@@ -42,7 +43,7 @@ const Activity: React.FC<ActivityProps> = ({ tab }: ActivityProps) => {
         {"Temps d'activité : "}
         <span>{domain}</span>
       </Name>
-      <Time>{formattedTime ? formattedTime : getFormattedTime(tabtimes)}</Time>
+      <Time>{formattedTime || getFormattedTime(tabtimes)}</Time>
     </Container>
   );
 };

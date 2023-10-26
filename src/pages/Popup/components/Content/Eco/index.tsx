@@ -91,16 +91,6 @@ const Eco: React.FC = () => {
     };
   }, []);
 
-  console.log(
-    "analyze",
-    "domSize",
-    !!analyze?.domSize,
-    "pageWeight",
-    !!analyze?.pageWeight,
-    "requestAmount",
-    !!analyze?.requestAmount,
-  );
-
   const ecoIndex =
     analyze?.domSize !== undefined &&
     analyze?.pageWeight !== undefined &&
