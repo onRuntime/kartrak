@@ -1,12 +1,13 @@
-import React from 'react';
-import { RiCloseLine } from 'react-icons/ri';
-import styled from 'styled-components';
-import tips from '../../data/tips';
-import { getRandomNumber } from '../../utils/__collection';
+import React from "react";
+import { RiCloseLine } from "react-icons/ri";
+import styled from "styled-components";
+
 import {
   getChromeSessionStorage,
   setChromeSessionStorage,
-} from '../../../../utils/asyncChromeStorage';
+} from "../../../../utils/asyncChromeStorage";
+import tips from "../../data/tips";
+import { getRandomNumber } from "../../utils/__collection";
 
 const Tip: React.FC = () => {
   const [isTip, setIsTip] = React.useState<boolean>();
@@ -14,20 +15,20 @@ const Tip: React.FC = () => {
 
   React.useEffect(() => {
     const handler = async () => {
-      const isTip = await getChromeSessionStorage<boolean>('isTip');
+      const isTip = await getChromeSessionStorage<boolean>("isTip");
       if (isTip !== undefined) {
         setIsTip(isTip);
       } else {
-        await setChromeSessionStorage('isTip', true);
+        await setChromeSessionStorage("isTip", true);
         setIsTip(true);
       }
 
-      const tipKey = await getChromeSessionStorage<number>('tipKey');
+      const tipKey = await getChromeSessionStorage<number>("tipKey");
       if (tipKey !== undefined) {
         setTipKey(tipKey);
       } else {
         const tipKey = getRandomNumber(0, tips.length - 1);
-        await setChromeSessionStorage('tipKey', tipKey);
+        await setChromeSessionStorage("tipKey", tipKey);
         setTipKey(tipKey);
       }
     };
@@ -35,7 +36,7 @@ const Tip: React.FC = () => {
     handler();
   }, []);
 
-  console.log('chrome session storage', isTip, tipKey);
+  console.log("chrome session storage", isTip, tipKey);
   if (!isTip || tipKey === undefined) {
     return null;
   }
@@ -44,17 +45,17 @@ const Tip: React.FC = () => {
     <Container>
       <Header>
         <Icon
-          src={require('../../../../assets/img/bulb.svg')}
+          src={require("../../../../assets/img/bulb.svg")}
           draggable={false}
-          alt=""
+          alt={""}
           width={18}
           height={18}
         />
-        <Title>Tip & Astuce</Title>
+        <Title>{"Tip & Astuce"}</Title>
         <Close
           size={15}
           onClick={async () => {
-            await setChromeSessionStorage('isTip', false);
+            await setChromeSessionStorage("isTip", false);
             setIsTip(false);
           }}
         />

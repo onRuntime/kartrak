@@ -1,6 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
-import { formatTime } from '../../../../../utils/__collection';
+import React from "react";
+import styled from "styled-components";
+
+import { formatTime } from "../../../../../utils/__collection";
 
 export type DomainItemProps = {
   domain: string;

@@ -1,15 +1,16 @@
-import React from 'react';
-import styled from 'styled-components';
-import ReportCard from './Card';
-import { RiCloudLine, RiContrastDrop2Line, RiStackLine } from 'react-icons/ri';
-import { Analyze } from '../../../../../../types';
-import bytes from 'bytes';
+import bytes from "bytes";
+import React from "react";
+import { RiCloudLine, RiContrastDrop2Line, RiStackLine } from "react-icons/ri";
+import styled from "styled-components";
+
+import ReportCard from "./Card";
+import { Analyze } from "../../../../../../types";
 import {
   computeGreenhouseGasesEmissionfromEcoIndex,
   computeWaterConsumptionfromEcoIndex,
   formatCO2e,
   formatLiters,
-} from '../../../../utils/__collection';
+} from "../../../../utils/__collection";
 
 export type ReportProps = {
   analyze?: Analyze;
@@ -19,7 +20,9 @@ export type ReportProps = {
 const Report: React.FC<ReportProps> = ({ analyze, ecoIndex }) => {
   return (
     <Container>
-      <Description>Votre empreinte écologique pour cette visite :</Description>
+      <Description>
+        {"Votre empreinte écologique pour cette visite :"}
+      </Description>
       <Content>
         <ReportCard
           title={
@@ -28,10 +31,10 @@ const Report: React.FC<ReportProps> = ({ analyze, ecoIndex }) => {
               <br />
               {ecoIndex
                 ? formatLiters(computeWaterConsumptionfromEcoIndex(ecoIndex))
-                : '-'}
+                : "-"}
             </>
           }
-          description={<>consommation d'eau bleue</>}
+          description={<>{"consommation d'eau bleue"}</>}
         />
         <ReportCard
           title={
@@ -40,12 +43,12 @@ const Report: React.FC<ReportProps> = ({ analyze, ecoIndex }) => {
               <br />
               {ecoIndex
                 ? formatCO2e(
-                    computeGreenhouseGasesEmissionfromEcoIndex(ecoIndex)
+                    computeGreenhouseGasesEmissionfromEcoIndex(ecoIndex),
                   )
-                : '-'}
+                : "-"}
             </>
           }
-          description={<>émission de gaz à effet de serre</>}
+          description={<>{"émission de gaz à effet de serre"}</>}
         />
         <ReportCard
           title={
@@ -55,10 +58,10 @@ const Report: React.FC<ReportProps> = ({ analyze, ecoIndex }) => {
               {/* 2,05Mo */}
               {analyze?.pageWeight !== undefined
                 ? bytes.format(analyze?.pageWeight)
-                : '-'}
+                : "-"}
             </>
           }
-          description={<>poids de la page visitée</>}
+          description={<>{"poids de la page visitée"}</>}
         />
       </Content>
     </Container>

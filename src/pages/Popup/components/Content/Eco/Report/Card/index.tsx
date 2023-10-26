@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 export type ReportCardProps = {
   title: React.ReactNode | string;
@@ -31,7 +31,7 @@ const Container = styled.div`
 const Title = styled.span`
   font-size: 20px;
   font-weight: 600;
-  font-family: 'neulis-cursive';
+  font-family: "neulis-cursive";
   color: var(--current-ecoindex-color, #009245);
 
   svg {

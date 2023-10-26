@@ -1,7 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
-import logo from '../../../../assets/img/logo.svg';
-import manifestJson from '../../../../manifest.json';
+import React from "react";
+import styled from "styled-components";
+
+import logo from "../../../../assets/img/logo.svg";
+import manifestJson from "../../../../manifest.json";
 
 const Header: React.FC = () => {
   return (
@@ -10,12 +11,12 @@ const Header: React.FC = () => {
         <BrandImage src={logo} width={32} height={32} />
       </BrandContainer>
       <Content>
-        <Title>Kartrak - Tracking carbone & activité</Title>
+        <Title>{"Kartrak - Tracking carbone & activité"}</Title>
         <Description>
-          Alpha{' '}
+          {"Alpha"}{" "}
           {(manifestJson as any).version
             ? `v${(manifestJson as any).version}`
-            : 'development mode'}
+            : "development mode"}
         </Description>
       </Content>
     </Container>
@@ -45,7 +46,7 @@ const Title = styled.h1`
   font-size: 15px;
   font-weight: 600;
   color: #014335;
-  font-family: 'neulis-cursive';
+  font-family: "neulis-cursive";
 `;
 
 const Description = styled.p`

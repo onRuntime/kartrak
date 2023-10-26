@@ -1,5 +1,8 @@
 import { Analyze } from "../../../types";
-import { getChromeLocalStorage, setChromeLocalStorage } from "../../../utils/asyncChromeStorage";
+import {
+  getChromeLocalStorage,
+  setChromeLocalStorage,
+} from "../../../utils/asyncChromeStorage";
 import { cleanUrl } from "../../../utils/url";
 
 const getDomSizeWithoutSvg = (): number => {
@@ -9,7 +12,7 @@ const getDomSizeWithoutSvg = (): number => {
     dom_size -= getNbChildsExcludingNestedSvg(svgElements[i]) - 1;
   }
   return dom_size;
-}
+};
 
 const getNbChildsExcludingNestedSvg = (element: Element): number => {
   if (element.nodeType === Node.TEXT_NODE) return 0;
@@ -22,7 +25,7 @@ const getNbChildsExcludingNestedSvg = (element: Element): number => {
     if (childNode.nodeType === Node.ELEMENT_NODE) {
       const childElement = childNode as Element; // Cast to Element
       // Deal with the 'svg' nested case
-      if (childElement.tagName !== 'svg') {
+      if (childElement.tagName !== "svg") {
         nb_elements += getNbChildsExcludingNestedSvg(childElement);
       } else {
         nb_elements += 1;
@@ -31,20 +34,22 @@ const getNbChildsExcludingNestedSvg = (element: Element): number => {
   }
 
   return nb_elements;
-}
+};
 
 const updateAnalyzeDomSize = async () => {
-  let analyzes = await getChromeLocalStorage<Analyze[]>('analyzes') || [];
+  const analyzes = (await getChromeLocalStorage<Analyze[]>("analyzes")) || [];
 
   const currentUrl = cleanUrl(window.location.href);
-  const analyze = analyzes.find(analyze => cleanUrl(analyze.url) === currentUrl);
+  const analyze = analyzes.find(
+    (analyze) => cleanUrl(analyze.url) === currentUrl,
+  );
   const domSize = getDomSizeWithoutSvg();
   if (analyze) {
     analyze.domSize = domSize;
     analyze.updatedAt = new Date().toISOString();
-    console.log('kartrak - update analyze DS', analyze);
+    console.log("kartrak - update analyze DS", analyze);
   } else {
-    console.log('kartrak - create analyze DS');
+    console.log("kartrak - create analyze DS");
     analyzes.push({
       url: cleanUrl(currentUrl),
       domSize,
@@ -53,14 +58,14 @@ const updateAnalyzeDomSize = async () => {
   }
 
   // save the analyzes
-  await setChromeLocalStorage('analyzes', analyzes);
+  await setChromeLocalStorage("analyzes", analyzes);
 };
 
 const analyzeDomSize = async () => {
   await updateAnalyzeDomSize();
 
-  const observer = new MutationObserver(async (mutations) => {
-    console.log('kartrak - mutation observer');
+  const observer = new MutationObserver(async (_mutations) => {
+    console.log("kartrak - mutation observer");
     await updateAnalyzeDomSize();
   });
 

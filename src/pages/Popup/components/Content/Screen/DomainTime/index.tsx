@@ -1,10 +1,11 @@
-import React from 'react';
-import styled from 'styled-components';
-import useTabTimes from '../../../../hooks/useTabTimes';
-import dayjs from 'dayjs';
-import { extractDomainFromUrl } from '../../../../utils/__collection';
-import DomainItem from './DomainItem';
-import { TabTime } from '../../../../../../types';
+import dayjs from "dayjs";
+import React from "react";
+import styled from "styled-components";
+
+import DomainItem from "./DomainItem";
+import { TabTime } from "../../../../../../types";
+import useTabTimes from "../../../../hooks/useTabTimes";
+import { extractDomainFromUrl } from "../../../../utils/__collection";
 
 const DomainTime: React.FC = () => {
   const tabtimes = useTabTimes().map((tabtime) => {
@@ -34,13 +35,13 @@ const DomainTime: React.FC = () => {
     >();
 
     tabtimes.map(async (tabtime) => {
-      const domain = extractDomainFromUrl(tabtime.url) || '';
+      const domain = extractDomainFromUrl(tabtime.url) || "";
       const existingDomainData = domainMap.get(domain);
 
       if (existingDomainData) {
         // If data exists for the domain, update the time property
         existingDomainData.time += dayjs(
-          new Date(tabtime.endAt as string)
+          new Date(tabtime.endAt as string),
         ).diff(dayjs(new Date(tabtime.startAt as string)));
 
         // Set the updated data back in the map
@@ -49,7 +50,7 @@ const DomainTime: React.FC = () => {
         // If no data exists for the domain, create a new object and add it to the map
         domainMap.set(domain, {
           time: dayjs(new Date(tabtime.endAt as string)).diff(
-            dayjs(new Date(tabtime.startAt as string))
+            dayjs(new Date(tabtime.startAt as string)),
           ),
           favIconUrl: tabtime.favIconUrl,
         });
@@ -57,7 +58,7 @@ const DomainTime: React.FC = () => {
     });
 
     const sortedDomainMap = new Map(
-      Array.from(domainMap.entries()).sort((a, b) => b[1].time - a[1].time)
+      Array.from(domainMap.entries()).sort((a, b) => b[1].time - a[1].time),
     );
 
     return sortedDomainMap;

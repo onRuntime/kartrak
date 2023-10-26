@@ -4,16 +4,16 @@ const customCss = css`
   :root {
     --primary: #014335;
     --grey: #909090;
-    --red: #E40000;
-    --red-80: #FFCFCF;
-    --yellow: #DCB903;
-    --yellow-80: #FEF2C7;
-    --orange: #DC6803;
-    --orange-80: #FEF0C7;
+    --red: #e40000;
+    --red-80: #ffcfcf;
+    --yellow: #dcb903;
+    --yellow-80: #fef2c7;
+    --orange: #dc6803;
+    --orange-80: #fef0c7;
     --green: #009245;
-    --green-80: #CCE9DA;
-    --green-40: #EFF8F3;
-    --green-10: #F1FAF1;
+    --green-80: #cce9da;
+    --green-40: #eff8f3;
+    --green-10: #f1faf1;
   }
 
   html {

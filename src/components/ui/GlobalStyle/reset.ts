@@ -132,7 +132,9 @@ const resetCss = css`
     border-spacing: 0;
   }
 
-  *, *:before, *:after {
+  *,
+  *:before,
+  *:after {
     box-sizing: border-box;
   }
 `;

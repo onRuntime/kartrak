@@ -1,19 +1,20 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useLocalStorage } from 'usehooks-ts';
-import { getFormattedTime } from '../../../../utils/__collection';
-import useTabTimes from '../../../../hooks/useTabTimes';
+import React from "react";
+import styled from "styled-components";
+import { useLocalStorage } from "usehooks-ts";
+
+import useTabTimes from "../../../../hooks/useTabTimes";
+import { getFormattedTime } from "../../../../utils/__collection";
 
 export enum Range {
-  Day = 'day',
-  Week = 'week',
-  Month = 'month',
-  Year = 'year',
+  Day = "day",
+  Week = "week",
+  Month = "month",
+  Year = "year",
 }
 
 const ScreenTime: React.FC = () => {
   const tabtimes = useTabTimes();
-  const [range, setRange] = useLocalStorage<Range>('range', Range.Day);
+  const [range, setRange] = useLocalStorage<Range>("range", Range.Day);
 
   const [formattedTime, setFormattedTime] = React.useState<string>();
 
@@ -42,10 +43,10 @@ const ScreenTime: React.FC = () => {
         value={range}
         onChange={(e) => setRange(e.target.value as Range)}
       >
-        <option value={Range.Day}>Aujourd'hui</option>
-        <option value={Range.Week}>Cette semaine</option>
-        <option value={Range.Month}>Ce mois-ci</option>
-        <option value={Range.Year}>Cette année</option>
+        <option value={Range.Day}>{"Aujourd'hui"}</option>
+        <option value={Range.Week}>{"Cette semaine"}</option>
+        <option value={Range.Month}>{"Ce mois-ci"}</option>
+        <option value={Range.Year}>{"Cette année"}</option>
       </RangeSelect>
     </Container>
   );
@@ -60,7 +61,7 @@ const Container = styled.div`
 
 const Time = styled.span`
   font-size: 23px;
-  font-family: 'neulis-cursive';
+  font-family: "neulis-cursive";
   font-weight: 600;
   color: #014335;
 `;

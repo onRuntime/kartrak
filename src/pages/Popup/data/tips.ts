@@ -19,7 +19,7 @@ const tips = [
   "Limitez la fréquentation de sites web riches en animations et publicités énergivores.",
   "Optez pour des polices de caractères qui consomment moins d'énergie à l'affichage.",
   "Utilisez des extensions (comme nous) pour gérer les onglets de votre navigateur, réduisant ainsi l'utilisation de la mémoire et du processeur.",
-  "Soutenez et promouvez des entreprises et des projets qui s'engagent activement dans des pratiques numériques durables."
-]
+  "Soutenez et promouvez des entreprises et des projets qui s'engagent activement dans des pratiques numériques durables.",
+];
 
 export default tips;

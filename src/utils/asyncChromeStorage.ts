@@ -31,7 +31,7 @@ export const setChromeSessionStorage = async <T>(key: string, value: T) => {
       resolve(value);
     });
   });
-}
+};
 
 export const getChromeSessionStorage = async <T>(key: string): Promise<T> => {
   return new Promise((resolve, reject) => {
@@ -42,4 +42,4 @@ export const getChromeSessionStorage = async <T>(key: string): Promise<T> => {
       resolve(result[key]);
     });
   });
-}
+};

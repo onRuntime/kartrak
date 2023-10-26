@@ -1,6 +1,7 @@
-import React from 'react';
-import { TabTime } from '../../../types';
-import { getTabTimes } from '../../../utils/bridge';
+import React from "react";
+
+import { TabTime } from "../../../types";
+import { getTabTimes } from "../../../utils/bridge";
 
 // Create a context for TabTime data
 export const TabTimesContext = React.createContext<TabTime[]>([]);
@@ -20,13 +21,13 @@ export const TabTimesProvider: React.FC<React.PropsWithChildren> = ({
     updateTabTimes();
 
     // Listen for tab updates and removal
-    chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-      if (changeInfo.status === 'complete') {
+    chrome.tabs.onUpdated.addListener((_tabId, changeInfo, _tab) => {
+      if (changeInfo.status === "complete") {
         updateTabTimes();
       }
     });
 
-    chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
+    chrome.tabs.onRemoved.addListener((_tabId, _removeInfo) => {
       updateTabTimes();
     });
   }, []);

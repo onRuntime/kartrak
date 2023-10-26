@@ -1,14 +1,15 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Analyze } from '../../../../../../types';
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import React from "react";
+import styled from "styled-components";
+
+import { Analyze } from "../../../../../../types";
 import {
   extractDomainFromUrl,
   getEcoIndexGrade,
   getEcoIndexText,
   getSmileyType,
-} from '../../../../utils/__collection';
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
+} from "../../../../utils/__collection";
 dayjs.extend(relativeTime);
 
 export type ScoreProps = {
@@ -22,28 +23,36 @@ const Score: React.FC<ScoreProps> = ({
   ecoIndex,
   tab,
 }: ScoreProps) => {
-  const domain = extractDomainFromUrl(tab?.url || '');
+  const domain = extractDomainFromUrl(tab?.url || "");
 
   return (
     <Container>
       <EcoIndex>
         <Smiley
-          src={require(`../../../../../../assets/img/smileys/${getSmileyType(
-            ecoIndex
-          )}.svg`)}
+          src={require(
+            `../../../../../../assets/img/smileys/${getSmileyType(
+              ecoIndex,
+            )}.svg`,
+          )}
           alt={getSmileyType(ecoIndex)}
           draggable={false}
         />
-        <Note>{ecoIndex ? Math.round(ecoIndex) : '-'}/100</Note>
+        <Note>
+          {ecoIndex ? Math.round(ecoIndex) : "-"}
+          {"/100"}
+        </Note>
       </EcoIndex>
       <Content>
         <Title>
-          {ecoIndex ? getEcoIndexText(ecoIndex) : ''} Cette page de {domain} est classée “
-          {ecoIndex ? getEcoIndexGrade(ecoIndex) : '-'}”
+          {ecoIndex ? getEcoIndexText(ecoIndex) : ""}
+          {" Cette page de "}
+          {domain} {"est classée “"}
+          {ecoIndex ? getEcoIndexGrade(ecoIndex) : "-"}
+          {"”"}
         </Title>
         <Description>
-          Calculé la dernière fois le :{' '}
-          {analyze ? dayjs(analyze.updatedAt).fromNow() : '-'}
+          {"Calculé la dernière fois le :"}{" "}
+          {analyze ? dayjs(analyze.updatedAt).fromNow() : "-"}
         </Description>
       </Content>
     </Container>
@@ -74,7 +83,7 @@ const Note = styled.div`
   font-size: 36px;
   font-weight: 600;
   color: var(--current-ecoindex-color, #009245);
-  font-family: 'neulis-cursive';
+  font-family: "neulis-cursive";
 `;
 
 const Content = styled.div`

@@ -1,12 +1,13 @@
-import React from 'react';
-import Activity from './Activity';
-import Report from './Report';
-import Score from './Score';
-import styled from 'styled-components';
-import { Analyze } from '../../../../../types';
-import { getChromeLocalStorage } from '../../../../../utils/asyncChromeStorage';
-import { computeEcoIndex } from '../../../utils/__collection';
-import { cleanUrl } from '../../../../../utils/url';
+import React from "react";
+import styled from "styled-components";
+
+import Activity from "./Activity";
+import Report from "./Report";
+import Score from "./Score";
+import { Analyze } from "../../../../../types";
+import { getChromeLocalStorage } from "../../../../../utils/asyncChromeStorage";
+import { cleanUrl } from "../../../../../utils/url";
+import { computeEcoIndex } from "../../../utils/__collection";
 
 const Eco: React.FC = () => {
   const [tab, setTab] = React.useState<chrome.tabs.Tab>();
@@ -21,8 +22,8 @@ const Eco: React.FC = () => {
       });
     });
 
-    chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-      if (changeInfo.status === 'complete') {
+    chrome.tabs.onUpdated.addListener((_tabId, changeInfo, tab) => {
+      if (changeInfo.status === "complete") {
         setTab(tab);
       }
     });
@@ -31,13 +32,13 @@ const Eco: React.FC = () => {
       setTab(tab);
     });
 
-    chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
+    chrome.tabs.onRemoved.addListener((_tabId, _removeInfo) => {
       setTab(undefined);
     });
   }, []);
 
   const getAnalyze = async () => {
-    const analyzes = (await getChromeLocalStorage('analyzes')) as Analyze[];
+    const analyzes = (await getChromeLocalStorage("analyzes")) as Analyze[];
 
     const tabs = await new Promise<chrome.tabs.Tab[]>((resolve) =>
       chrome.tabs.query(
@@ -45,8 +46,8 @@ const Eco: React.FC = () => {
           active: true,
           currentWindow: true,
         },
-        resolve
-      )
+        resolve,
+      ),
     );
     const tab = tabs[0];
     if (!tab) {
@@ -54,7 +55,7 @@ const Eco: React.FC = () => {
     }
 
     const analyze = analyzes.find(
-      (analyze) => cleanUrl(analyze.url) === cleanUrl(tab.url || '')
+      (analyze) => cleanUrl(analyze.url) === cleanUrl(tab.url || ""),
     );
     if (!analyze) {
       return;
@@ -91,13 +92,13 @@ const Eco: React.FC = () => {
   }, []);
 
   console.log(
-    'analyze',
-    'domSize',
+    "analyze",
+    "domSize",
     !!analyze?.domSize,
-    'pageWeight',
+    "pageWeight",
     !!analyze?.pageWeight,
-    'requestAmount',
-    !!analyze?.requestAmount
+    "requestAmount",
+    !!analyze?.requestAmount,
   );
 
   const ecoIndex =
@@ -107,7 +108,7 @@ const Eco: React.FC = () => {
       ? computeEcoIndex(
           analyze?.domSize,
           analyze?.pageWeight,
-          analyze?.requestAmount
+          analyze?.requestAmount,
         )
       : undefined;
 
@@ -118,13 +119,13 @@ const Eco: React.FC = () => {
       <Report analyze={analyze} ecoIndex={ecoIndex} />
 
       <About>
-        Envie d’en savoir plus?{' '}
+        {"Envie d’en savoir plus?"}{" "}
         <a
-          href={'https://onruntime.com'}
-          target="_blank"
-          rel="noopener noreferrer"
+          href={"https://onruntime.com"}
+          target={"_blank"}
+          rel={"noopener noreferrer"}
         >
-          Cliquez ici
+          {"Cliquez ici"}
         </a>
       </About>
     </Container>
@@ -133,42 +134,42 @@ const Eco: React.FC = () => {
 
 const getCurrentEcoIndexColor = (ecoIndex?: number) => {
   if (ecoIndex === undefined) {
-    return 'var(--primary)';
+    return "var(--primary)";
   }
 
   if (ecoIndex >= 75) {
-    return 'var(--green)';
+    return "var(--green)";
   }
 
   if (ecoIndex >= 50) {
-    return 'var(--yellow)';
+    return "var(--yellow)";
   }
 
   if (ecoIndex >= 25) {
-    return 'var(--orange)';
+    return "var(--orange)";
   }
 
-  return 'var(--red)';
+  return "var(--red)";
 };
 
 const getCurrentEcoIndexBackgroundColor = (ecoIndex?: number) => {
   if (ecoIndex === undefined) {
-    return 'var(--green-10)';
+    return "var(--green-10)";
   }
 
   if (ecoIndex >= 75) {
-    return 'var(--green-80)';
+    return "var(--green-80)";
   }
 
   if (ecoIndex >= 50) {
-    return 'var(--yellow-80)';
+    return "var(--yellow-80)";
   }
 
   if (ecoIndex >= 25) {
-    return 'var(--orange-80)';
+    return "var(--orange-80)";
   }
 
-  return 'var(--red-80)';
+  return "var(--red-80)";
 };
 
 const Container = styled.div<{

@@ -1,6 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
-import { TabType } from '..';
+import React from "react";
+import styled from "styled-components";
+
+import { TabType } from "..";
 
 export type TabsProps = {
   tab: TabType;
@@ -16,7 +17,7 @@ const Tabs: React.FC<TabsProps> = ({ tab, setTab }: TabsProps) => {
           setTab(TabType.Eco);
         }}
       >
-        Empreinte éco’
+        {"Empreinte éco’"}
       </Tab>
       <Tab
         active={tab === TabType.Screen}
@@ -24,7 +25,7 @@ const Tabs: React.FC<TabsProps> = ({ tab, setTab }: TabsProps) => {
           setTab(TabType.Screen);
         }}
       >
-        Temps d’écran
+        {"Temps d’écran"}
       </Tab>
     </Container>
   );
@@ -45,8 +46,8 @@ const Tab = styled.button<{ active?: boolean }>`
   border: none;
   border-radius: 99999px;
   cursor: pointer;
-  background-color: ${({ active }) => (active ? '#cce9dA' : 'transparent')};
-  color: ${({ active }) => (active ? '#009245' : 'inherit')};
+  background-color: ${({ active }) => (active ? "#cce9dA" : "transparent")};
+  color: ${({ active }) => (active ? "#009245" : "inherit")};
 `;
 
 export default Tabs;

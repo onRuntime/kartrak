@@ -1,8 +1,9 @@
-import React from 'react';
-import styled from 'styled-components';
-import BrowserTab from './Tab';
-import useTabTimes from '../../../../hooks/useTabTimes';
-import { cleanUrl } from '../../../../../../utils/url';
+import React from "react";
+import styled from "styled-components";
+
+import BrowserTab from "./Tab";
+import { cleanUrl } from "../../../../../../utils/url";
+import useTabTimes from "../../../../hooks/useTabTimes";
 
 const BrowserTabs: React.FC = () => {
   const [tabs, setTabs] = React.useState<chrome.tabs.Tab[]>([]);
@@ -13,15 +14,15 @@ const BrowserTabs: React.FC = () => {
       setTabs(t);
     });
 
-    chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-      if (changeInfo.status === 'complete') {
+    chrome.tabs.onUpdated.addListener(function (_tabId, changeInfo, _tab) {
+      if (changeInfo.status === "complete") {
         chrome.tabs.query({ currentWindow: true }, async function (t) {
           setTabs(t);
         });
       }
     });
 
-    chrome.tabs.onRemoved.addListener(function (tabId, removeInfo) {
+    chrome.tabs.onRemoved.addListener(function (_tabId, _removeInfo) {
       chrome.tabs.query({ currentWindow: true }, async function (t) {
         setTabs(t);
       });
@@ -30,7 +31,10 @@ const BrowserTabs: React.FC = () => {
 
   return (
     <Container>
-      <Title>Onglets actifs - {tabs.length}</Title>
+      <Title>
+        {"Onglets actifs - "}
+        {tabs.length}
+      </Title>
       <Row>
         {tabs.map((tab) => {
           return (
@@ -38,7 +42,7 @@ const BrowserTabs: React.FC = () => {
               key={tab.id}
               tab={tab}
               tabtimes={tabtimes.filter(
-                (t) => cleanUrl(t.url) === cleanUrl(tab.url || '')
+                (t) => cleanUrl(t.url) === cleanUrl(tab.url || ""),
               )}
             />
           );

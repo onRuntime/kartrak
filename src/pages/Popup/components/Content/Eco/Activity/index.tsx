@@ -1,20 +1,21 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
+
+import useTabTimes from "../../../../hooks/useTabTimes";
 import {
   extractDomainFromUrl,
   getFormattedTime,
-} from '../../../../utils/__collection';
-import useTabTimes from '../../../../hooks/useTabTimes';
+} from "../../../../utils/__collection";
 
 export type ActivityProps = {
   tab?: chrome.tabs.Tab;
 };
 
 const Activity: React.FC<ActivityProps> = ({ tab }: ActivityProps) => {
-  const domain = extractDomainFromUrl(tab?.url || '');
+  const domain = extractDomainFromUrl(tab?.url || "");
 
   const tabtimes = useTabTimes().filter(
-    (tab) => extractDomainFromUrl(tab.url) === domain
+    (tab) => extractDomainFromUrl(tab.url) === domain,
   );
   const [formattedTime, setFormattedTime] = React.useState<string>();
   React.useEffect(() => {
@@ -38,7 +39,8 @@ const Activity: React.FC<ActivityProps> = ({ tab }: ActivityProps) => {
   return (
     <Container>
       <Name>
-        Temps d'activité : <span>{domain}</span>
+        {"Temps d'activité : "}
+        <span>{domain}</span>
       </Name>
       <Time>{formattedTime ? formattedTime : getFormattedTime(tabtimes)}</Time>
     </Container>
@@ -73,7 +75,7 @@ const Name = styled.span`
 const Time = styled.span`
   font-size: 18px;
   font-weight: 600;
-  font-family: 'neulis-cursive';
+  font-family: "neulis-cursive";
   color: #014335;
   white-space: nowrap;
 `;

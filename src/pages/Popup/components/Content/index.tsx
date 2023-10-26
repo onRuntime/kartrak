@@ -1,22 +1,23 @@
-import React from 'react';
-import styled from 'styled-components';
-import Tabs from './Tabs';
-import Eco from './Eco';
-import { useLocalStorage } from 'usehooks-ts';
-import Screen from './Screen';
+import React from "react";
+import styled from "styled-components";
+import { useLocalStorage } from "usehooks-ts";
+
+import Eco from "./Eco";
+import Screen from "./Screen";
+import Tabs from "./Tabs";
 
 export enum TabType {
-  Eco = 'eco',
-  Screen = 'screen',
+  Eco = "eco",
+  Screen = "screen",
 }
 
 const Content: React.FC = () => {
-  const [tab, setTab] = useLocalStorage<TabType>('tab', TabType.Eco);
+  const [tab, setTab] = useLocalStorage<TabType>("tab", TabType.Eco);
 
   return (
     <Container>
       <Tabs tab={tab} setTab={setTab} />
-      {tab === 'eco' ? <Eco /> : <Screen />}
+      {tab === "eco" ? <Eco /> : <Screen />}
     </Container>
   );
 };

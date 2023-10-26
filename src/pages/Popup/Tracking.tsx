@@ -1,9 +1,10 @@
-import React from 'react';
-import Header from './components/Header';
-import Content from './components/Content';
-import styled from 'styled-components';
-import Tip from './components/Tip';
-import { RiInformationLine } from 'react-icons/ri';
+import React from "react";
+import { RiInformationLine } from "react-icons/ri";
+import styled from "styled-components";
+
+import Content from "./components/Content";
+import Header from "./components/Header";
+import Tip from "./components/Tip";
 
 const Tracking: React.FC = () => {
   return (
@@ -13,11 +14,12 @@ const Tracking: React.FC = () => {
       <Tip />
       <Help>
         <a
-          href="https://discord.gg/ucX9c5yXmX"
-          target="_blank"
-          rel="noopener noreferrer"
+          href={"https://discord.gg/ucX9c5yXmX"}
+          target={"_blank"}
+          rel={"noopener noreferrer"}
         >
-          Besoin d'aide <RiInformationLine size={18} />
+          {"Besoin d'aide "}
+          <RiInformationLine size={18} />
         </a>
       </Help>
     </Container>
