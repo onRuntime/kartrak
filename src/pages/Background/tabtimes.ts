@@ -68,6 +68,30 @@ const tabtimes = async () => {
     }
   });
 
+  chrome.idle.onStateChanged.addListener(async (newState) => {
+    const now = new Date();
+    console.log("kartrak - idle state changed", newState);
+    switch (newState) {
+      case "active":
+        handleTabChange();
+        break;
+      case "idle":
+      case "locked":
+        // find the tabtimes which are not ended, and end them
+        tabtimes = tabtimes.map((tabtime) => {
+          if (!tabtime.endAt) {
+            tabtime.endAt = now.toISOString();
+            console.log("kartrak - tabtime ended", tabtime);
+          }
+          return tabtime;
+        });
+
+        // save the tabtimes
+        await setChromeLocalStorage("tabtimes", tabtimes);
+        break;
+    }
+  });
+
   chrome.runtime.onMessage.addListener(
     async (message, sender, sendResponse) => {
       if (message === "getTabTimes") {

@@ -45,7 +45,8 @@
     "storage",
     "unlimitedStorage",
     "webNavigation",
-    "webRequest"
+    "webRequest",
+    "idle"
   ],
   "host_permissions": [
     "http://*/*",

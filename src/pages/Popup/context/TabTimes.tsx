@@ -30,6 +30,10 @@ export const TabTimesProvider: React.FC<React.PropsWithChildren> = ({
     chrome.tabs.onRemoved.addListener((_tabId, _removeInfo) => {
       updateTabTimes();
     });
+
+    chrome.idle.onStateChanged.addListener(() => {
+      updateTabTimes();
+    });
   }, []);
 
   return (
