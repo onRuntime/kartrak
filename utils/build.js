@@ -11,11 +11,6 @@ const webpack = require("webpack"),
   config = require("../webpack.config"),
   ZipPlugin = require("zip-webpack-plugin");
 
-console.log(
-  "Extension build successfully: ",
-  path.join(__dirname, "../", "zip"),
-);
-
 delete config.chromeExtensionBoilerplate;
 
 config.mode = "production";
@@ -29,6 +24,26 @@ config.plugins = (config.plugins || []).concat(
   }),
 );
 
-webpack(config, function (err) {
-  if (err) throw err;
-});
+try {
+  webpack(config, function (err, stats) {
+    if (err) {
+      console.error(err);
+      process.exit(1); // Exit the process with an error code
+    } else {
+      const info = stats.toJson();
+
+      if (stats.hasErrors()) {
+        console.error("Build has errors:");
+        info.errors.forEach((error) => {
+          console.error(error);
+        });
+        process.exit(1); // Exit the process with an error code
+      } else {
+        console.log("Build completed successfully!");
+      }
+    }
+  });
+} catch (err) {
+  console.error("An unexpected error occurred:", err);
+  process.exit(1); // Exit the process with an error code
+}
