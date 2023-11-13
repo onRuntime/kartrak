@@ -92,6 +92,27 @@ const tabtimes = async () => {
     }
   });
 
+  chrome.windows.onFocusChanged.addListener(async (windowId) => {
+    if (windowId === chrome.windows.WINDOW_ID_NONE) {
+      // unfocused
+      // find the tabtimes which are not ended, and end them
+      const now = new Date();
+      tabtimes = tabtimes.map((tabtime) => {
+        if (!tabtime.endAt) {
+          tabtime.endAt = now.toISOString();
+          console.log("kartrak - tabtime ended", tabtime);
+        }
+        return tabtime;
+      });
+
+      // save the tabtimes
+      await setChromeLocalStorage("tabtimes", tabtimes);
+    } else {
+      // focused
+      handleTabChange();
+    }
+  });
+
   chrome.runtime.onMessage.addListener(
     async (message, sender, sendResponse) => {
       if (message === "getTabTimes") {
