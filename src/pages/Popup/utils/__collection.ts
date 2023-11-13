@@ -159,14 +159,14 @@ export const getSmileyType = (ecoIndex?: number) => {
   return ecoIndex === undefined
     ? SmileyType.Neutral
     : ecoIndex >= 80
-    ? SmileyType.Happy
-    : ecoIndex >= 60
-    ? SmileyType.Good
-    : ecoIndex >= 40
-    ? SmileyType.Neutral
-    : ecoIndex >= 20
-    ? SmileyType.Sad
-    : SmileyType.Bad;
+      ? SmileyType.Happy
+      : ecoIndex >= 60
+        ? SmileyType.Good
+        : ecoIndex >= 40
+          ? SmileyType.Neutral
+          : ecoIndex >= 20
+            ? SmileyType.Sad
+            : SmileyType.Bad;
 };
 
 export const getRandomNumber = (min: number, max: number) => {
