@@ -1,8 +1,9 @@
 <p align="center">
   <a href="https://onruntime.com">
     <img src="src/assets/img/icon-128.png" alt="Kartrak logo" width="64"/>
-    <h1 align="center">Kartrak</h1>
-    <h3 align="center">Tracking carbone & activité</h3>
+    <h1 align="center">
+      Kartrak
+    </h1>
   </a>
 </p>
 
@@ -37,9 +38,13 @@
   </a> 
 </p>
 
+## About
+
+Kartrak is a Browser extension that allows you to track your carbon footprint and your activity on the web.
+
 ## Community
 
-The TonightPass community can be found on [GitHub Discussions](https://github.com/onruntime/discussions), where you can ask questions, voice ideas, and share your projects.
+The onRuntime Studio community can be found on [GitHub Discussions](https://github.com/onruntime/discussions), where you can ask questions, voice ideas, and share your projects.
 
 To chat with other community members join the [onRuntime Studio Discord](https://discord.gg/ucX9c5yXmX).
 
