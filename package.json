@@ -12,7 +12,8 @@
     "build": "node utils/build.js",
     "start": "node utils/webserver.js",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
-    "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix"
+    "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
+    "version": "changeset version"
   },
   "dependencies": {
     "@changesets/cli": "^2.26.2",
