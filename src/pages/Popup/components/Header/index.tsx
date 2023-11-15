@@ -1,10 +1,13 @@
 import React from "react";
 import styled from "styled-components";
+import useSWR from "swr";
 
 import logo from "../../../../assets/img/logo.svg";
-import manifestJson from "../../../../manifest.json";
+import { fetcher } from "../../utils/__collection";
 
 const Header: React.FC = () => {
+  const { data } = useSWR("/manifest.json", fetcher);
+
   return (
     <Container>
       <BrandContainer>
@@ -13,10 +16,7 @@ const Header: React.FC = () => {
       <Content>
         <Title>{"Kartrak - Tracking carbone & activité"}</Title>
         <Description>
-          {"Alpha"}{" "}
-          {(manifestJson as any).version
-            ? `v${(manifestJson as any).version}`
-            : "development mode"}
+          {"Alpha"} {data && data.version ? `v${data.version}` : ""}
         </Description>
       </Content>
     </Container>

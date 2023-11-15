@@ -172,3 +172,13 @@ export const getSmileyType = (ecoIndex?: number) => {
 export const getRandomNumber = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
+
+type Fetcher = (...args: Parameters<typeof fetch>) => Promise<any>;
+
+export const fetcher: Fetcher = (...args) =>
+  fetch(...args).then((res) => {
+    if (!res.ok) {
+      throw new Error(`HTTP error! Status: ${res.status}`);
+    }
+    return res.json();
+  });
