@@ -14,9 +14,10 @@
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
     "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
     "version": "changeset version",
-    "release": "yarn run tag-release && yarn run create-github-release",
     "tag-release": "if ! git rev-parse v$(node -p \"require('./package.json').version\") >/dev/null 2>&1; then git tag -a v$(node -p \"require('./package.json').version\") -m \"🔖 release version $(node -p \"require('./package.json').version\")\"; fi",
-    "create-github-release": "if ! gh release view v$(node -p \"require('./package.json').version\") >/dev/null 2>&1; then gh release create v$(node -p \"require('./package.json').version\") ./zip/kartrak-$(node -p \"require('./package.json').version\").zip; fi"
+    "create-github-release": "if ! gh release view v$(node -p \"require('./package.json').version\") >/dev/null 2>&1; then gh release create v$(node -p \"require('./package.json').version\") ./zip/kartrak-$(node -p \"require('./package.json').version\").zip; fi",
+    "push-tags": "git push --tags --force-with-lease",
+    "release": "yarn run tag-release && yarn run create-github-release && yarn run push-tags"
   },
   "dependencies": {
     "@fontsource/figtree": "^5.0.15",
