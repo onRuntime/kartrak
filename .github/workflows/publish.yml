@@ -52,14 +52,14 @@ jobs:
           node-version: "20.x"
           cache: "yarn"
 
-      - name: Download bundle artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: chrome-extension-${{ github.sha }}
-
       - name: Set Version
         id: set-version
         run: echo "::set-output name=VERSION::$(node -p "require('./package.json').version")"
+
+      - name: Download bundle artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: kartrak-${{ steps.set-version.outputs.VERSION }}
 
       - name: Upload to Chrome Web Store
         run: |-
