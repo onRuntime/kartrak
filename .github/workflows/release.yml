@@ -30,7 +30,7 @@ jobs:
       - name: Create Release Pull Request or Publish to npm
         uses: changesets/action@v1
         with:
-          publish: git tag -a $(node -p "require('./package.json').version") -m "🔖 release version $(node -p "require('./package.json').version")"
+          publish: yarn run release
           version: yarn run version
           commit: "🔖 release version"
           title: "🔖 release version"

@@ -1,7 +1,7 @@
 {
   "name": "kartrak",
   "private": true,
-  "version": "0.0.3",
+  "version": "0.0.2",
   "description": "Le suivi d'activité tourné vers l'écologie",
   "license": "MIT",
   "repository": {
@@ -14,7 +14,9 @@
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
     "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
     "version": "changeset version",
-    "release": "changeset publish"
+    "release": "yarn run tag-release && yarn run create-github-release",
+    "tag-release": "git tag -a $(node -p \"require('./package.json').version\") -m \"🔖 release version $(node -p \"require('./package.json').version\")\"",
+    "create-github-release": "gh release create v$(node -p \"require('./package.json').version\") ./zip/kartrak-$(node -p \"require('./package.json').version\").zip"
   },
   "dependencies": {
     "@fontsource/figtree": "^5.0.15",
