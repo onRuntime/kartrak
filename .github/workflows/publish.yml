@@ -69,4 +69,12 @@ jobs:
 
       - name: Upload to Chrome Web Store
         run: |-
+          set +e
           yarn run chrome-webstore-upload upload --source ./zip/kartrak-${{ steps.set-version.outputs.VERSION }}.zip --extension-id ${{ env.EXTENSION_ID }} --client-id ${{ secrets.CI_GOOGLE_CLIENT_ID }} --client-secret ${{ secrets.CI_GOOGLE_CLIENT_SECRET }} --refresh-token ${{ secrets.CI_GOOGLE_REFRESH_TOKEN }}
+          exit_code=$?  # Capture the exit code
+          set -e
+
+          if [ $exit_code -ne 0 ]; then
+            echo "Error: ITEM_NOT_UPDATABLE. Cancelling workflow."
+            exit 78
+          fi
