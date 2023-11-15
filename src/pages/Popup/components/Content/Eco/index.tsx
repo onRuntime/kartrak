@@ -46,8 +46,8 @@ const Eco: React.FC = () => {
           active: true,
           currentWindow: true,
         },
-        resolve,
-      ),
+        resolve
+      )
     );
     const tab = tabs[0];
     if (!tab) {
@@ -55,7 +55,7 @@ const Eco: React.FC = () => {
     }
 
     const analyze = analyzes.find(
-      (analyze) => cleanUrl(analyze.url) === cleanUrl(tab.url || ""),
+      (analyze) => cleanUrl(analyze.url) === cleanUrl(tab.url || "")
     );
     if (!analyze) {
       return;
@@ -98,7 +98,7 @@ const Eco: React.FC = () => {
       ? computeEcoIndex(
           analyze?.domSize,
           analyze?.pageWeight,
-          analyze?.requestAmount,
+          analyze?.requestAmount
         )
       : undefined;
 
@@ -111,7 +111,9 @@ const Eco: React.FC = () => {
       <About>
         {"Envie d’en savoir plus?"}{" "}
         <a
-          href={"https://onruntime.com"}
+          href={
+            "https://www.ecoindex.fr/comment-ca-marche?utm_source=kartrak&utm_medium=extension&utm_campaign=kartrak"
+          }
           target={"_blank"}
           rel={"noopener noreferrer"}
         >
