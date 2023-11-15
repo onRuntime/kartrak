@@ -1,0 +1,68 @@
+name: Publish
+
+on:
+  push:
+    tags:
+      - v*.*.*
+
+jobs:
+  build-chrome-extension:
+    name: Build Chrome extension artifact
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+
+      - name: Use Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+          cache: "yarn"
+
+      - name: Install Dependencies
+        run: yarn
+
+      - name: Build
+        run: yarn build
+
+      - name: Set Version
+        id: set-version
+        run: echo "::set-output name=VERSION::$(node -p "require('./package.json').version")"
+
+      - name: Archive chrome-extension artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: kartrak-${{ steps.set-version.outputs.VERSION }}
+          path: ./zip/kartrak-${{ steps.set-version.outputs.VERSION }}.zip
+
+  upload-extension:
+    name: Upload extension
+    runs-on: ubuntu-latest
+    needs: build-chrome-extension
+    env:
+      EXTENSION_ID: bheoaeahkgfmogmgkfldoecmnlbhlibf
+
+    steps:
+      - name: Use Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+          cache: "yarn"
+
+      - name: Download bundle artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: chrome-extension-${{ github.sha }}
+
+      - name: Set Version
+        id: set-version
+        run: echo "::set-output name=VERSION::$(node -p "require('./package.json').version")"
+
+      - name: Upload to Chrome Web Store
+        run: |-
+          yarn chrome-webstore-upload upload \\
+            --source ./zip/kartrak-${{ steps.set-version.outputs.VERSION }}.zip \\
+            --extension-id ${{ env.EXTENSION_ID }} \\
+            --client-id ${{ secrets.CI_GOOGLE_CLIENT_ID }} \\
+            --client-secret ${{ secrets.CI_GOOGLE_CLIENT_SECRET }} \\
+            --refresh-token ${{ secrets.CI_GOOGLE_REFRESH_TOKEN }}
