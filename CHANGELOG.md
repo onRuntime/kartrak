@@ -1,5 +1,11 @@
 # kartrak
 
+## 0.0.4
+
+### Patch Changes
+
+- 3e297a7: Add ecoindex mention
+
 ## 0.0.3
 
 ### Patch Changes
