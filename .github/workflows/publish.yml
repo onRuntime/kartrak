@@ -43,6 +43,9 @@ jobs:
       EXTENSION_ID: bheoaeahkgfmogmgkfldoecmnlbhlibf
 
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+
       - name: Use Node
         uses: actions/setup-node@v4
         with:
