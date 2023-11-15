@@ -15,7 +15,7 @@
     "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
     "version": "changeset version",
     "release": "yarn run tag-release && yarn run create-github-release",
-    "tag-release": "git tag -a $(node -p \"require('./package.json').version\") -m \"🔖 release version $(node -p \"require('./package.json').version\")\"",
+    "tag-release": "if ! git rev-parse v$(node -p \"require('./package.json').version\") >/dev/null 2>&1; then git tag -a v$(node -p \"require('./package.json').version\") -m \"🔖 release version $(node -p \"require('./package.json').version\")\"; fi",
     "create-github-release": "gh release create v$(node -p \"require('./package.json').version\") ./zip/kartrak-$(node -p \"require('./package.json').version\").zip"
   },
   "dependencies": {
