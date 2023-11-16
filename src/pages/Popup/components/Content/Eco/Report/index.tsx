@@ -1,4 +1,3 @@
-import bytes from "bytes";
 import React from "react";
 import {
   RiCloudLine,
