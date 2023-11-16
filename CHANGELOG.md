@@ -1,5 +1,16 @@
 # kartrak
 
+## 0.0.5
+
+### Patch Changes
+
+- 2b18145: Add version fetcher
+  Add dom size and request amount
+
+  Improve analyzes and tabtimes storage communication
+
+  Fix ecoindex weight computing
+
 ## 0.0.4
 
 ### Patch Changes
