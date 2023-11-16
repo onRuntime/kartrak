@@ -3,14 +3,43 @@ import styled from "styled-components";
 import { useLocalStorage } from "usehooks-ts";
 
 import useTabTimes from "../../../../hooks/useTabTimes";
+import { DateRange, Range } from "../../../../types";
 import { getFormattedTime } from "../../../../utils/__collection";
 
-export enum Range {
-  Day = "day",
-  Week = "week",
-  Month = "month",
-  Year = "year",
-}
+export const getDateRange = (range: Range): DateRange => {
+  const now = new Date();
+  let startDate: Date;
+  let endDate: Date;
+
+  switch (range) {
+    case Range.Day:
+      startDate = new Date(now);
+      startDate.setDate(now.getDate() - 1);
+      endDate = new Date(now);
+      break;
+
+    case Range.Week:
+      startDate = new Date(now);
+      startDate.setDate(now.getDate() - 7);
+      endDate = new Date(now);
+      break;
+
+    case Range.Month:
+      startDate = new Date(now.getFullYear(), now.getMonth(), 1);
+      endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+      break;
+
+    case Range.Year:
+      startDate = new Date(now.getFullYear(), 0, 1);
+      endDate = new Date(now.getFullYear(), 11, 31);
+      break;
+
+    default:
+      throw new Error(`Invalid range: ${range}`);
+  }
+
+  return [startDate.toISOString(), endDate.toISOString()];
+};
 
 const ScreenTime: React.FC = () => {
   const tabtimes = useTabTimes();
@@ -22,7 +51,7 @@ const ScreenTime: React.FC = () => {
     let intervalId: NodeJS.Timeout | null = null;
 
     const updateFormattedTime = () => {
-      setFormattedTime(getFormattedTime(tabtimes));
+      setFormattedTime(getFormattedTime(tabtimes, getDateRange(range)));
     };
 
     // Update the formatted time every second (1000ms)
@@ -38,7 +67,11 @@ const ScreenTime: React.FC = () => {
 
   return (
     <Container>
-      <Time>{formattedTime ? formattedTime : getFormattedTime(tabtimes)}</Time>
+      <Time>
+        {formattedTime
+          ? formattedTime
+          : getFormattedTime(tabtimes, getDateRange(range))}
+      </Time>
       <RangeSelect
         value={range}
         onChange={(e) => setRange(e.target.value as Range)}

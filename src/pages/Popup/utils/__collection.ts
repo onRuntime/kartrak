@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 
 import { TabTime } from "../../../types";
+import { DateRange } from "../types";
 
 export const extractDomainFromUrl = (url: string): string | null => {
   // Regular expression to match the domain in a URL
@@ -41,11 +42,23 @@ export const formatTime = (time: number): string => {
   return formattedTime;
 };
 
-export const getFormattedTime = (tabtimes: TabTime[]) => {
+export const getFormattedTime = (
+  tabtimes: TabTime[],
+  dateRange?: DateRange,
+): string => {
   const totalTabTime = tabtimes.reduce((total, worktime) => {
-    const startAt = dayjs(worktime.startAt);
-    const endAt = worktime.endAt ? dayjs(worktime.endAt) : dayjs();
-    const timeDiff = endAt.diff(startAt);
+    const startAt = new Date(worktime.startAt);
+    const endAt = worktime.endAt ? new Date(worktime.endAt) : new Date();
+
+    // Check if the worktime is within the specified date range
+    if (
+      dateRange &&
+      (startAt < new Date(dateRange[0]) || endAt > new Date(dateRange[1]))
+    ) {
+      return total;
+    }
+
+    const timeDiff = endAt.getTime() - startAt.getTime();
     return total + timeDiff;
   }, 0);
 
