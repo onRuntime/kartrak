@@ -50,7 +50,7 @@ const Report: React.FC<ReportProps> = ({ analyze, ecoIndex }) => {
               <br />
               {ecoIndex
                 ? formatCO2e(
-                    computeGreenhouseGasesEmissionfromEcoIndex(ecoIndex)
+                    computeGreenhouseGasesEmissionfromEcoIndex(ecoIndex),
                   )
                 : "-"}
             </>
