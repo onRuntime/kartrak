@@ -17,6 +17,7 @@ import {
   formatCO2e,
   formatLiters,
   nFormatter,
+  nFormatterOctets,
 } from "../../../../utils/__collection";
 
 export type ReportProps = {
@@ -50,7 +51,7 @@ const Report: React.FC<ReportProps> = ({ analyze, ecoIndex }) => {
               <br />
               {ecoIndex
                 ? formatCO2e(
-                    computeGreenhouseGasesEmissionfromEcoIndex(ecoIndex),
+                    computeGreenhouseGasesEmissionfromEcoIndex(ecoIndex)
                   )
                 : "-"}
             </>
@@ -63,7 +64,7 @@ const Report: React.FC<ReportProps> = ({ analyze, ecoIndex }) => {
               <RiStackLine size={18} />
               <br />
               {analyze?.pageWeight !== undefined
-                ? bytes.format(analyze?.pageWeight)
+                ? nFormatterOctets(analyze?.pageWeight / 8, 2)
                 : "-"}
             </>
           }

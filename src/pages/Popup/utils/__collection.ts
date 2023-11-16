@@ -202,3 +202,24 @@ export const nFormatter = (num: number, digits: number) => {
   }
   return (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol;
 };
+
+export const nFormatterOctets = (num: number, digits: number) => {
+  const si = [
+    { value: 1, symbol: "o" },
+    { value: 1024, symbol: "Ko" },
+    { value: 1024 * 1024, symbol: "Mo" },
+    { value: 1024 * 1024 * 1024, symbol: "Go" },
+    { value: 1024 * 1024 * 1024 * 1024, symbol: "To" },
+    { value: 1024 * 1024 * 1024 * 1024 * 1024, symbol: "Po" },
+    { value: 1024 * 1024 * 1024 * 1024 * 1024 * 1024, symbol: "Eo" },
+  ];
+
+  const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+  let i;
+  for (i = si.length - 1; i > 0; i--) {
+    if (num >= si[i].value) {
+      break;
+    }
+  }
+  return (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol;
+};

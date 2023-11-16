@@ -46,8 +46,8 @@ const Eco: React.FC = () => {
           active: true,
           currentWindow: true,
         },
-        resolve,
-      ),
+        resolve
+      )
     );
     const tab = tabs[0];
     if (!tab) {
@@ -55,7 +55,7 @@ const Eco: React.FC = () => {
     }
 
     const analyze = analyzes.find(
-      (analyze) => cleanUrl(analyze.url) === cleanUrl(tab.url || ""),
+      (analyze) => cleanUrl(analyze.url) === cleanUrl(tab.url || "")
     );
     if (!analyze) {
       return;
@@ -97,8 +97,8 @@ const Eco: React.FC = () => {
     analyze?.requestAmount !== undefined
       ? computeEcoIndex(
           analyze?.domSize,
-          analyze?.pageWeight,
-          analyze?.requestAmount,
+          analyze?.pageWeight / 8 / 1024,
+          analyze?.requestAmount
         )
       : undefined;
 
