@@ -1,3 +1,5 @@
+import { merge } from "lodash";
+
 import { Analyze } from "../../types";
 import {
   getChromeLocalStorage,
@@ -6,21 +8,48 @@ import {
 import { cleanUrl } from "../../utils/url";
 
 const analyzes = async () => {
+  let analyzes = (await getChromeLocalStorage<Analyze[]>("analyzes")) || [];
+
   chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
-    if (changeInfo.status === "loading") {
-      const analyzes =
-        (await getChromeLocalStorage<Analyze[]>("analyzes")) || [];
-      const analyze = analyzes.find(
-        (analyze) => cleanUrl(analyze.url) === cleanUrl(tab.url || ""),
-      );
-      if (analyze) {
-        analyze.requestAmount = 0;
-        analyze.pageWeight = 0;
-        analyze.domSize = 0;
-        analyze.updatedAt = new Date().toISOString();
-        console.log("kartrak - reset analyze", analyze);
-      }
+    const analyze = analyzes.find(
+      (analyze) => cleanUrl(analyze.url) === cleanUrl(tab.url || ""),
+    );
+    if (changeInfo.status === "loading" && analyze && !analyze.isLoading) {
+      analyze.requestAmount = 0;
+      analyze.pageWeight = 0;
+      analyze.domSize = 0;
+      analyze.updatedAt = new Date().toISOString();
+      analyze.isLoading = true;
+      console.log("kartrak - reset analyze", analyze);
+
       await setChromeLocalStorage("analyzes", analyzes);
+    } else if (
+      changeInfo.status === "complete" &&
+      analyze &&
+      analyze.isLoading
+    ) {
+      analyze.isLoading = false;
+      analyze.updatedAt = new Date().toISOString();
+      console.log("kartrak - update analyze", analyze);
+      await setChromeLocalStorage("analyzes", analyzes);
+    }
+  });
+
+  chrome.webNavigation.onBeforeNavigate.addListener((details) => {
+    const analyze = analyzes.find(
+      (analyze) => cleanUrl(analyze.url) === cleanUrl(details.url || ""),
+    );
+
+    if (analyze && analyze.isLoading) {
+      // Reset the analysis if the page is being reloaded manually
+      analyze.requestAmount = 0;
+      analyze.pageWeight = 0;
+      analyze.domSize = 0;
+      analyze.updatedAt = new Date().toISOString();
+      analyze.isLoading = true;
+      console.log("kartrak - reset analyze (manual reload)", analyze);
+
+      setChromeLocalStorage("analyzes", analyzes);
     }
   });
 
@@ -47,7 +76,6 @@ const analyzes = async () => {
       return;
     }
 
-    const analyzes = await getAnalyzes();
     const analyze = analyzes.find(
       (a) => cleanUrl(a.url) === cleanUrl(tab.url || ""),
     );
@@ -61,7 +89,7 @@ const analyzes = async () => {
       });
     }
 
-    await setAnalyzes(analyzes);
+    await setChromeLocalStorage("analyzes", analyzes);
   }
 
   async function handleHeadersReceived(
@@ -76,7 +104,6 @@ const analyzes = async () => {
       (header) => header.name === "content-length",
     )?.value;
     if (contentLengthHeader) {
-      const analyzes = await getAnalyzes();
       const analyze = analyzes.find(
         (a) => cleanUrl(a.url) === cleanUrl(tab.url || ""),
       );
@@ -91,7 +118,7 @@ const analyzes = async () => {
         });
       }
 
-      await setAnalyzes(analyzes);
+      await setChromeLocalStorage("analyzes", analyzes);
     }
   }
 
@@ -102,13 +129,17 @@ const analyzes = async () => {
     return tabs.find((tab) => tab.id === tabId);
   }
 
-  async function getAnalyzes() {
-    return ((await getChromeLocalStorage("analyzes")) as Analyze[]) || [];
-  }
-
-  async function setAnalyzes(analyzes: Analyze[]) {
-    await setChromeLocalStorage("analyzes", analyzes);
-  }
+  chrome.runtime.onMessage.addListener(
+    async (message, sender, sendResponse) => {
+      if (message.action === "getAnalyzes") {
+        sendResponse(analyzes);
+      } else if (message.action === "setAnalyzes") {
+        analyzes = merge(analyzes, message.analyzes);
+        await setChromeLocalStorage("analyzes", analyzes);
+        sendResponse(true);
+      }
+    },
+  );
 };
 
 export default analyzes;

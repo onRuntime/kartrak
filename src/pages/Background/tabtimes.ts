@@ -115,7 +115,7 @@ const tabtimes = async () => {
 
   chrome.runtime.onMessage.addListener(
     async (message, sender, sendResponse) => {
-      if (message === "getTabTimes") {
+      if (message.action === "getTabTimes") {
         sendResponse(tabtimes);
       }
     },

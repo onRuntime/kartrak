@@ -1,8 +1,4 @@
-import { Analyze } from "../../../types";
-import {
-  getChromeLocalStorage,
-  setChromeLocalStorage,
-} from "../../../utils/asyncChromeStorage";
+import { getAnalyzes, setAnalyzes } from "../../../utils/bridge";
 import { cleanUrl } from "../../../utils/url";
 
 const getDomSizeWithoutSvg = (): number => {
@@ -37,7 +33,7 @@ const getNbChildsExcludingNestedSvg = (element: Element): number => {
 };
 
 const updateAnalyzeDomSize = async () => {
-  const analyzes = (await getChromeLocalStorage<Analyze[]>("analyzes")) || [];
+  const analyzes = await getAnalyzes();
 
   const currentUrl = cleanUrl(window.location.href);
   const analyze = analyzes.find(
@@ -58,7 +54,7 @@ const updateAnalyzeDomSize = async () => {
   }
 
   // save the analyzes
-  await setChromeLocalStorage("analyzes", analyzes);
+  await setAnalyzes(analyzes);
 };
 
 const analyzeDomSize = async () => {

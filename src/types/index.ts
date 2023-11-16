@@ -11,4 +11,5 @@ export type Analyze = {
   domSize?: number;
   pageWeight?: number;
   updatedAt?: string;
+  isLoading?: boolean;
 };
