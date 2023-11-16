@@ -1,6 +1,12 @@
 import bytes from "bytes";
 import React from "react";
-import { RiCloudLine, RiContrastDrop2Line, RiStackLine } from "react-icons/ri";
+import {
+  RiCloudLine,
+  RiContrastDrop2Line,
+  RiPagesLine,
+  RiStackLine,
+  RiSwapBoxLine,
+} from "react-icons/ri";
 import styled from "styled-components";
 
 import ReportCard from "./Card";
@@ -10,6 +16,7 @@ import {
   computeWaterConsumptionfromEcoIndex,
   formatCO2e,
   formatLiters,
+  nFormatter,
 } from "../../../../utils/__collection";
 
 export type ReportProps = {
@@ -43,7 +50,7 @@ const Report: React.FC<ReportProps> = ({ analyze, ecoIndex }) => {
               <br />
               {ecoIndex
                 ? formatCO2e(
-                    computeGreenhouseGasesEmissionfromEcoIndex(ecoIndex),
+                    computeGreenhouseGasesEmissionfromEcoIndex(ecoIndex)
                   )
                 : "-"}
             </>
@@ -55,13 +62,36 @@ const Report: React.FC<ReportProps> = ({ analyze, ecoIndex }) => {
             <>
               <RiStackLine size={18} />
               <br />
-              {/* 2,05Mo */}
               {analyze?.pageWeight !== undefined
                 ? bytes.format(analyze?.pageWeight)
                 : "-"}
             </>
           }
           description={<>{"poids de la page visitée"}</>}
+        />
+        <ReportCard
+          title={
+            <>
+              <RiPagesLine size={18} />
+              <br />
+              {analyze?.domSize !== undefined
+                ? nFormatter(analyze?.domSize, 2)
+                : "-"}
+            </>
+          }
+          description={<>{"éléments dans le document"}</>}
+        />
+        <ReportCard
+          title={
+            <>
+              <RiSwapBoxLine size={18} />
+              <br />
+              {analyze?.requestAmount !== undefined
+                ? analyze?.requestAmount
+                : "-"}
+            </>
+          }
+          description={<>{"requêtes"}</>}
         />
       </Content>
     </Container>
@@ -77,7 +107,10 @@ const Container = styled.div`
 
 const Content = styled.div`
   display: flex;
-  gap: 7px;
+  margin-left: -7px;
+  margin-top: -7px;
+  flex-wrap: wrap;
+  justify-content: center;
 `;
 
 const Description = styled.span`

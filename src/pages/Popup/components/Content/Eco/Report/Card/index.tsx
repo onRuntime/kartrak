@@ -19,13 +19,15 @@ const ReportCard: React.FC<ReportCardProps> = ({
 };
 
 const Container = styled.div`
-  width: 100%;
+  width: calc(33.3% - 7px);
   display: flex;
   background-color: var(--current-ecoindex-background-color, #f1faf1);
   color: #909090;
   padding: 10px 10px;
   flex-direction: column;
   border-radius: 3.45px;
+  margin-left: 7px;
+  margin-top: 7px;
 `;
 
 const Title = styled.span`
