@@ -61,9 +61,7 @@ const Tip: React.FC = () => {
         <Title>{"Tip & Astuce"}</Title>
 
         <Row>
-          <RefreshIcon size={15} onClick={handleSwitchTip}>
-            {"nouveau"}
-          </RefreshIcon>
+          <RefreshIcon size={15} onClick={handleSwitchTip} />
 
           <Close
             size={15}
