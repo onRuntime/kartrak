@@ -41,6 +41,7 @@ const BrowserTab: React.FC<BrowserTabProps> = ({
   return (
     <Container
       onClick={() => chrome.tabs.update(tab.id || 0, { active: true })}
+      active={tab.active}
     >
       {tab.favIconUrl ? (
         <Favicon src={tab.favIconUrl} alt={tab.title} width={10} height={10} />
@@ -54,14 +55,15 @@ const BrowserTab: React.FC<BrowserTabProps> = ({
   );
 };
 
-const Container = styled.div`
+const Container = styled.div<{ active?: boolean }>`
   width: 100%;
   display: flex;
   align-items: center;
   color: #909090;
   gap: 3px;
   padding: 5px 7px;
-  background-color: #faf7f7;
+  background-color: ${({ active }) =>
+    active ? "var(--green-80, #cce9da)" : "var(--grey-20, #faf7f7)"};
   border-radius: 3.5px;
   cursor: pointer;
 `;

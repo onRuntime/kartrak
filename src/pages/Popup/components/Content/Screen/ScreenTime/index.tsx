@@ -3,42 +3,37 @@ import styled from "styled-components";
 import { useLocalStorage } from "usehooks-ts";
 
 import useTabTimes from "../../../../hooks/useTabTimes";
-import { getFormattedTime } from "../../../../utils/__collection";
-
-export enum Range {
-  Day = "day",
-  Week = "week",
-  Month = "month",
-  Year = "year",
-}
+import { Range } from "../../../../types";
+import { getDateRange, getFormattedTime } from "../../../../utils/__collection";
 
 const ScreenTime: React.FC = () => {
   const tabtimes = useTabTimes();
   const [range, setRange] = useLocalStorage<Range>("range", Range.Day);
-
   const [formattedTime, setFormattedTime] = React.useState<string>();
 
   React.useEffect(() => {
-    let intervalId: NodeJS.Timeout | null = null;
+    let animationFrameId: number | null = null;
 
     const updateFormattedTime = () => {
-      setFormattedTime(getFormattedTime(tabtimes));
+      setFormattedTime(getFormattedTime(tabtimes, getDateRange(range)));
+      animationFrameId = requestAnimationFrame(updateFormattedTime);
     };
 
-    // Update the formatted time every second (1000ms)
-    intervalId = setInterval(updateFormattedTime, 1000);
-
-    // Clear the interval when the component unmounts
+    animationFrameId = requestAnimationFrame(updateFormattedTime);
     return () => {
-      if (intervalId) {
-        clearInterval(intervalId);
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
       }
     };
-  }, [tabtimes]);
+  }, [tabtimes, range]);
 
   return (
     <Container>
-      <Time>{formattedTime ? formattedTime : getFormattedTime(tabtimes)}</Time>
+      <Time>
+        {formattedTime
+          ? formattedTime
+          : getFormattedTime(tabtimes, getDateRange(range))}
+      </Time>
       <RangeSelect
         value={range}
         onChange={(e) => setRange(e.target.value as Range)}

@@ -4,6 +4,7 @@ const customCss = css`
   :root {
     --primary: #014335;
     --grey: #909090;
+    --grey-20: #faf7f7;
     --red: #e40000;
     --red-80: #ffcfcf;
     --yellow: #dcb903;

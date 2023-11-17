@@ -46,7 +46,8 @@ const Tab = styled.button<{ active?: boolean }>`
   border: none;
   border-radius: 99999px;
   cursor: pointer;
-  background-color: ${({ active }) => (active ? "#cce9dA" : "transparent")};
+  background-color: ${({ active }) =>
+    active ? "var(--green-80, #cce9da)" : "transparent"};
   color: ${({ active }) => (active ? "#009245" : "inherit")};
 `;
 

@@ -112,6 +112,7 @@ const Row = styled.div`
 
   svg {
     cursor: pointer;
+    user-select: none;
   }
 `;
 
