@@ -3,67 +3,29 @@ import styled from "styled-components";
 import { useLocalStorage } from "usehooks-ts";
 
 import useTabTimes from "../../../../hooks/useTabTimes";
-import { DateRange, Range } from "../../../../types";
-import { getFormattedTime } from "../../../../utils/__collection";
-
-export const getDateRange = (range: Range): DateRange => {
-  const now = new Date();
-  let startDate: Date;
-  let endDate: Date;
-
-  switch (range) {
-    case Range.Day:
-      startDate = new Date(now);
-      startDate.setDate(now.getDate() - 1);
-      endDate = new Date(now);
-      break;
-
-    case Range.Week:
-      startDate = new Date(now);
-      startDate.setDate(now.getDate() - 7);
-      endDate = new Date(now);
-      break;
-
-    case Range.Month:
-      startDate = new Date(now.getFullYear(), now.getMonth(), 1);
-      endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0);
-      break;
-
-    case Range.Year:
-      startDate = new Date(now.getFullYear(), 0, 1);
-      endDate = new Date(now.getFullYear(), 11, 31);
-      break;
-
-    default:
-      throw new Error(`Invalid range: ${range}`);
-  }
-
-  return [startDate.toISOString(), endDate.toISOString()];
-};
+import { Range } from "../../../../types";
+import { getDateRange, getFormattedTime } from "../../../../utils/__collection";
 
 const ScreenTime: React.FC = () => {
   const tabtimes = useTabTimes();
   const [range, setRange] = useLocalStorage<Range>("range", Range.Day);
-
   const [formattedTime, setFormattedTime] = React.useState<string>();
 
   React.useEffect(() => {
-    let intervalId: NodeJS.Timeout | null = null;
+    let animationFrameId: number | null = null;
 
     const updateFormattedTime = () => {
       setFormattedTime(getFormattedTime(tabtimes, getDateRange(range)));
+      animationFrameId = requestAnimationFrame(updateFormattedTime);
     };
 
-    // Update the formatted time every second (1000ms)
-    intervalId = setInterval(updateFormattedTime, 1000);
-
-    // Clear the interval when the component unmounts
+    animationFrameId = requestAnimationFrame(updateFormattedTime);
     return () => {
-      if (intervalId) {
-        clearInterval(intervalId);
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
       }
     };
-  }, [tabtimes]);
+  }, [tabtimes, range]);
 
   return (
     <Container>

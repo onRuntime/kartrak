@@ -1,5 +1,5 @@
 import { TabTime } from "../../../types";
-import { DateRange } from "../types";
+import { DateRange, Range } from "../types";
 
 export const extractDomainFromUrl = (url: string): string | null => {
   // Regular expression to match the domain in a URL
@@ -233,4 +233,39 @@ export const nFormatterOctets = (num: number, digits: number) => {
     }
   }
   return (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol;
+};
+
+export const getDateRange = (range: Range): DateRange => {
+  const now = new Date();
+  let startDate: Date;
+  let endDate: Date;
+
+  switch (range) {
+    case Range.Day:
+      startDate = new Date(now);
+      startDate.setDate(now.getDate() - 1);
+      endDate = new Date(now);
+      break;
+
+    case Range.Week:
+      startDate = new Date(now);
+      startDate.setDate(now.getDate() - 7);
+      endDate = new Date(now);
+      break;
+
+    case Range.Month:
+      startDate = new Date(now.getFullYear(), now.getMonth(), 1);
+      endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+      break;
+
+    case Range.Year:
+      startDate = new Date(now.getFullYear(), 0, 1);
+      endDate = new Date(now.getFullYear(), 11, 31);
+      break;
+
+    default:
+      throw new Error(`Invalid range: ${range}`);
+  }
+
+  return [startDate.toISOString(), endDate.toISOString()];
 };
