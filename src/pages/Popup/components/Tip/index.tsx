@@ -42,6 +42,11 @@ const Tip: React.FC = () => {
     setTipKey(tipKey);
   };
 
+  const handleCloseTip = async () => {
+    await setChromeSessionStorage("isTip", false);
+    setIsTip(false);
+  };
+
   console.log("chrome session storage", isTip, tipKey);
   if (!isTip || tipKey === undefined) {
     return null;
@@ -61,15 +66,8 @@ const Tip: React.FC = () => {
         <Title>{"Tip & Astuce"}</Title>
 
         <Row>
-          <RefreshIcon size={15} onClick={handleSwitchTip} />
-
-          <Close
-            size={15}
-            onClick={async () => {
-              await setChromeSessionStorage("isTip", false);
-              setIsTip(false);
-            }}
-          />
+          <RiRefreshLine size={15} onClick={handleSwitchTip} />
+          <RiCloseLine size={15} onClick={handleCloseTip} />
         </Row>
       </Header>
 
@@ -107,18 +105,14 @@ const Title = styled.div`
   color: var(--primary);
 `;
 
-const RefreshIcon = styled(RiRefreshLine)`
-  cursor: pointer;
-`;
-
-const Close = styled(RiCloseLine)`
-  cursor: pointer;
-`;
-
 const Row = styled.div`
   display: flex;
   flex-direction: row;
   gap: 10px;
+
+  svg {
+    cursor: pointer;
+  }
 `;
 
 const Content = styled.p`
