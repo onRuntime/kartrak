@@ -1,5 +1,5 @@
 import React from "react";
-import { RiCloseLine } from "react-icons/ri";
+import { RiCloseLine, RiRefreshLine } from "react-icons/ri";
 import styled from "styled-components";
 
 import {
@@ -36,6 +36,12 @@ const Tip: React.FC = () => {
     handler();
   }, []);
 
+  const handleSwitchTip = async () => {
+    const tipKey = getRandomNumber(0, tips.length - 1);
+    await setChromeSessionStorage("tipKey", tipKey);
+    setTipKey(tipKey);
+  };
+
   console.log("chrome session storage", isTip, tipKey);
   if (!isTip || tipKey === undefined) {
     return null;
@@ -51,16 +57,25 @@ const Tip: React.FC = () => {
           width={18}
           height={18}
         />
+
         <Title>{"Tip & Astuce"}</Title>
-        <Close
-          size={15}
-          onClick={async () => {
-            await setChromeSessionStorage("isTip", false);
-            setIsTip(false);
-          }}
-        />
+
+        <Row>
+          <RefreshIcon size={15} onClick={handleSwitchTip}>
+            {"nouveau"}
+          </RefreshIcon>
+
+          <Close
+            size={15}
+            onClick={async () => {
+              await setChromeSessionStorage("isTip", false);
+              setIsTip(false);
+            }}
+          />
+        </Row>
       </Header>
-      <Content>{tips[tipKey!]}</Content>
+
+      <Content>{tips[tipKey]}</Content>
     </Container>
   );
 };
@@ -94,8 +109,18 @@ const Title = styled.div`
   color: var(--primary);
 `;
 
+const RefreshIcon = styled(RiRefreshLine)`
+  cursor: pointer;
+`;
+
 const Close = styled(RiCloseLine)`
   cursor: pointer;
+`;
+
+const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
 `;
 
 const Content = styled.p`
