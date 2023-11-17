@@ -1,5 +1,13 @@
 # kartrak
 
+## 0.0.6
+
+### Patch Changes
+
+- 8e7f51b: Add active tab indicator
+  Add ability to switch tips
+  Add range selector
+
 ## 0.0.5
 
 ### Patch Changes
