@@ -1,14 +1,20 @@
 import React from "react";
 import styled from "styled-components";
-import { useLocalStorage } from "usehooks-ts";
 
 import useTabTimes from "../../../../hooks/useTabTimes";
 import { Range } from "../../../../types";
 import { getDateRange, getFormattedTime } from "../../../../utils/__collection";
 
-const ScreenTime: React.FC = () => {
+export type ScreenTimeProps = {
+  range: Range;
+  setRange: (range: Range) => void;
+};
+
+const ScreenTime: React.FC<ScreenTimeProps> = ({
+  range,
+  setRange,
+}: ScreenTimeProps) => {
   const tabtimes = useTabTimes();
-  const [range, setRange] = useLocalStorage<Range>("range", Range.Day);
   const [formattedTime, setFormattedTime] = React.useState<string>();
 
   React.useEffect(() => {

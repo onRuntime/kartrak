@@ -249,13 +249,14 @@ export const getDateRange = (range: Range): DateRange => {
 
     case Range.Week:
       startDate = new Date(now);
-      startDate.setDate(now.getDate() - 7);
+      startDate.setDate(now.getDate() - 6);
       endDate = new Date(now);
       break;
 
     case Range.Month:
-      startDate = new Date(now.getFullYear(), now.getMonth(), 1);
-      endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+      startDate = new Date(now);
+      startDate.setDate(now.getDate() - 30);
+      endDate = new Date(now);
       break;
 
     case Range.Year:
