@@ -42,6 +42,15 @@ const options = {
   mode: process.env.NODE_ENV || "development",
   entry: {
     options: path.join(__dirname, "src", "pages", "Options", "index.tsx"),
+    installed: path.join(__dirname, "src", "pages", "Installed", "index.tsx"),
+    installedVerified: path.join(
+      __dirname,
+      "src",
+      "pages",
+      "Installed",
+      "Pinned",
+      "index.tsx"
+    ),
     popup: path.join(__dirname, "src", "pages", "Popup", "index.tsx"),
     background: path.join(__dirname, "src", "pages", "Background", "index.ts"),
     contentScript: path.join(__dirname, "src", "pages", "Content", "index.ts"),
@@ -101,7 +110,7 @@ const options = {
             options: {
               getCustomTransformers: () => ({
                 before: [isDevelopment && ReactRefreshTypeScript()].filter(
-                  Boolean,
+                  Boolean
                 ),
               }),
               transpileOnly: isDevelopment,
@@ -153,7 +162,7 @@ const options = {
                 description: process.env.npm_package_description,
                 version: process.env.npm_package_version,
                 ...JSON.parse(content.toString()),
-              }),
+              })
             );
           },
         },
@@ -190,6 +199,25 @@ const options = {
       template: path.join(__dirname, "src", "pages", "Options", "index.html"),
       filename: "options.html",
       chunks: ["options"],
+      cache: false,
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, "src", "pages", "Installed", "index.html"),
+      filename: "installed.html",
+      chunks: ["installed"],
+      cache: false,
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(
+        __dirname,
+        "src",
+        "pages",
+        "Installed",
+        "Pinned",
+        "index.html"
+      ),
+      filename: "installed/verified.html",
+      chunks: ["verified"],
       cache: false,
     }),
     new HtmlWebpackPlugin({

@@ -18,7 +18,6 @@ const customCss = css`
   }
 
   html {
-    width: 380px;
     height: auto;
   }
 
@@ -58,6 +57,17 @@ const customCss = css`
     &:hover {
       filter: brightness(0.8);
     }
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "neulis-cursive", sans-serif;
+    font-weight: 700;
+    margin: 0;
   }
 `;
 

@@ -2,6 +2,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 
 import Popup from "./Popup";
+import "./index.css";
 import "./../../styles/fonts.css";
 
 const container = document.getElementById("app-container");
