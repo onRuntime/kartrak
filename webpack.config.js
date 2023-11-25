@@ -102,7 +102,7 @@ const options = {
             options: {
               getCustomTransformers: () => ({
                 before: [isDevelopment && ReactRefreshTypeScript()].filter(
-                  Boolean
+                  Boolean,
                 ),
               }),
               transpileOnly: isDevelopment,
@@ -154,7 +154,7 @@ const options = {
                 description: process.env.npm_package_description,
                 version: process.env.npm_package_version,
                 ...JSON.parse(content.toString()),
-              })
+              }),
             );
           },
         },
