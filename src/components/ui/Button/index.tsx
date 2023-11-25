@@ -68,7 +68,7 @@ const Button: React.FC<ButtonProps> = styled(
         </ButtonContent>
       </Component>
     );
-  }
+  },
 )<ButtonProps>`
   cursor: pointer;
 
