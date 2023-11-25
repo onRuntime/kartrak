@@ -34,6 +34,10 @@ const Button: React.FC<ButtonProps> = styled(
     children,
     ...rest
   }: ButtonProps) => {
+    href;
+    color;
+    variant;
+    size;
     /* if (href && !disabled) {
   return (
     <_LinkAsButton className={className} href={href}>
