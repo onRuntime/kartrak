@@ -118,7 +118,7 @@ const Row = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  max-width: 800px;
+  max-width: 750px;
 `;
 
 const Title = styled.h1`
@@ -140,6 +140,7 @@ const TextContent = styled.p`
 const Image = styled.img`
   margin-top: 40px;
   max-width: 560px;
+  width: 100%;
 `;
 
 const StyledButton = styled(Button)`

@@ -67,7 +67,6 @@ const customCss = css`
   h6 {
     font-family: "neulis-cursive", sans-serif;
     font-weight: 700;
-    margin: 0;
   }
 `;
 
