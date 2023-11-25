@@ -85,7 +85,7 @@ const WelcomePage: React.FC = () => {
 
             <TextContent>
               {
-                "Epinglez dès maintenant l’extension à la barre d’outils de votre navigateur. Vous serez amenés à ouvrir souvent l’extension, alors ça sera plus pratique !"
+                "Épinglez dès maintenant l’extension à la barre d’outils de votre navigateur. Vous serez amenés à ouvrir souvent l’extension, alors ça sera plus pratique !"
               }
             </TextContent>
 
