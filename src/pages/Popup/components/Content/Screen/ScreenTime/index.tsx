@@ -38,7 +38,7 @@ const ScreenTime: React.FC = () => {
         value={range}
         onChange={(e) => setRange(e.target.value as Range)}
       >
-        <option value={Range.Day}>{"Dernières 24h"}</option>
+        <option value={Range.Day}>{"24 dernières heures"}</option>
         <option value={Range.Week}>{"7 derniers jours"}</option>
         <option value={Range.Month}>{"30 derniers jours"}</option>
         <option value={Range.Year}>{"365 derniers jours"}</option>
