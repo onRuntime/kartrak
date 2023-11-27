@@ -1,7 +1,7 @@
 import React from "react";
 
 import { TabTime } from "../../../types";
-import { getTabTimes } from "../../../utils/bridge";
+import { getTabTimes } from "../../../utils/chromeBridge";
 
 // Create a context for TabTime data
 export const TabTimesContext = React.createContext<TabTime[]>([]);

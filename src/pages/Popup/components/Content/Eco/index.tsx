@@ -5,10 +5,13 @@ import Activity from "./Activity";
 import Report from "./Report";
 import Score from "./Score";
 import { Analyze } from "../../../../../types";
-import { getChromeLocalStorage } from "../../../../../utils/asyncChromeStorage";
+import { getChromeLocalStorage } from "../../../../../utils/chromeStorage";
+import {
+  computeEcoIndex,
+  getCurrentEcoIndexBackgroundColor,
+  getCurrentEcoIndexColor,
+} from "../../../../../utils/ecoindex";
 import { cleanUrl } from "../../../../../utils/url";
-import { computeEcoIndex } from "../../../utils/__collection";
-
 const Eco: React.FC = () => {
   const [tab, setTab] = React.useState<chrome.tabs.Tab>();
   React.useEffect(() => {
@@ -97,7 +100,7 @@ const Eco: React.FC = () => {
     analyze?.requestAmount !== undefined
       ? computeEcoIndex(
           analyze?.domSize,
-          analyze?.pageWeight / 8 / 1024,
+          analyze?.pageWeight,
           analyze?.requestAmount,
         )
       : undefined;
@@ -122,46 +125,6 @@ const Eco: React.FC = () => {
       </About>
     </Container>
   );
-};
-
-const getCurrentEcoIndexColor = (ecoIndex?: number) => {
-  if (ecoIndex === undefined) {
-    return "var(--primary)";
-  }
-
-  if (ecoIndex >= 75) {
-    return "var(--green)";
-  }
-
-  if (ecoIndex >= 50) {
-    return "var(--yellow)";
-  }
-
-  if (ecoIndex >= 25) {
-    return "var(--orange)";
-  }
-
-  return "var(--red)";
-};
-
-const getCurrentEcoIndexBackgroundColor = (ecoIndex?: number) => {
-  if (ecoIndex === undefined) {
-    return "var(--green-10)";
-  }
-
-  if (ecoIndex >= 75) {
-    return "var(--green-80)";
-  }
-
-  if (ecoIndex >= 50) {
-    return "var(--yellow-80)";
-  }
-
-  if (ecoIndex >= 25) {
-    return "var(--orange-80)";
-  }
-
-  return "var(--red-80)";
 };
 
 const Container = styled.div<{

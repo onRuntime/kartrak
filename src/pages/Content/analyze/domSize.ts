@@ -1,4 +1,9 @@
-import { getAnalyzes, setAnalyzes } from "../../../utils/bridge";
+import {
+  getAnalyzes,
+  getTabId,
+  setAnalyzes,
+  updateBadge,
+} from "../../../utils/chromeBridge";
 import { cleanUrl } from "../../../utils/url";
 
 const getDomSizeWithoutSvg = (): number => {
@@ -51,6 +56,11 @@ const updateAnalyzeDomSize = async () => {
       domSize,
       updatedAt: new Date().toISOString(),
     });
+  }
+
+  const tabId = await getTabId();
+  if (tabId) {
+    await updateBadge(tabId);
   }
 
   // save the analyzes

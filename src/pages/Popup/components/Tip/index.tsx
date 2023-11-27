@@ -5,7 +5,7 @@ import styled from "styled-components";
 import {
   getChromeSessionStorage,
   setChromeSessionStorage,
-} from "../../../../utils/asyncChromeStorage";
+} from "../../../../utils/chromeStorage";
 import tips from "../../data/tips";
 import { getRandomNumber } from "../../utils/__collection";
 

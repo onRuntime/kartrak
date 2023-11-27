@@ -2,7 +2,7 @@ import { TabTime } from "../../types";
 import {
   getChromeLocalStorage,
   setChromeLocalStorage,
-} from "../../utils/asyncChromeStorage";
+} from "../../utils/chromeStorage";
 import { cleanUrl } from "../../utils/url";
 
 const tabtimes = async () => {
