@@ -1,5 +1,12 @@
 # kartrak
 
+## 0.0.7
+
+### Patch Changes
+
+- a94f8bf: Add Badge Indicator
+  Fix Date Range
+
 ## 0.0.6
 
 ### Patch Changes
