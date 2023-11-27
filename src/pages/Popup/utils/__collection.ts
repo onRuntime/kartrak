@@ -255,13 +255,14 @@ export const getDateRange = (range: Range): DateRange => {
 
     case Range.Month:
       startDate = new Date(now);
-      startDate.setDate(now.getDate() - 30);
+      startDate.setMonth(now.getMonth() - 1);
       endDate = new Date(now);
       break;
 
     case Range.Year:
-      startDate = new Date(now.getFullYear(), 0, 1);
-      endDate = new Date(now.getFullYear(), 11, 31);
+      startDate = new Date(now);
+      startDate.setFullYear(now.getFullYear() - 1);
+      endDate = new Date(now);
       break;
 
     default:
