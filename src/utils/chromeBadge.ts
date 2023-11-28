@@ -8,13 +8,13 @@ import { Analyze } from "../types";
 export const updateBadge = async (analyze: Analyze, tabId: number) => {
   const ecoIndex =
     analyze?.domSize !== undefined &&
-      analyze?.pageWeight !== undefined &&
-      analyze?.requestAmount !== undefined
+    analyze?.pageWeight !== undefined &&
+    analyze?.requestAmount !== undefined
       ? computeEcoIndex(
-        analyze?.domSize,
-        analyze?.pageWeight,
-        analyze?.requestAmount,
-      )
+          analyze?.domSize,
+          analyze?.pageWeight,
+          analyze?.requestAmount,
+        )
       : undefined;
 
   await chrome.action.setBadgeText({
