@@ -4,9 +4,9 @@ import React from "react";
 import styled from "styled-components";
 
 import { Analyze } from "../../../../../../types";
+import { getEcoIndexGrade } from "../../../../../../utils/ecoindex";
 import {
   extractDomainFromUrl,
-  getEcoIndexGrade,
   getEcoIndexText,
   getSmileyType,
 } from "../../../../utils/__collection";

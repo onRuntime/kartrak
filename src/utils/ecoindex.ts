@@ -1,3 +1,23 @@
+export enum EcoIndexGrade {
+  A = "A",
+  B = "B",
+  C = "C",
+  D = "D",
+  E = "E",
+  F = "F",
+  G = "G",
+}
+
+export const getEcoIndexGrade = (ecoIndex: number): string => {
+  if (ecoIndex > 80) return EcoIndexGrade.A;
+  if (ecoIndex > 70) return EcoIndexGrade.B;
+  if (ecoIndex > 55) return EcoIndexGrade.C;
+  if (ecoIndex > 40) return EcoIndexGrade.D;
+  if (ecoIndex > 25) return EcoIndexGrade.E;
+  if (ecoIndex > 10) return EcoIndexGrade.F;
+  return EcoIndexGrade.G;
+};
+
 const getHexColorFromCssVariable = (cssVariable: string) => {
   const match = cssVariable.match(/#(?:[0-9a-fA-F]{3}){1,2}\b/);
   return match ? match[0] : "#000000";

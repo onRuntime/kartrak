@@ -86,6 +86,7 @@ const analyzes = async () => {
 
     if (analyze) {
       analyze.requestAmount = (analyze.requestAmount || 0) + 1;
+      await updateBadge(analyze, details.tabId);
     } else {
       analyzes.push({
         url: cleanUrl(tab.url || ""),
@@ -115,6 +116,7 @@ const analyzes = async () => {
       if (analyze) {
         analyze.pageWeight =
           (analyze.pageWeight || 0) + parseInt(contentLengthHeader, 10);
+        await updateBadge(analyze, details.tabId);
       } else {
         analyzes.push({
           url: cleanUrl(tab.url || ""),
