@@ -200,6 +200,7 @@ export const nFormatterOctets = (num: number, digits: number) => {
 
 export const getDateRange = (range: Range): DateRange => {
   const now = new Date();
+  now.setSeconds(now.getSeconds() + 1);
   let startDate: Date;
   let endDate: Date;
 
