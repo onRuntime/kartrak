@@ -3,10 +3,8 @@ import { RiWindowLine } from "react-icons/ri";
 import styled from "styled-components";
 
 import { TabTime } from "../../../../../../../types";
-import {
-  extractDomainFromUrl,
-  getFormattedTime,
-} from "../../../../../utils/__collection";
+import { cleanUrl } from "../../../../../../../utils/url";
+import { getFormattedTime } from "../../../../../utils/__collection";
 
 export type BrowserTabProps = {
   tab: chrome.tabs.Tab;
@@ -49,7 +47,11 @@ const BrowserTab: React.FC<BrowserTabProps> = ({
         <RiWindowLine size={8} />
       )}
       <Name>{tab.title}</Name>
-      <Url>{`- ${extractDomainFromUrl(tab.url || "")}`}</Url>
+      <Url>{`- ${
+        cleanUrl(tab.url || "")
+          .replace(/\/$/, "")
+          .split("://")[1]
+      }`}</Url>
       <Time>{formattedTime ? formattedTime : getFormattedTime(tabtimes)}</Time>
     </Container>
   );
