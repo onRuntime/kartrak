@@ -1,5 +1,11 @@
 # kartrak
 
+## 0.0.9
+
+### Patch Changes
+
+- eccd89c: Update screen browser tabs with a clean url instead of domain
+
 ## 0.0.8
 
 ### Patch Changes
