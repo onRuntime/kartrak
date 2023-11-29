@@ -63,26 +63,6 @@ export const getFormattedTime = (
   return formatTime(totalTabTime);
 };
 
-export enum EcoIndexGrade {
-  A = "A",
-  B = "B",
-  C = "C",
-  D = "D",
-  E = "E",
-  F = "F",
-  G = "G",
-}
-
-export const getEcoIndexGrade = (ecoIndex: number): string => {
-  if (ecoIndex > 80) return EcoIndexGrade.A;
-  if (ecoIndex > 70) return EcoIndexGrade.B;
-  if (ecoIndex > 55) return EcoIndexGrade.C;
-  if (ecoIndex > 40) return EcoIndexGrade.D;
-  if (ecoIndex > 25) return EcoIndexGrade.E;
-  if (ecoIndex > 10) return EcoIndexGrade.F;
-  return EcoIndexGrade.G;
-};
-
 export const getEcoIndexText = (ecoIndex: number): string => {
   if (ecoIndex > 80) return "Excellent!";
   if (ecoIndex > 70) return "Bravo.";
@@ -91,43 +71,6 @@ export const getEcoIndexText = (ecoIndex: number): string => {
   if (ecoIndex > 25) return "Aïe aïe...";
   if (ecoIndex > 10) return "Y'a du boulot...";
   return "Que dire ?";
-};
-
-export const computeQuantile = (quantiles: number[], value: number): number => {
-  for (let i = 1; i < quantiles.length; i++) {
-    if (value < quantiles[i]) {
-      return (
-        i - 1 + (value - quantiles[i - 1]) / (quantiles[i] - quantiles[i - 1])
-      );
-    }
-  }
-  return quantiles.length - 1;
-};
-
-const quantiles_dom = [
-  0, 47, 75, 159, 233, 298, 358, 417, 476, 537, 603, 674, 753, 843, 949, 1076,
-  1237, 1459, 1801, 2479, 594601,
-];
-const quantiles_req = [
-  0, 2, 15, 25, 34, 42, 49, 56, 63, 70, 78, 86, 95, 105, 117, 130, 147, 170,
-  205, 281, 3920,
-];
-const quantiles_size = [
-  0, 1.37, 144.7, 319.53, 479.46, 631.97, 783.38, 937.91, 1098.62, 1265.47,
-  1448.32, 1648.27, 1876.08, 2142.06, 2465.37, 2866.31, 3401.59, 4155.73,
-  5400.08, 8037.54, 223212.26,
-];
-
-export const computeEcoIndex = (
-  dom: number,
-  req: number,
-  size: number,
-): number => {
-  const q_dom: number = computeQuantile(quantiles_dom, dom);
-  const q_req: number = computeQuantile(quantiles_req, req);
-  const q_size: number = computeQuantile(quantiles_size, size);
-
-  return 100 - (5 * (3 * q_dom + 2 * q_req + q_size)) / 6;
 };
 
 export const formatLiters = (volumeInCL: number): string => {
@@ -237,6 +180,7 @@ export const nFormatterOctets = (num: number, digits: number) => {
 
 export const getDateRange = (range: Range): DateRange => {
   const now = new Date();
+  now.setSeconds(now.getSeconds() + 1);
   let startDate: Date;
   let endDate: Date;
 

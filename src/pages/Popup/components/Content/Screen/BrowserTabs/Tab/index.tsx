@@ -3,10 +3,8 @@ import { RiWindowLine } from "react-icons/ri";
 import styled from "styled-components";
 
 import { TabTime } from "../../../../../../../types";
-import {
-  extractDomainFromUrl,
-  getFormattedTime,
-} from "../../../../../utils/__collection";
+import { cleanUrl } from "../../../../../../../utils/url";
+import { getFormattedTime } from "../../../../../utils/__collection";
 
 export type BrowserTabProps = {
   tab: chrome.tabs.Tab;
@@ -46,10 +44,15 @@ const BrowserTab: React.FC<BrowserTabProps> = ({
       {tab.favIconUrl ? (
         <Favicon src={tab.favIconUrl} alt={tab.title} width={10} height={10} />
       ) : (
-        <RiWindowLine size={8} />
+        <RiWindowLine size={10} />
       )}
-      <Name>{tab.title}</Name>
-      <Url>{`- ${extractDomainFromUrl(tab.url || "")}`}</Url>
+      <Content>
+        <Name>{tab.title}</Name>
+        <Url>{`- ${cleanUrl(tab.url || "")
+          .replace(/^.*?:\/\//, "")
+          .replace(/^(www\.)?/, "")
+          .replace(/\/$/, "")}`}</Url>
+      </Content>
       <Time>{formattedTime ? formattedTime : getFormattedTime(tabtimes)}</Time>
     </Container>
   );
@@ -74,6 +77,14 @@ const Favicon = styled.img`
   border-radius: 2px;
 `;
 
+const Content = styled.div`
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  align-items: center;
+  gap: 3px;
+`;
+
 const Name = styled.span`
   font-size: 12px;
   font-weight: 600;
@@ -82,6 +93,7 @@ const Name = styled.span`
   overflow: hidden;
   white-space: nowrap;
   max-width: 130px;
+  flex-shrink: 0;
 `;
 
 const Url = styled.span`

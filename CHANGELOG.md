@@ -1,5 +1,24 @@
 # kartrak
 
+## 0.0.9
+
+### Patch Changes
+
+- eccd89c: Update screen browser tabs with a clean url instead of domain
+
+## 0.0.8
+
+### Patch Changes
+
+- d88ae7b: Fix date range and badge blinking
+
+## 0.0.7
+
+### Patch Changes
+
+- a94f8bf: Add Badge Indicator
+  Fix Date Range
+
 ## 0.0.6
 
 ### Patch Changes

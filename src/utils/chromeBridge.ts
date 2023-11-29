@@ -17,3 +17,17 @@ export const setAnalyzes = async (analyzes: Analyze[]): Promise<boolean> => {
     chrome.runtime.sendMessage({ action: "setAnalyzes", analyzes }, resolve);
   });
 };
+
+export const getTabId = async (): Promise<number | undefined> => {
+  return new Promise((resolve) => {
+    chrome.runtime.sendMessage({ action: "getTabId" }, (response) => {
+      resolve(response?.tabId);
+    });
+  });
+};
+
+export const updateBadge = async (tabId: number) => {
+  return new Promise((resolve) => {
+    chrome.runtime.sendMessage({ action: "updateBadge", tabId }, resolve);
+  });
+};

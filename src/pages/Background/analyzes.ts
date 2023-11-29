@@ -1,10 +1,11 @@
 import { merge } from "lodash";
 
 import { Analyze } from "../../types";
+import { updateBadge } from "../../utils/chromeBadge";
 import {
   getChromeLocalStorage,
   setChromeLocalStorage,
-} from "../../utils/asyncChromeStorage";
+} from "../../utils/chromeStorage";
 import { cleanUrl } from "../../utils/url";
 
 const analyzes = async () => {
@@ -21,6 +22,7 @@ const analyzes = async () => {
       analyze.updatedAt = new Date().toISOString();
       analyze.isLoading = true;
       console.log("kartrak - reset analyze", analyze);
+      await updateBadge(analyze, tabId);
 
       await setChromeLocalStorage("analyzes", analyzes);
     } else if (
@@ -31,6 +33,8 @@ const analyzes = async () => {
       analyze.isLoading = false;
       analyze.updatedAt = new Date().toISOString();
       console.log("kartrak - update analyze", analyze);
+      await updateBadge(analyze, tabId);
+
       await setChromeLocalStorage("analyzes", analyzes);
     }
   });
@@ -82,6 +86,7 @@ const analyzes = async () => {
 
     if (analyze) {
       analyze.requestAmount = (analyze.requestAmount || 0) + 1;
+      await updateBadge(analyze, details.tabId);
     } else {
       analyzes.push({
         url: cleanUrl(tab.url || ""),
@@ -111,6 +116,7 @@ const analyzes = async () => {
       if (analyze) {
         analyze.pageWeight =
           (analyze.pageWeight || 0) + parseInt(contentLengthHeader, 10);
+        await updateBadge(analyze, details.tabId);
       } else {
         analyzes.push({
           url: cleanUrl(tab.url || ""),
@@ -137,6 +143,14 @@ const analyzes = async () => {
         analyzes = merge(analyzes, message.analyzes);
         await setChromeLocalStorage("analyzes", analyzes);
         sendResponse(true);
+      } else if (message.action === "updateBadge") {
+        const analyze = analyzes.find(
+          (analyze) =>
+            cleanUrl(analyze.url) === cleanUrl(sender.tab?.url || ""),
+        );
+        if (analyze) {
+          await updateBadge(analyze, sender.tab?.id || 0);
+        }
       }
     },
   );
