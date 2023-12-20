@@ -1454,9 +1454,9 @@
   integrity sha512-qQfo2mxH5yVom1kacMtZZJFVdW+E70mqHMJvVg6WTLo+VBuQJ4TojZlfWBjK0ve5BdEeNAVxOsl/nvNMpJOaJA==
 
 "@fontsource/figtree@^5.0.15":
-  version "5.0.17"
-  resolved "https://registry.yarnpkg.com/@fontsource/figtree/-/figtree-5.0.17.tgz#c813e1cee594819f1b1cfd0b5b07ddb96cfd9a6b"
-  integrity sha512-NIEMRyxPg7Ce9At12vTRXja/bYtODbw+0a3ygfg1YgFpF2vRRQRcj8sipZMc142NNZH75popdjPrhUZusss40w==
+  version "5.0.18"
+  resolved "https://registry.yarnpkg.com/@fontsource/figtree/-/figtree-5.0.18.tgz#2beeae2e52110f9e6a9d1e8454cfbe6a86451f65"
+  integrity sha512-dr9BuLeFLz270lUAzuqBrWtW2w8ZVfrkDG2rv+0hHPt2EWJ/2CmXyNiVrwbXBiNwRMHyfvJp9KtsoxlEzvxhIQ==
 
 "@humanwhocodes/config-array@^0.11.13":
   version "0.11.13"
