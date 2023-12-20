@@ -30,7 +30,7 @@ jobs:
         run: echo "::set-output name=VERSION::$(node -p "require('./package.json').version")"
 
       - name: Archive chrome-extension artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: kartrak-${{ steps.set-version.outputs.VERSION }}
           path: ./zip/kartrak-${{ steps.set-version.outputs.VERSION }}.zip
