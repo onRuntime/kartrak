@@ -2,19 +2,15 @@ import dayjs from "dayjs";
 import React from "react";
 import styled from "styled-components";
 
-import DomainItem from "./DomainItem";
+import DomainItem, { DomainItemSkeleton } from "./DomainItem";
 import { TabTime } from "../../../../../../types";
 import useTabTimes from "../../../../hooks/useTabTimes";
 import { extractDomainFromUrl } from "../../../../utils/__collection";
 
-const DomainTime: React.FC = () => {
-  const tabtimes = useTabTimes().map((tabtime) => {
-    if (!tabtime.endAt) {
-      tabtime.endAt = new Date().toISOString();
-    }
-    return tabtime;
-  });
+const ITEMS_TO_SHOW = 4;
 
+const DomainTime: React.FC = () => {
+  const { tabtimes, isLoading } = useTabTimes();
   const [domainMap, setDomainMap] = React.useState<
     Map<
       string,
@@ -23,7 +19,7 @@ const DomainTime: React.FC = () => {
         favIconUrl?: string;
       }
     >
-  >();
+  >(new Map());
 
   const getSortedDomainMap = React.useCallback((tabtimes: TabTime[]) => {
     const domainMap = new Map<
@@ -34,34 +30,33 @@ const DomainTime: React.FC = () => {
       }
     >();
 
-    tabtimes.map(async (tabtime) => {
+    const processedTabtimes = tabtimes.map((tabtime) => ({
+      ...tabtime,
+      endAt: tabtime.endAt || new Date().toISOString(),
+    }));
+
+    processedTabtimes.forEach((tabtime) => {
       const domain = extractDomainFromUrl(tabtime.url) || "";
       const existingDomainData = domainMap.get(domain);
 
-      if (existingDomainData) {
-        // If data exists for the domain, update the time property
-        existingDomainData.time += dayjs(
-          new Date(tabtime.endAt as string),
-        ).diff(dayjs(new Date(tabtime.startAt as string)));
+      const timeSpent = dayjs(new Date(tabtime.endAt as string)).diff(
+        dayjs(new Date(tabtime.startAt)),
+      );
 
-        // Set the updated data back in the map
+      if (existingDomainData) {
+        existingDomainData.time += timeSpent;
         domainMap.set(domain, existingDomainData);
       } else {
-        // If no data exists for the domain, create a new object and add it to the map
         domainMap.set(domain, {
-          time: dayjs(new Date(tabtime.endAt as string)).diff(
-            dayjs(new Date(tabtime.startAt as string)),
-          ),
+          time: timeSpent,
           favIconUrl: tabtime.favIconUrl,
         });
       }
     });
 
-    const sortedDomainMap = new Map(
+    return new Map(
       Array.from(domainMap.entries()).sort((a, b) => b[1].time - a[1].time),
     );
-
-    return sortedDomainMap;
   }, []);
 
   React.useEffect(() => {
@@ -71,10 +66,9 @@ const DomainTime: React.FC = () => {
       setDomainMap(getSortedDomainMap(tabtimes));
     };
 
-    // Update the formatted time every second (1000ms)
+    updateDomainMap();
     intervalId = setInterval(updateDomainMap, 1000);
 
-    // Clear the interval when the component unmounts
     return () => {
       if (intervalId) {
         clearInterval(intervalId);
@@ -82,20 +76,34 @@ const DomainTime: React.FC = () => {
     };
   }, [getSortedDomainMap, tabtimes]);
 
+  if (isLoading) {
+    return (
+      <Container>
+        {Array.from({ length: ITEMS_TO_SHOW }).map((_, index) => (
+          <DomainItemSkeleton key={index} />
+        ))}
+      </Container>
+    );
+  }
+
+  const sortedDomains = Array.from(domainMap.entries())
+    .slice(0, ITEMS_TO_SHOW)
+    .map(([domain, { time, favIconUrl }]) => (
+      <DomainItem
+        key={domain}
+        domain={domain}
+        time={time}
+        favIconUrl={favIconUrl}
+      />
+    ));
+
   return (
     <Container>
-      {Array.from((domainMap || getSortedDomainMap(tabtimes)).entries())
-        .slice(0, 4)
-        .map(([domain, { time, favIconUrl }]) => {
-          return (
-            <DomainItem
-              key={domain}
-              domain={domain}
-              time={time}
-              favIconUrl={favIconUrl}
-            />
-          );
-        })}
+      {sortedDomains.length > 0 ? (
+        sortedDomains
+      ) : (
+        <EmptyMessage>{"Aucune donnée disponible"}</EmptyMessage>
+      )}
     </Container>
   );
 };
@@ -107,4 +115,11 @@ const Container = styled.div`
   gap: 5px;
 `;
 
-export default DomainTime;
+const EmptyMessage = styled.div`
+  text-align: center;
+  color: #909090;
+  font-size: 13px;
+  padding: 8px 0;
+`;
+
+export default React.memo(DomainTime);
