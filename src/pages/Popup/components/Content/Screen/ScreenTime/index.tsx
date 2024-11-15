@@ -29,7 +29,7 @@ const ScreenTime: React.FC = () => {
   const dateRange = React.useMemo(() => getDateRange(range), [range]);
   const initialTime = React.useMemo(
     () => getFormattedTime(tabtimes, dateRange),
-    [tabtimes, dateRange]
+    [tabtimes, dateRange],
   );
 
   return (

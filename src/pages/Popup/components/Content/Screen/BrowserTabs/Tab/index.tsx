@@ -19,7 +19,7 @@ const BrowserTab: React.FC<BrowserTabProps> = ({
   cachedUrl,
 }: BrowserTabProps) => {
   const [formattedTime, setFormattedTime] = React.useState(() =>
-    getFormattedTime(tabtimes)
+    getFormattedTime(tabtimes),
   );
 
   // Memoize le titre et l'URL pour éviter les recalculs
