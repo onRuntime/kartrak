@@ -1,0 +1,5 @@
+---
+"kartrak": patch
+---
+
+Optimize Tabtimes
