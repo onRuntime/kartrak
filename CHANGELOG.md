@@ -1,5 +1,11 @@
 # kartrak
 
+## 0.0.10
+
+### Patch Changes
+
+- 3eb515a: Optimize Tabtimes
+
 ## 0.0.9
 
 ### Patch Changes
