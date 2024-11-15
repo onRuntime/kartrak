@@ -18,6 +18,47 @@ const tabtimes = async () => {
   let tabtimes = (await getChromeLocalStorage<TabTime[]>("tabtimes")) || [];
   let saveTimeout: NodeJS.Timeout | null = null;
 
+  // Vérifier et fermer les tabtimes non fermés au démarrage
+  const checkAndCloseOpenTabTimes = async () => {
+    const lastShutdownTime =
+      await getChromeLocalStorage<string>("lastShutdownTime");
+    let hasOpenTabs = false;
+
+    tabtimes = tabtimes.map((tabtime) => {
+      if (!tabtime.endAt) {
+        hasOpenTabs = true;
+        // Si on a un timestamp de dernière fermeture, on l'utilise
+        // Sinon on utilise le moment présent
+        tabtime.endAt = lastShutdownTime || new Date().toISOString();
+      }
+      return tabtime;
+    });
+
+    if (hasOpenTabs) {
+      await setChromeLocalStorage("tabtimes", tabtimes);
+    }
+  };
+
+  // Exécuter la vérification au démarrage
+  await checkAndCloseOpenTabTimes();
+
+  // Enregistrer le moment de la dernière fermeture/suspension
+  const saveShutdownTime = async () => {
+    const now = new Date().toISOString();
+    await setChromeLocalStorage("lastShutdownTime", now);
+
+    // Fermer tous les tabtimes ouverts
+    tabtimes = tabtimes.map((tabtime) => {
+      if (!tabtime.endAt) {
+        tabtime.endAt = now;
+      }
+      return tabtime;
+    });
+
+    // Forcer la sauvegarde immédiate sans utiliser le buffer
+    await setChromeLocalStorage("tabtimes", tabtimes);
+  };
+
   // Buffer de sauvegarde pour éviter les écritures trop fréquentes
   const bufferedSave = async () => {
     if (saveTimeout) {
@@ -127,7 +168,10 @@ const tabtimes = async () => {
   const handleTabChange = async () => {
     const now = new Date();
 
-    // Mettre à jour les tabtimes existants
+    // Nettoyer le timestamp de dernière fermeture puisqu'on est actif
+    await setChromeLocalStorage("lastShutdownTime", null);
+
+    // Le reste du code handleTabChange reste identique
     tabtimes = tabtimes.map((tabtime) => {
       if (!tabtime.endAt) {
         tabtime.endAt = now.toISOString();
@@ -135,7 +179,6 @@ const tabtimes = async () => {
       return tabtime;
     });
 
-    // Obtenir l'onglet actif
     const tabs = await new Promise<chrome.tabs.Tab[]>((resolve) => {
       chrome.tabs.query({ active: true, currentWindow: true }, resolve);
     });
@@ -236,6 +279,40 @@ const tabtimes = async () => {
     }
     return true; // Indique qu'on utilisera sendResponse de manière asynchrone
   });
+
+  chrome.runtime.onSuspend.addListener(async () => {
+    console.log("Extension is being suspended, closing open tabtimes...");
+    await saveShutdownTime();
+  });
+
+  // Optimisation supplémentaire : vérifier périodiquement les tabtimes ouverts
+  setInterval(
+    async () => {
+      const now = new Date();
+      let hasChanges = false;
+
+      tabtimes = tabtimes.map((tabtime) => {
+        if (!tabtime.endAt) {
+          const startTime = new Date(tabtime.startAt);
+          const duration = now.getTime() - startTime.getTime();
+
+          // Si un tabtime est ouvert depuis plus de 24h, on le ferme
+          // car c'est probablement dû à une fermeture non détectée de l'extension
+          if (duration > 24 * 60 * 60 * 1000) {
+            // 24 heures
+            hasChanges = true;
+            return { ...tabtime, endAt: now.toISOString() };
+          }
+        }
+        return tabtime;
+      });
+
+      if (hasChanges) {
+        await bufferedSave();
+      }
+    },
+    60 * 60 * 1000,
+  );
 };
 
 export default tabtimes;
