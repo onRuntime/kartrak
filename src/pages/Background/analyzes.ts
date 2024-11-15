@@ -1,5 +1,3 @@
-import { merge } from "lodash";
-
 import { Analyze } from "../../types";
 import { updateBadge } from "../../utils/chromeBadge";
 import {
@@ -9,7 +7,7 @@ import {
 import { cleanUrl } from "../../utils/url";
 
 const analyzes = async () => {
-  let analyzes = (await getChromeLocalStorage<Analyze[]>("analyzes")) || [];
+  const analyzes = (await getChromeLocalStorage<Analyze[]>("analyzes")) || [];
 
   chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
     const analyze = analyzes.find(
@@ -18,7 +16,7 @@ const analyzes = async () => {
     if (changeInfo.status === "loading" && analyze && !analyze.isLoading) {
       analyze.requestAmount = 0;
       analyze.pageWeight = 0;
-      analyze.domSize = 0;
+      // Ne pas réinitialiser le domSize ici car il sera mis à jour par le content script
       analyze.updatedAt = new Date().toISOString();
       analyze.isLoading = true;
       console.log("kartrak - reset analyze", analyze);
@@ -48,7 +46,7 @@ const analyzes = async () => {
       // Reset the analysis if the page is being reloaded manually
       analyze.requestAmount = 0;
       analyze.pageWeight = 0;
-      analyze.domSize = 0;
+      // Ne pas réinitialiser le domSize ici non plus
       analyze.updatedAt = new Date().toISOString();
       analyze.isLoading = true;
       console.log("kartrak - reset analyze (manual reload)", analyze);
@@ -140,9 +138,42 @@ const analyzes = async () => {
       if (message.action === "getAnalyzes") {
         sendResponse(analyzes);
       } else if (message.action === "setAnalyzes") {
-        analyzes = merge(analyzes, message.analyzes);
+        // Nouvelle logique de mise à jour
+        message.analyzes.forEach((newAnalyze: Analyze) => {
+          const existingIndex = analyzes.findIndex(
+            (a) => cleanUrl(a.url) === cleanUrl(newAnalyze.url),
+          );
+
+          if (existingIndex !== -1) {
+            // Mise à jour intelligente qui préserve les valeurs existantes
+            const existing = analyzes[existingIndex];
+            analyzes[existingIndex] = {
+              ...existing,
+              ...newAnalyze,
+              // Préserver certaines valeurs si elles existent déjà
+              domSize: newAnalyze.domSize ?? existing.domSize,
+              pageWeight: newAnalyze.pageWeight ?? existing.pageWeight,
+              requestAmount: newAnalyze.requestAmount ?? existing.requestAmount,
+              isLoading: newAnalyze.isLoading ?? existing.isLoading,
+              updatedAt: newAnalyze.updatedAt || new Date().toISOString(),
+            };
+            console.log("kartrak - updated analyze", analyzes[existingIndex]);
+          } else {
+            // Nouvelle analyse
+            analyzes.push(newAnalyze);
+            console.log("kartrak - added new analyze", newAnalyze);
+          }
+        });
+
         await setChromeLocalStorage("analyzes", analyzes);
         sendResponse(true);
+
+        // Notifier les autres parties de l'extension
+        try {
+          chrome.runtime.sendMessage({ action: "analyzesUpdated" });
+        } catch (error) {
+          console.error("kartrak - error sending update notification:", error);
+        }
       } else if (message.action === "updateBadge") {
         const analyze = analyzes.find(
           (analyze) =>

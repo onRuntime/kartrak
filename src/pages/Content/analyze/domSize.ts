@@ -65,6 +65,14 @@ const updateAnalyzeDomSize = async () => {
 
   // save the analyzes
   await setAnalyzes(analyzes);
+
+  try {
+    // Notifier la popup de manière synchrone
+    chrome.runtime.sendMessage({ action: "analyzeUpdated" });
+    console.log("kartrak - analyzeUpdated");
+  } catch (error) {
+    console.error("Error notifying popup:", error);
+  }
 };
 
 const analyzeDomSize = async () => {
