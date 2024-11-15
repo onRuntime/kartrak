@@ -1,5 +1,11 @@
 # kartrak
 
+## 0.0.11
+
+### Patch Changes
+
+- ed670a0: Improve tabtimes management with automatic closure of open tabs and periodic checks
+
 ## 0.0.10
 
 ### Patch Changes
