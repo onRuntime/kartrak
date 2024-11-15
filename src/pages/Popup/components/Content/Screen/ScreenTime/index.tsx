@@ -1,40 +1,45 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { useLocalStorage } from "usehooks-ts";
 
 import useTabTimes from "../../../../hooks/useTabTimes";
 import { Range } from "../../../../types";
 import { getDateRange, getFormattedTime } from "../../../../utils/__collection";
 
-const REFRESH_INTERVAL = 1000; // Rafraîchir toutes les secondes au lieu d'utiliser requestAnimationFrame
+const UPDATE_INTERVAL = 1000;
+
+const ScreenTimeSkeleton = () => (
+  <Container>
+    <SkeletonText width={"120px"} height={"23px"} />
+    <SkeletonText width={"100px"} height={"13px"} />
+  </Container>
+);
 
 const ScreenTime: React.FC = () => {
-  const tabtimes = useTabTimes();
+  const { tabtimes, isLoading } = useTabTimes();
   const [range, setRange] = useLocalStorage<Range>("range", Range.Day);
-  const [formattedTime, setFormattedTime] = React.useState<string>();
-
-  React.useEffect(() => {
-    // Utiliser un intervalle fixe au lieu de requestAnimationFrame
-    const interval = setInterval(() => {
-      const dateRange = getDateRange(range);
-      const newTime = getFormattedTime(tabtimes, dateRange);
-      if (newTime !== formattedTime) {
-        setFormattedTime(newTime);
-      }
-    }, REFRESH_INTERVAL);
-
-    return () => clearInterval(interval);
-  }, [tabtimes, range, formattedTime]);
+  const [currentTime, setCurrentTime] = React.useState<string>("");
 
   const dateRange = React.useMemo(() => getDateRange(range), [range]);
-  const initialTime = React.useMemo(
-    () => getFormattedTime(tabtimes, dateRange),
-    [tabtimes, dateRange],
-  );
+
+  React.useEffect(() => {
+    const updateTime = () => {
+      const formatted = getFormattedTime(tabtimes, dateRange);
+      setCurrentTime(formatted);
+    };
+
+    updateTime();
+    const interval = setInterval(updateTime, UPDATE_INTERVAL);
+    return () => clearInterval(interval);
+  }, [tabtimes, dateRange]);
+
+  if (isLoading) {
+    return <ScreenTimeSkeleton />;
+  }
 
   return (
     <Container>
-      <Time>{formattedTime || initialTime}</Time>
+      <Time>{currentTime}</Time>
       <RangeSelect
         value={range}
         onChange={(e) => setRange(e.target.value as Range)}
@@ -47,6 +52,12 @@ const ScreenTime: React.FC = () => {
     </Container>
   );
 };
+
+const pulse = keyframes`
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+`;
 
 const Container = styled.div`
   width: 100%;
@@ -72,6 +83,14 @@ const RangeSelect = styled.select`
   cursor: pointer;
   padding: 0;
   margin: 0;
+`;
+
+const SkeletonText = styled.div<{ width: string; height: string }>`
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+  background-color: #e2e8f0;
+  border-radius: 3px;
+  animation: ${pulse} 1.5s ease-in-out infinite;
 `;
 
 export default React.memo(ScreenTime);

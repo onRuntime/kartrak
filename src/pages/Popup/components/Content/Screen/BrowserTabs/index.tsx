@@ -1,33 +1,81 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 import BrowserTab from "./Tab";
 import { cleanUrl } from "../../../../../../utils/url";
 import useTabTimes from "../../../../hooks/useTabTimes";
 
+const SKELETON_TABS_COUNT = 3; // Nombre de tabs skeleton à afficher
+
+const BrowserTabsSkeleton = () => (
+  <Container>
+    <Title>
+      <SkeletonText width={"150px"} height={"14px"} />
+    </Title>
+    <Row>
+      {Array.from({ length: SKELETON_TABS_COUNT }).map((_, index) => (
+        <TabSkeleton key={index} />
+      ))}
+    </Row>
+  </Container>
+);
+
+const TabSkeleton = () => (
+  <SkeletonContainer>
+    <SkeletonCircle />
+    <SkeletonText width={"70%"} height={"12px"} />
+    <SkeletonText
+      width={"60px"}
+      height={"12px"}
+      style={{ marginLeft: "auto" }}
+    />
+  </SkeletonContainer>
+);
+
 const BrowserTabs: React.FC = () => {
   const [tabs, setTabs] = React.useState<chrome.tabs.Tab[]>([]);
-  const tabtimes = useTabTimes();
+  const { tabtimes, isLoading } = useTabTimes();
 
   React.useEffect(() => {
-    chrome.tabs.query({ currentWindow: true }, async function (t) {
-      setTabs(t);
-    });
+    const updateTabs = () => {
+      chrome.tabs.query({ currentWindow: true }, setTabs);
+    };
 
-    chrome.tabs.onUpdated.addListener(function (_tabId, changeInfo, _tab) {
+    updateTabs();
+
+    const handleTabUpdate = (
+      _tabId: number,
+      changeInfo: chrome.tabs.TabChangeInfo,
+    ) => {
       if (changeInfo.status === "complete") {
-        chrome.tabs.query({ currentWindow: true }, async function (t) {
-          setTabs(t);
-        });
+        updateTabs();
       }
-    });
+    };
 
-    chrome.tabs.onRemoved.addListener(function (_tabId, _removeInfo) {
-      chrome.tabs.query({ currentWindow: true }, async function (t) {
-        setTabs(t);
-      });
-    });
+    chrome.tabs.onUpdated.addListener(handleTabUpdate);
+    chrome.tabs.onRemoved.addListener(updateTabs);
+
+    return () => {
+      chrome.tabs.onUpdated.removeListener(handleTabUpdate);
+      chrome.tabs.onRemoved.removeListener(updateTabs);
+    };
   }, []);
+
+  const tabTimesByUrl = React.useMemo(() => {
+    const map = new Map();
+    tabs.forEach((tab) => {
+      const url = cleanUrl(tab.url || "");
+      map.set(
+        url,
+        tabtimes.filter((t) => cleanUrl(t.url) === url),
+      );
+    });
+    return map;
+  }, [tabs, tabtimes]);
+
+  if (isLoading) {
+    return <BrowserTabsSkeleton />;
+  }
 
   return (
     <Container>
@@ -36,21 +84,23 @@ const BrowserTabs: React.FC = () => {
         {tabs.length}
       </Title>
       <Row>
-        {tabs.map((tab) => {
-          return (
-            <BrowserTab
-              key={tab.id}
-              tab={tab}
-              tabtimes={tabtimes.filter(
-                (t) => cleanUrl(t.url) === cleanUrl(tab.url || ""),
-              )}
-            />
-          );
-        })}
+        {tabs.map((tab) => (
+          <BrowserTab
+            key={tab.id}
+            tab={tab}
+            tabtimes={tabTimesByUrl.get(cleanUrl(tab.url || "")) || []}
+          />
+        ))}
       </Row>
     </Container>
   );
 };
+
+const pulse = keyframes`
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+`;
 
 const Container = styled.div`
   width: 100%;
@@ -72,4 +122,30 @@ const Row = styled.div`
   gap: 3.5px;
 `;
 
-export default BrowserTabs;
+const SkeletonContainer = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 7px;
+  background-color: var(--grey-20, #faf7f7);
+  border-radius: 3.5px;
+`;
+
+const SkeletonText = styled.div<{ width: string; height: string }>`
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+  background-color: #e2e8f0;
+  border-radius: 3px;
+  animation: ${pulse} 1.5s ease-in-out infinite;
+`;
+
+const SkeletonCircle = styled.div`
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #e2e8f0;
+  animation: ${pulse} 1.5s ease-in-out infinite;
+`;
+
+export default React.memo(BrowserTabs);
