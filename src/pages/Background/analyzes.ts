@@ -19,7 +19,7 @@ const analyzes = async () => {
       // Ne pas réinitialiser le domSize ici car il sera mis à jour par le content script
       analyze.updatedAt = new Date().toISOString();
       analyze.isLoading = true;
-      console.log("kartrak - reset analyze", analyze);
+      console.log("[kartrak][background][analyze] reset analyze", analyze);
       await updateBadge(analyze, tabId);
 
       await setChromeLocalStorage("analyzes", analyzes);
@@ -30,7 +30,7 @@ const analyzes = async () => {
     ) {
       analyze.isLoading = false;
       analyze.updatedAt = new Date().toISOString();
-      console.log("kartrak - update analyze", analyze);
+      console.log("[kartrak][background][analyze] update analyze", analyze);
       await updateBadge(analyze, tabId);
 
       await setChromeLocalStorage("analyzes", analyzes);
@@ -49,7 +49,10 @@ const analyzes = async () => {
       // Ne pas réinitialiser le domSize ici non plus
       analyze.updatedAt = new Date().toISOString();
       analyze.isLoading = true;
-      console.log("kartrak - reset analyze (manual reload)", analyze);
+      console.log(
+        "[kartrak][background][analyze] reset analyze (manual reload)",
+        analyze,
+      );
 
       setChromeLocalStorage("analyzes", analyzes);
     }
@@ -157,11 +160,17 @@ const analyzes = async () => {
               isLoading: newAnalyze.isLoading ?? existing.isLoading,
               updatedAt: newAnalyze.updatedAt || new Date().toISOString(),
             };
-            console.log("kartrak - updated analyze", analyzes[existingIndex]);
+            console.log(
+              "[kartrak][background][analyze] updated analyze",
+              analyzes[existingIndex],
+            );
           } else {
             // Nouvelle analyse
             analyzes.push(newAnalyze);
-            console.log("kartrak - added new analyze", newAnalyze);
+            console.log(
+              "[kartrak][background][analyze] added new analyze",
+              newAnalyze,
+            );
           }
         });
 
@@ -172,7 +181,10 @@ const analyzes = async () => {
         try {
           chrome.runtime.sendMessage({ action: "analyzesUpdated" });
         } catch (error) {
-          console.error("kartrak - error sending update notification:", error);
+          console.error(
+            "[kartrak][background][analyze] error sending update notification:",
+            error,
+          );
         }
       } else if (message.action === "updateBadge") {
         const analyze = analyzes.find(

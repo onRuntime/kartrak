@@ -35,11 +35,14 @@ export const TabTimesProvider: React.FC<React.PropsWithChildren> = ({
       const stringifiedCurrentData = JSON.stringify(tabtimes);
 
       if (stringifiedNewData !== stringifiedCurrentData) {
-        console.log("kartrak - context updating tabtimes:", data);
+        console.log(
+          "[kartrak][popup][tabtime] context updating tabtimes:",
+          data,
+        );
         setTabTimes(data);
       }
     } catch (err) {
-      console.error("kartrak - error fetching tabtimes:", err);
+      console.error("[kartrak][popup][tabtime] error fetching tabtimes:", err);
       setError(err as Error);
     } finally {
       setIsLoading(false);
@@ -58,7 +61,7 @@ export const TabTimesProvider: React.FC<React.PropsWithChildren> = ({
         message.action === "tabTimesUpdated"
       ) {
         console.log(
-          "kartrak - context received update message:",
+          "[kartrak][popup][tabtime] context received update message:",
           message.action,
         );
 

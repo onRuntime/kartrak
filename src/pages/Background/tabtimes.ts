@@ -277,7 +277,7 @@ const tabtimes = async () => {
         sendResponse(tabtimes);
       }
     }
-    return true; // Indique qu'on utilisera sendResponse de manière asynchrone
+    // return true; // Indique qu'on utilisera sendResponse de manière asynchrone
   });
 
   chrome.runtime.onSuspend.addListener(async () => {
