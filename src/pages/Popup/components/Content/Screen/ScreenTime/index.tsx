@@ -6,34 +6,35 @@ import useTabTimes from "../../../../hooks/useTabTimes";
 import { Range } from "../../../../types";
 import { getDateRange, getFormattedTime } from "../../../../utils/__collection";
 
+const REFRESH_INTERVAL = 1000; // Rafraîchir toutes les secondes au lieu d'utiliser requestAnimationFrame
+
 const ScreenTime: React.FC = () => {
   const tabtimes = useTabTimes();
   const [range, setRange] = useLocalStorage<Range>("range", Range.Day);
   const [formattedTime, setFormattedTime] = React.useState<string>();
 
   React.useEffect(() => {
-    let animationFrameId: number | null = null;
-
-    const updateFormattedTime = () => {
-      setFormattedTime(getFormattedTime(tabtimes, getDateRange(range)));
-      animationFrameId = requestAnimationFrame(updateFormattedTime);
-    };
-
-    animationFrameId = requestAnimationFrame(updateFormattedTime);
-    return () => {
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
+    // Utiliser un intervalle fixe au lieu de requestAnimationFrame
+    const interval = setInterval(() => {
+      const dateRange = getDateRange(range);
+      const newTime = getFormattedTime(tabtimes, dateRange);
+      if (newTime !== formattedTime) {
+        setFormattedTime(newTime);
       }
-    };
-  }, [tabtimes, range]);
+    }, REFRESH_INTERVAL);
+
+    return () => clearInterval(interval);
+  }, [tabtimes, range, formattedTime]);
+
+  const dateRange = React.useMemo(() => getDateRange(range), [range]);
+  const initialTime = React.useMemo(
+    () => getFormattedTime(tabtimes, dateRange),
+    [tabtimes, dateRange]
+  );
 
   return (
     <Container>
-      <Time>
-        {formattedTime
-          ? formattedTime
-          : getFormattedTime(tabtimes, getDateRange(range))}
-      </Time>
+      <Time>{formattedTime || initialTime}</Time>
       <RangeSelect
         value={range}
         onChange={(e) => setRange(e.target.value as Range)}
@@ -73,4 +74,4 @@ const RangeSelect = styled.select`
   margin: 0;
 `;
 
-export default ScreenTime;
+export default React.memo(ScreenTime);
