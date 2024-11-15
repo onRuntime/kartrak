@@ -1,5 +1,12 @@
 # kartrak
 
+## 0.0.12
+
+### Patch Changes
+
+- 66f3cf4: Update analyze logic to preserve existing values and notify on updates
+- 66f3cf4: Improve tabtimes context to include loading state, error handling, and refresh functionality
+
 ## 0.0.11
 
 ### Patch Changes
