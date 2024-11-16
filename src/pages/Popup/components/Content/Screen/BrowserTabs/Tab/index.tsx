@@ -1,11 +1,17 @@
 import React from "react";
 import { RiWindowLine } from "react-icons/ri";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 import { TabTime } from "../../../../../../../types";
 import { getFormattedTime } from "../../../../../utils/__collection";
 
-const UPDATE_INTERVAL = 1000; // 1 seconde
+const UPDATE_INTERVAL = 1000;
+
+const pulse = keyframes`
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+`;
 
 export type BrowserTabProps = {
   tab: chrome.tabs.Tab;
@@ -13,14 +19,22 @@ export type BrowserTabProps = {
   cachedUrl?: string;
 };
 
+const TimeSkeleton = styled.div`
+  width: 35px;
+  height: 12px;
+  background-color: #e2e8f0;
+  border-radius: 3px;
+  animation: ${pulse} 1.5s ease-in-out infinite;
+  margin-left: auto;
+`;
+
 const BrowserTab: React.FC<BrowserTabProps> = ({
   tab,
   tabtimes,
   cachedUrl,
 }: BrowserTabProps) => {
-  const [formattedTime, setFormattedTime] = React.useState(() =>
-    getFormattedTime(tabtimes),
-  );
+  const [formattedTime, setFormattedTime] = React.useState<string | null>(null);
+  const [imageError, setImageError] = React.useState(false);
 
   // Memoize le titre et l'URL pour éviter les recalculs
   const { displayTitle, displayUrl } = React.useMemo(() => {
@@ -35,7 +49,6 @@ const BrowserTab: React.FC<BrowserTabProps> = ({
   }, [tab.title, cachedUrl, tab.url]);
 
   React.useEffect(() => {
-    // Utiliser setInterval au lieu de requestAnimationFrame
     const interval = setInterval(() => {
       const newTime = getFormattedTime(tabtimes);
       if (newTime !== formattedTime) {
@@ -43,8 +56,16 @@ const BrowserTab: React.FC<BrowserTabProps> = ({
       }
     }, UPDATE_INTERVAL);
 
+    // Initialisation immédiate
+    setFormattedTime(getFormattedTime(tabtimes));
+
     return () => clearInterval(interval);
   }, [tabtimes, formattedTime]);
+
+  // Réinitialiser le temps formaté quand les tabtimes changent
+  React.useEffect(() => {
+    setFormattedTime(null);
+  }, [tabtimes]);
 
   const handleClick = React.useCallback(() => {
     if (tab.id) {
@@ -54,7 +75,7 @@ const BrowserTab: React.FC<BrowserTabProps> = ({
 
   // Optimisation du rendu de l'icône
   const renderIcon = React.useMemo(() => {
-    if (tab.favIconUrl) {
+    if (tab.favIconUrl && !imageError) {
       return (
         <Favicon
           src={tab.favIconUrl}
@@ -64,16 +85,13 @@ const BrowserTab: React.FC<BrowserTabProps> = ({
           onError={(e) => {
             const img = e.target as HTMLImageElement;
             img.style.display = "none";
-            // Afficher l'icône par défaut en cas d'erreur
-            const defaultIcon = document.createElement("span");
-            defaultIcon.innerHTML = "<RiWindowLine size={10} />";
-            img.parentNode?.appendChild(defaultIcon);
+            setImageError(true);
           }}
         />
       );
     }
     return <RiWindowLine size={10} />;
-  }, [tab.favIconUrl, displayTitle]);
+  }, [tab.favIconUrl, displayTitle, imageError]);
 
   return (
     <Container onClick={handleClick} active={tab.active}>
@@ -82,7 +100,7 @@ const BrowserTab: React.FC<BrowserTabProps> = ({
         <Name title={displayTitle}>{displayTitle}</Name>
         <Url title={displayUrl}>{`- ${displayUrl}`}</Url>
       </Content>
-      <Time>{formattedTime}</Time>
+      {formattedTime === null ? <TimeSkeleton /> : <Time>{formattedTime}</Time>}
     </Container>
   );
 };

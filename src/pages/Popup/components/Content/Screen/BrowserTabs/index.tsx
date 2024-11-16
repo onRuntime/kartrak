@@ -6,7 +6,7 @@ import { TabTime } from "../../../../../../types";
 import { cleanUrl } from "../../../../../../utils/url";
 import { useChromeStorage } from "../../../../context/ChromeStorage";
 
-const SKELETON_TABS_COUNT = 3; // Nombre de tabs skeleton à afficher
+const SKELETON_TABS_COUNT = 3;
 
 const BrowserTabsSkeleton = () => (
   <Container>
@@ -15,18 +15,23 @@ const BrowserTabsSkeleton = () => (
     </Title>
     <Row>
       {Array.from({ length: SKELETON_TABS_COUNT }).map((_, index) => (
-        <TabSkeleton key={index} />
+        <SkeletonTab key={index} />
       ))}
     </Row>
   </Container>
 );
 
-const TabSkeleton = () => (
+// Création d'un tab skeleton minimal
+const SkeletonTab = () => (
   <SkeletonContainer>
     <SkeletonCircle />
-    <SkeletonText width={"70%"} height={"12px"} />
+    <SkeletonContent>
+      <SkeletonText width={"130px"} height={"12px"} />
+      <SkeletonDash>{"-"}</SkeletonDash>
+      <SkeletonText width={"100px"} height={"12px"} />
+    </SkeletonContent>
     <SkeletonText
-      width={"60px"}
+      width={"35px"}
       height={"12px"}
       style={{ marginLeft: "auto" }}
     />
@@ -44,10 +49,17 @@ const BrowserTabs: React.FC = () => {
   );
 
   const [tabs, setTabs] = React.useState<chrome.tabs.Tab[]>([]);
+  const [isTabsLoading, setIsTabsLoading] = React.useState(true);
 
   React.useEffect(() => {
-    const updateTabs = () => {
-      chrome.tabs.query({ currentWindow: true }, setTabs);
+    const updateTabs = async () => {
+      setIsTabsLoading(true);
+      try {
+        const newTabs = await chrome.tabs.query({ currentWindow: true });
+        setTabs(newTabs);
+      } finally {
+        setIsTabsLoading(false);
+      }
     };
 
     updateTabs();
@@ -82,7 +94,7 @@ const BrowserTabs: React.FC = () => {
     return map;
   }, [tabs, tabtimes]);
 
-  if (isLoading) {
+  if (isLoading || isTabsLoading) {
     return <BrowserTabsSkeleton />;
   }
 
@@ -135,10 +147,18 @@ const SkeletonContainer = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 3px;
   padding: 5px 7px;
   background-color: var(--grey-20, #faf7f7);
   border-radius: 3.5px;
+`;
+
+const SkeletonContent = styled.div`
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  align-items: center;
+  gap: 3px;
 `;
 
 const SkeletonText = styled.div<{ width: string; height: string }>`
@@ -155,6 +175,11 @@ const SkeletonCircle = styled.div`
   border-radius: 50%;
   background-color: #e2e8f0;
   animation: ${pulse} 1.5s ease-in-out infinite;
+`;
+
+const SkeletonDash = styled.span`
+  font-size: 12px;
+  color: #909090;
 `;
 
 export default React.memo(BrowserTabs);

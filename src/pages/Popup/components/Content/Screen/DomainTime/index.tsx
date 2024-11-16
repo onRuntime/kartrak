@@ -7,6 +7,7 @@ import { TabTime } from "../../../../../../types";
 import { useChromeStorage } from "../../../../context/ChromeStorage";
 import { extractDomainFromUrl } from "../../../../utils/__collection";
 
+const UPDATE_INTERVAL = 1000;
 const ITEMS_TO_SHOW = 4;
 
 const DomainTime: React.FC = () => {
@@ -18,16 +19,6 @@ const DomainTime: React.FC = () => {
       fallback: [],
     },
   );
-
-  const [domainMap, setDomainMap] = React.useState<
-    Map<
-      string,
-      {
-        time: number;
-        favIconUrl?: string;
-      }
-    >
-  >(new Map());
 
   const getSortedDomainMap = React.useCallback((tabtimes: TabTime[]) => {
     const domainMap = new Map<
@@ -67,24 +58,47 @@ const DomainTime: React.FC = () => {
     );
   }, []);
 
+  const [formattedDomains, setFormattedDomains] = React.useState<
+    [string, { time: number; favIconUrl?: string }][]
+  >(() => {
+    if (isLoading) return [];
+    const initialMap = getSortedDomainMap(tabtimes);
+    return Array.from(initialMap.entries()).slice(0, ITEMS_TO_SHOW);
+  });
+
   React.useEffect(() => {
-    let intervalId: NodeJS.Timeout | null = null;
+    const interval = setInterval(() => {
+      const newMap = getSortedDomainMap(tabtimes);
+      const newDomains = Array.from(newMap.entries()).slice(0, ITEMS_TO_SHOW);
 
-    const updateDomainMap = () => {
-      setDomainMap(getSortedDomainMap(tabtimes));
-    };
+      const isDifferent = newDomains.some((newItem, index) => {
+        const currentItem = formattedDomains[index];
+        return (
+          !currentItem ||
+          newItem[0] !== currentItem[0] ||
+          newItem[1].time !== currentItem[1].time
+        );
+      });
 
-    updateDomainMap();
-    intervalId = setInterval(updateDomainMap, 1000);
-
-    return () => {
-      if (intervalId) {
-        clearInterval(intervalId);
+      if (isDifferent) {
+        setFormattedDomains(newDomains);
       }
-    };
-  }, [getSortedDomainMap, tabtimes]);
+    }, UPDATE_INTERVAL);
 
-  if (isLoading) {
+    return () => clearInterval(interval);
+  }, [tabtimes, formattedDomains, getSortedDomainMap]);
+
+  // Effet pour initialiser les données une fois que le chargement est terminé
+  React.useEffect(() => {
+    if (!isLoading && formattedDomains.length === 0) {
+      const initialMap = getSortedDomainMap(tabtimes);
+      setFormattedDomains(
+        Array.from(initialMap.entries()).slice(0, ITEMS_TO_SHOW),
+      );
+    }
+  }, [isLoading, tabtimes, getSortedDomainMap, formattedDomains.length]);
+
+  if (isLoading || formattedDomains.length === 0) {
     return (
       <Container>
         {Array.from({ length: ITEMS_TO_SHOW }).map((_, index) => (
@@ -94,21 +108,17 @@ const DomainTime: React.FC = () => {
     );
   }
 
-  const sortedDomains = Array.from(domainMap.entries())
-    .slice(0, ITEMS_TO_SHOW)
-    .map(([domain, { time, favIconUrl }]) => (
-      <DomainItem
-        key={domain}
-        domain={domain}
-        time={time}
-        favIconUrl={favIconUrl}
-      />
-    ));
-
   return (
     <Container>
-      {sortedDomains.length > 0 ? (
-        sortedDomains
+      {formattedDomains.length > 0 ? (
+        formattedDomains.map(([domain, { time, favIconUrl }]) => (
+          <DomainItem
+            key={domain}
+            domain={domain}
+            time={time}
+            favIconUrl={favIconUrl}
+          />
+        ))
       ) : (
         <EmptyMessage>{"Aucune donnée disponible"}</EmptyMessage>
       )}

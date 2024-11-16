@@ -26,28 +26,39 @@ const ScreenTime: React.FC = () => {
     },
   );
   const [range, setRange] = useLocalStorage<Range>("range", Range.Day);
-  const [currentTime, setCurrentTime] = React.useState<string>("");
 
   const dateRange = React.useMemo(() => getDateRange(range), [range]);
 
+  // État pour le temps formaté avec null comme valeur initiale
+  const [formattedTime, setFormattedTime] = React.useState<string | null>(null);
+
+  // Effet pour mettre à jour le temps
   React.useEffect(() => {
-    const updateTime = () => {
-      const formatted = getFormattedTime(tabtimes, dateRange);
-      setCurrentTime(formatted);
-    };
+    const interval = setInterval(() => {
+      const newTime = getFormattedTime(tabtimes, dateRange);
+      if (newTime !== formattedTime) {
+        setFormattedTime(newTime);
+      }
+    }, UPDATE_INTERVAL);
 
-    updateTime();
-    const interval = setInterval(updateTime, UPDATE_INTERVAL);
+    // Initialisation immédiate
+    setFormattedTime(getFormattedTime(tabtimes, dateRange));
+
     return () => clearInterval(interval);
-  }, [tabtimes, dateRange]);
+  }, [tabtimes, dateRange, formattedTime]);
 
-  if (isLoading) {
+  // Effet pour réinitialiser le temps lors du changement de range
+  React.useEffect(() => {
+    setFormattedTime(null);
+  }, [range]);
+
+  if (isLoading || formattedTime === null) {
     return <ScreenTimeSkeleton />;
   }
 
   return (
     <Container>
-      <Time>{currentTime}</Time>
+      <Time>{formattedTime}</Time>
       <RangeSelect
         value={range}
         onChange={(e) => setRange(e.target.value as Range)}

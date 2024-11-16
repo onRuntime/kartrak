@@ -34,43 +34,37 @@ const Activity: React.FC = () => {
     },
   );
 
-  const [currentTime, setCurrentTime] = React.useState<string>("");
-
   // Filtrer les tabtimes pour le domaine actuel
   const domainTabtimes = React.useMemo(() => {
-    // Si l'onglet est actif, on ajoute une entrée virtuelle pour le temps en cours
-    let filteredTimes = tabtimes.filter(
+    return tabtimes.filter(
       (tabtime) => extractDomainFromUrl(tabtime.url) === domain,
     );
-
-    if (activeTab?.url) {
-      // Ajouter une entrée temporaire pour le temps en cours
-      filteredTimes = [
-        ...filteredTimes,
-        {
-          url: activeTab.url,
-          startAt: new Date().toISOString(),
-          endAt: undefined,
-        },
-      ];
-    }
-
-    return filteredTimes;
   }, [tabtimes, domain]);
 
-  // Mettre à jour le temps affiché
+  // État pour le temps formaté et l'état de chargement initial
+  const [formattedTime, setFormattedTime] = React.useState<string | null>(null);
+
+  // Effet pour mettre à jour le temps
   React.useEffect(() => {
-    const updateTime = () => {
-      const formatted = getFormattedTime(domainTabtimes);
-      setCurrentTime(formatted);
-    };
+    const interval = setInterval(() => {
+      const newTime = getFormattedTime(domainTabtimes);
+      if (newTime !== formattedTime) {
+        setFormattedTime(newTime);
+      }
+    }, UPDATE_INTERVAL);
 
-    updateTime();
-    const interval = setInterval(updateTime, UPDATE_INTERVAL);
+    // Initialisation immédiate
+    setFormattedTime(getFormattedTime(domainTabtimes));
+
     return () => clearInterval(interval);
-  }, [domainTabtimes]);
+  }, [domainTabtimes, formattedTime]);
 
-  if (isLoading) {
+  // Effet pour réinitialiser le temps lors du changement de domaine
+  React.useEffect(() => {
+    setFormattedTime(null);
+  }, [domain]);
+
+  if (isLoading || formattedTime === null) {
     return <ActivitySkeleton />;
   }
 
@@ -80,7 +74,7 @@ const Activity: React.FC = () => {
         {"Temps d'activité : "}
         <span>{domain}</span>
       </Name>
-      <Time>{currentTime}</Time>
+      <Time>{formattedTime}</Time>
     </Container>
   );
 };
