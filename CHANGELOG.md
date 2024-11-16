@@ -1,5 +1,11 @@
 # kartrak
 
+## 0.0.15
+
+### Patch Changes
+
+- 080314d: Fix eco index calculations to use raw page weight and request amount
+
 ## 0.0.14
 
 ### Patch Changes
