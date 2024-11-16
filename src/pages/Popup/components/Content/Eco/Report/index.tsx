@@ -63,7 +63,7 @@ const Report: React.FC<ReportProps> = ({ analyze, ecoIndex }) => {
               <RiStackLine size={18} />
               <br />
               {analyze?.pageWeight !== undefined
-                ? nFormatterOctets(analyze?.pageWeight / 8, 2)
+                ? nFormatterOctets(analyze?.pageWeight, 2)
                 : "-"}
             </>
           }

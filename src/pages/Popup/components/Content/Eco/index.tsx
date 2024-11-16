@@ -33,8 +33,8 @@ const Eco: React.FC = () => {
     analyze?.requestAmount !== undefined
       ? computeEcoIndex(
           analyze?.domSize,
-          analyze?.pageWeight,
           analyze?.requestAmount,
+          analyze?.pageWeight,
         )
       : undefined;
 

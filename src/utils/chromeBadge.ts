@@ -12,8 +12,8 @@ export const updateBadge = async (analyze: Analyze, tabId: number) => {
     analyze?.requestAmount !== undefined
       ? computeEcoIndex(
           analyze?.domSize,
-          analyze?.pageWeight,
           analyze?.requestAmount,
+          analyze?.pageWeight,
         )
       : undefined;
 

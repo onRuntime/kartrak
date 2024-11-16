@@ -1,3 +1,5 @@
+// https://github.com/cnumr/ecoindex_node/blob/master/ecoindex.js
+
 export enum EcoIndexGrade {
   A = "A",
   B = "B",
@@ -97,7 +99,7 @@ export const computeEcoIndex = (
   size: number,
 ): number => {
   const q_dom: number = computeQuantile(quantiles_dom, dom);
-  const q_req: number = computeQuantile(quantiles_req, req / 8 / 1024);
+  const q_req: number = computeQuantile(quantiles_req, req);
   const q_size: number = computeQuantile(quantiles_size, size);
 
   return 100 - (5 * (3 * q_dom + 2 * q_req + q_size)) / 6;
