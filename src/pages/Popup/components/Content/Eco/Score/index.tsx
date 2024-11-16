@@ -28,8 +28,8 @@ const Score: React.FC<ScoreProps> = ({ analyze, ecoIndex }: ScoreProps) => {
         <Smiley
           src={require(
             `../../../../../../assets/img/smileys/${getSmileyType(
-              ecoIndex
-            )}.svg`
+              ecoIndex,
+            )}.svg`,
           )}
           alt={getSmileyType(ecoIndex)}
           draggable={false}

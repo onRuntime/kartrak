@@ -31,7 +31,7 @@ const Activity: React.FC = () => {
       area: "local",
       ttl: 5 * 60 * 1000,
       fallback: [],
-    }
+    },
   );
 
   const [currentTime, setCurrentTime] = React.useState<string>("");
@@ -40,7 +40,7 @@ const Activity: React.FC = () => {
   const domainTabtimes = React.useMemo(() => {
     // Si l'onglet est actif, on ajoute une entrée virtuelle pour le temps en cours
     let filteredTimes = tabtimes.filter(
-      (tabtime) => extractDomainFromUrl(tabtime.url) === domain
+      (tabtime) => extractDomainFromUrl(tabtime.url) === domain,
     );
 
     if (activeTab?.url) {

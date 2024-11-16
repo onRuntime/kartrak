@@ -24,7 +24,7 @@ const Eco: React.FC = () => {
   });
 
   const analyze = analyzes.find(
-    (analyze) => cleanUrl(analyze.url) === cleanUrl(activeTab?.url || "")
+    (analyze) => cleanUrl(analyze.url) === cleanUrl(activeTab?.url || ""),
   );
 
   const ecoIndex =
@@ -34,7 +34,7 @@ const Eco: React.FC = () => {
       ? computeEcoIndex(
           analyze?.domSize,
           analyze?.pageWeight,
-          analyze?.requestAmount
+          analyze?.requestAmount,
         )
       : undefined;
 
