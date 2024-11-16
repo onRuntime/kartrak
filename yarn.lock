@@ -3939,7 +3939,7 @@ eslint-plugin-react-hooks@^5.0.0:
   resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-5.0.0.tgz#72e2eefbac4b694f5324154619fee44f5f60f101"
   integrity sha512-hIOwI+5hYGpJEc4uPRmz2ulCjAGD/N13Lukkh8cLV0i2IRk/bdZDYjgLVHj+U9Z704kLIdIO6iueGvxNur0sgw==
 
-eslint-plugin-react@7.33.2, eslint-plugin-react@^7.27.1, eslint-plugin-react@^7.32.0:
+eslint-plugin-react@7.33.2, eslint-plugin-react@^7.27.1:
   version "7.33.2"
   resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.33.2.tgz#69ee09443ffc583927eafe86ffebb470ee737608"
   integrity sha512-73QQMKALArI8/7xGLNI/3LylrEYrlKZSb5C9+q3OtOewTnMQi5cT+aE9E41sLCmli3I9PGGmD1yiZydyo4FEPw==
@@ -3961,7 +3961,7 @@ eslint-plugin-react@7.33.2, eslint-plugin-react@^7.27.1, eslint-plugin-react@^7.
     semver "^6.3.1"
     string.prototype.matchall "^4.0.8"
 
-eslint-plugin-react@^7.32.2, eslint-plugin-react@^7.35.0:
+eslint-plugin-react@^7.32.0, eslint-plugin-react@^7.32.2, eslint-plugin-react@^7.35.0:
   version "7.37.2"
   resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.37.2.tgz#cd0935987876ba2900df2f58339f6d92305acc7a"
   integrity sha512-EsTAnj9fLVr/GZleBLFbj/sSuXeWmp1eXIN60ceYnZveqEaUCyW4X+Vh4WTdUhCkW4xutXYqTXCUSyqD4rB75w==
