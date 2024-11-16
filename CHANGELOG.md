@@ -1,5 +1,11 @@
 # kartrak
 
+## 0.0.14
+
+### Patch Changes
+
+- a21edbf: Improve time formatting and add more skeleton during rendering
+
 ## 0.0.13
 
 ### Patch Changes
