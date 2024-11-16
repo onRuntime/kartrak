@@ -1,5 +1,11 @@
 # kartrak
 
+## 0.0.13
+
+### Patch Changes
+
+- f80e279: Improve tab and window management in eco component for improved user experience
+
 ## 0.0.12
 
 ### Patch Changes
