@@ -2,8 +2,9 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 
 import BrowserTab from "./Tab";
+import { TabTime } from "../../../../../../types";
 import { cleanUrl } from "../../../../../../utils/url";
-import useTabTimes from "../../../../hooks/useTabTimes";
+import { useChromeStorage } from "../../../../context/ChromeStorage";
 
 const SKELETON_TABS_COUNT = 3; // Nombre de tabs skeleton à afficher
 
@@ -33,8 +34,16 @@ const TabSkeleton = () => (
 );
 
 const BrowserTabs: React.FC = () => {
+  const { data: tabtimes, isLoading } = useChromeStorage<TabTime[]>(
+    "tabtimes",
+    {
+      area: "local",
+      ttl: 5 * 60 * 1000,
+      fallback: [],
+    },
+  );
+
   const [tabs, setTabs] = React.useState<chrome.tabs.Tab[]>([]);
-  const { tabtimes, isLoading } = useTabTimes();
 
   React.useEffect(() => {
     const updateTabs = () => {

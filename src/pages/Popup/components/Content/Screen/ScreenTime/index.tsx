@@ -2,7 +2,8 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 import { useLocalStorage } from "usehooks-ts";
 
-import useTabTimes from "../../../../hooks/useTabTimes";
+import { TabTime } from "../../../../../../types";
+import { useChromeStorage } from "../../../../context/ChromeStorage";
 import { Range } from "../../../../types";
 import { getDateRange, getFormattedTime } from "../../../../utils/__collection";
 
@@ -16,7 +17,14 @@ const ScreenTimeSkeleton = () => (
 );
 
 const ScreenTime: React.FC = () => {
-  const { tabtimes, isLoading } = useTabTimes();
+  const { data: tabtimes, isLoading } = useChromeStorage<TabTime[]>(
+    "tabtimes",
+    {
+      area: "local",
+      ttl: 5 * 60 * 1000,
+      fallback: [],
+    },
+  );
   const [range, setRange] = useLocalStorage<Range>("range", Range.Day);
   const [currentTime, setCurrentTime] = React.useState<string>("");
 

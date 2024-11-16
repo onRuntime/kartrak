@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 import { Analyze } from "../../../../../../types";
 import { getEcoIndexGrade } from "../../../../../../utils/ecoindex";
+import { useChromeTabs } from "../../../../hooks/useChromeTabs";
 import {
   extractDomainFromUrl,
   getEcoIndexText,
@@ -15,15 +16,11 @@ dayjs.extend(relativeTime);
 export type ScoreProps = {
   analyze?: Analyze;
   ecoIndex?: number;
-  tab?: chrome.tabs.Tab;
 };
 
-const Score: React.FC<ScoreProps> = ({
-  analyze,
-  ecoIndex,
-  tab,
-}: ScoreProps) => {
-  const domain = extractDomainFromUrl(tab?.url || "");
+const Score: React.FC<ScoreProps> = ({ analyze, ecoIndex }: ScoreProps) => {
+  const { activeTab } = useChromeTabs();
+  const domain = extractDomainFromUrl(activeTab?.url || "");
 
   return (
     <Container>
@@ -31,8 +28,8 @@ const Score: React.FC<ScoreProps> = ({
         <Smiley
           src={require(
             `../../../../../../assets/img/smileys/${getSmileyType(
-              ecoIndex,
-            )}.svg`,
+              ecoIndex
+            )}.svg`
           )}
           alt={getSmileyType(ecoIndex)}
           draggable={false}

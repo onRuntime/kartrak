@@ -43,6 +43,7 @@ export const formatTime = (time: number): string => {
 export const getFormattedTime = (
   tabtimes: TabTime[],
   dateRange?: DateRange,
+  additionalTime = 0, // Nouveau paramètre pour le temps additionnel
 ): string => {
   const totalTabTime = tabtimes.reduce((total, worktime) => {
     const startAt = new Date(worktime.startAt);
@@ -60,7 +61,8 @@ export const getFormattedTime = (
     return total + timeDiff;
   }, 0);
 
-  return formatTime(totalTabTime);
+  // Ajouter le temps additionnel au total
+  return formatTime(totalTabTime + additionalTime);
 };
 
 export const getEcoIndexText = (ecoIndex: number): string => {

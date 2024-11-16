@@ -1,15 +1,15 @@
 import React from "react";
 
 import Tracking from "./Tracking";
-import { TabTimesProvider } from "./context/TabTimes";
+import { ChromeStorageProvider } from "./context/ChromeStorage";
 import GlobalStyle from "../../components/ui/GlobalStyle";
 
 const Popup: React.FC = () => {
   return (
-    <TabTimesProvider>
+    <ChromeStorageProvider>
       <GlobalStyle />
       <Tracking />
-    </TabTimesProvider>
+    </ChromeStorageProvider>
   );
 };
 

@@ -4,13 +4,21 @@ import styled from "styled-components";
 
 import DomainItem, { DomainItemSkeleton } from "./DomainItem";
 import { TabTime } from "../../../../../../types";
-import useTabTimes from "../../../../hooks/useTabTimes";
+import { useChromeStorage } from "../../../../context/ChromeStorage";
 import { extractDomainFromUrl } from "../../../../utils/__collection";
 
 const ITEMS_TO_SHOW = 4;
 
 const DomainTime: React.FC = () => {
-  const { tabtimes, isLoading } = useTabTimes();
+  const { data: tabtimes, isLoading } = useChromeStorage<TabTime[]>(
+    "tabtimes",
+    {
+      area: "local",
+      ttl: 5 * 60 * 1000,
+      fallback: [],
+    },
+  );
+
   const [domainMap, setDomainMap] = React.useState<
     Map<
       string,

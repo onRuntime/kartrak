@@ -1,17 +1,15 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 
-import useTabTimes from "../../../../hooks/useTabTimes";
+import { TabTime } from "../../../../../../types";
+import { useChromeStorage } from "../../../../context/ChromeStorage";
+import { useChromeTabs } from "../../../../hooks/useChromeTabs";
 import {
   extractDomainFromUrl,
   getFormattedTime,
 } from "../../../../utils/__collection";
 
 const UPDATE_INTERVAL = 1000;
-
-export type ActivityProps = {
-  tab?: chrome.tabs.Tab;
-};
 
 const ActivitySkeleton = () => (
   <Container>
@@ -23,16 +21,44 @@ const ActivitySkeleton = () => (
   </Container>
 );
 
-const Activity: React.FC<ActivityProps> = ({ tab }) => {
-  const domain = extractDomainFromUrl(tab?.url || "");
-  const { tabtimes, isLoading } = useTabTimes();
-  const [currentTime, setCurrentTime] = React.useState<string>("");
+const Activity: React.FC = () => {
+  const { activeTab } = useChromeTabs();
+  const domain = extractDomainFromUrl(activeTab?.url || "");
 
-  const domainTabtimes = React.useMemo(
-    () => tabtimes.filter((tab) => extractDomainFromUrl(tab.url) === domain),
-    [tabtimes, domain],
+  const { data: tabtimes, isLoading } = useChromeStorage<TabTime[]>(
+    "tabtimes",
+    {
+      area: "local",
+      ttl: 5 * 60 * 1000,
+      fallback: [],
+    }
   );
 
+  const [currentTime, setCurrentTime] = React.useState<string>("");
+
+  // Filtrer les tabtimes pour le domaine actuel
+  const domainTabtimes = React.useMemo(() => {
+    // Si l'onglet est actif, on ajoute une entrée virtuelle pour le temps en cours
+    let filteredTimes = tabtimes.filter(
+      (tabtime) => extractDomainFromUrl(tabtime.url) === domain
+    );
+
+    if (activeTab?.url) {
+      // Ajouter une entrée temporaire pour le temps en cours
+      filteredTimes = [
+        ...filteredTimes,
+        {
+          url: activeTab.url,
+          startAt: new Date().toISOString(),
+          endAt: undefined,
+        },
+      ];
+    }
+
+    return filteredTimes;
+  }, [tabtimes, domain]);
+
+  // Mettre à jour le temps affiché
   React.useEffect(() => {
     const updateTime = () => {
       const formatted = getFormattedTime(domainTabtimes);
@@ -59,7 +85,6 @@ const Activity: React.FC<ActivityProps> = ({ tab }) => {
   );
 };
 
-// Animation de pulse pour le skeleton
 const pulse = keyframes`
   0% { opacity: 0.6; }
   50% { opacity: 1; }
