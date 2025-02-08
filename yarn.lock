@@ -1748,10 +1748,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/chrome@^0.0.300":
-  version "0.0.300"
-  resolved "https://registry.yarnpkg.com/@types/chrome/-/chrome-0.0.300.tgz#19cda251d618f6937a9f7eedd4b642ea2649ddfe"
-  integrity sha512-vS5bUmNjMrbPut43Q8plS8GTAiJE+pBOxw1ovGC4LcwiGNKTithAH7TxhzHeX4wNq/FsaLj5KaW7riI0CgYjIg==
+"@types/chrome@^0.0.303":
+  version "0.0.303"
+  resolved "https://registry.yarnpkg.com/@types/chrome/-/chrome-0.0.303.tgz#35da0f56b823a5eaa40b98689d2a9175b1bd2e10"
+  integrity sha512-ARroKcZYkK/4Bpn6U8ZC6WHueCznhYpAnjCfLBdaFWh3YFo0op7IAm1FgbGtosYWL2vMjt5JdTlvnA4SUyE3OQ==
   dependencies:
     "@types/filesystem" "*"
     "@types/har-format" "*"
