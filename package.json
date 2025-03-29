@@ -58,7 +58,7 @@
     "html-loader": "^5.0.0",
     "html-webpack-plugin": "^5.5.0",
     "prettier": "^3.0.3",
-    "react-refresh": "^0.16.0",
+    "react-refresh": "^0.17.0",
     "react-refresh-typescript": "^2.0.7",
     "sass": "^1.57.1",
     "sass-loader": "^16.0.0",
