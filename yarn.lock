@@ -2863,9 +2863,9 @@ chrome-trace-event@^1.0.2:
   integrity sha512-rNjApaLzuwaOTjCiT8lSDdGN1APCiqkChLMJxJPWLunPAt5fy8xgU9/jNOchV84wfIxrA0lRQB7oCT8jrn/wrQ==
 
 chrome-webstore-upload-cli@^3.0.0:
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/chrome-webstore-upload-cli/-/chrome-webstore-upload-cli-3.3.1.tgz#51ecbbad6226670e41ba6c78c026bf163a93a6bc"
-  integrity sha512-9QHK6/yQAPttUK68Vzrj93nQUWKo0UMYJwG2KTkcUQke31QuzsYB1XGqmNd+XrQj7rxDTyGZa1QJznIgIXkmRw==
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/chrome-webstore-upload-cli/-/chrome-webstore-upload-cli-3.3.2.tgz#3a9e983ca7b02b6e876ab76cdd0c55c62d4a86bc"
+  integrity sha512-SitIJt3dO1wQEfcTBBj0yRh38+Thq+JJ/uVK0GT8t0bfvk0x8zk3Ar4U5zqmou1pjcR+exGOhdRoLwGLLQItkw==
   dependencies:
     chrome-webstore-upload "^3.1.0"
     junk "^4.0.1"
