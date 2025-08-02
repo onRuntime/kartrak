@@ -1927,9 +1927,9 @@
     "@types/node" "*"
 
 "@types/node@*":
-  version "24.0.15"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-24.0.15.tgz#f34fbc973e7d64217106e0c59ed8761e6b51381e"
-  integrity sha512-oaeTSbCef7U/z7rDeJA138xpG3NuKc64/rZ2qmUFkFJmnMsAPaluIifqyWd8hSSMxyP9oie3dLAqYPblag9KgA==
+  version "24.1.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-24.1.0.tgz#0993f7dc31ab5cc402d112315b463e383d68a49c"
+  integrity sha512-ut5FthK5moxFKH2T1CUOC6ctR67rQRvvHdFLCD2Ql6KXmMuCrjsSsRI9UsLCm9M18BMwClv4pn327UvB7eeO1w==
   dependencies:
     undici-types "~7.8.0"
 
@@ -3069,9 +3069,9 @@ caniuse-lite@^1.0.30001716:
   integrity sha512-Ec/2yV2nNPwb4DnTANEV99ZWwm3ZWfdlfkQbWSDDt+PsXEVYwlhPH8tdMaPunYTKKmz7AnHi2oNEi1GcmKCD8g==
 
 caniuse-lite@^1.0.30001726:
-  version "1.0.30001727"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001727.tgz#22e9706422ad37aa50556af8c10e40e2d93a8b85"
-  integrity sha512-pB68nIHmbN6L/4C6MH1DokyR3bYqFwjaSs/sWDHGj4CTcFtQUQMuJftVwWkXq7mNWOybD3KhUv3oWHoGxgP14Q==
+  version "1.0.30001731"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001731.tgz#277c07416ea4613ec564e5b0ffb47e7b60f32e2f"
+  integrity sha512-lDdp2/wrOmTRWuoB5DpfNkC0rJDU8DqRa6nYL6HK6sytw70QMopt/NIc/9SM7ylItlBWfACXk0tEn37UWM/+mg==
 
 chalk@^4.0.0, chalk@^4.1.0:
   version "4.1.2"
@@ -3640,9 +3640,9 @@ electron-to-chromium@^1.5.149:
   integrity sha512-hwtetwfKNZo/UlwHIVBlKZVdy7o8bIZxxKs0Mv/ROPiQQQmDgdm5a+KvKtBsxM8ZjFzTaCeLoodZ8jiBE3o9rA==
 
 electron-to-chromium@^1.5.173:
-  version "1.5.187"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.187.tgz#8c58854e065962351dc87e95614dd78d50425966"
-  integrity sha512-cl5Jc9I0KGUoOoSbxvTywTa40uspGJt/BDBoDLoxJRSBpWh4FFXBsjNRHfQrONsV/OoEjDfHUmZQa2d6Ze4YgA==
+  version "1.5.194"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.194.tgz#05e541c3373ba8d967a65c92bc14d60608908236"
+  integrity sha512-SdnWJwSUot04UR51I2oPD8kuP2VI37/CADR1OHsFOUzZIvfWJBO6q11k5P/uKNyTT3cdOsnyjkrZ+DDShqYqJA==
 
 emoji-regex@^9.2.2:
   version "9.2.2"
@@ -7719,9 +7719,9 @@ webpack-sources@^3.3.3:
   integrity sha512-yd1RBzSGanHkitROoPFd6qsrxt+oFhg/129YzheDGqeustzX0vTZJZsSsQjVQC4yzBQ56K55XU8gaNCtIzOnTg==
 
 webpack@^5.75.0:
-  version "5.100.2"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-5.100.2.tgz#e2341facf9f7de1d702147c91bcb65b693adf9e8"
-  integrity sha512-QaNKAvGCDRh3wW1dsDjeMdDXwZm2vqq3zn6Pvq4rHOEOGSaUMgOOjG2Y9ZbIGzpfkJk9ZYTHpDqgDfeBDcnLaw==
+  version "5.101.0"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-5.101.0.tgz#4b81407ffad9857f81ff03f872e3369b9198cc9d"
+  integrity sha512-B4t+nJqytPeuZlHuIKTbalhljIFXeNRqrUGAQgTGlfOl2lXXKXw+yZu6bicycP+PUlM44CxBjCFD6aciKFT3LQ==
   dependencies:
     "@types/eslint-scope" "^3.7.7"
     "@types/estree" "^1.0.8"
