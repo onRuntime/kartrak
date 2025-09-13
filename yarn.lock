@@ -1803,10 +1803,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/chrome@^0.0.323":
-  version "0.0.323"
-  resolved "https://registry.yarnpkg.com/@types/chrome/-/chrome-0.0.323.tgz#8e6d3ffaca47a9c8ce6f60d25634d26aba3c4cfb"
-  integrity sha512-ipiDwx41lmGeLnbiT6ENOayvWXdkqKqNwqDQWEuz6dujaX7slSkk1nbSt5Q5c6xnQ708+kuCFrC00VLltSbWVA==
+"@types/chrome@^0.1.0":
+  version "0.1.11"
+  resolved "https://registry.yarnpkg.com/@types/chrome/-/chrome-0.1.11.tgz#ab8ce57a813d3681836e359f61780bcac4a850fe"
+  integrity sha512-8KFchpiY51tZaOpojRM9WPkJzr3ZLei1blsR8nkr42XXMKav4GXQgDK/lP1JTP2wsljXhpDDqAsGw9eOgm8G9Q==
   dependencies:
     "@types/filesystem" "*"
     "@types/har-format" "*"
