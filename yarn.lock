@@ -6502,9 +6502,9 @@ react-is@^16.13.1:
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
 react-refresh-typescript@^2.0.7:
-  version "2.0.10"
-  resolved "https://registry.yarnpkg.com/react-refresh-typescript/-/react-refresh-typescript-2.0.10.tgz#8dfe40d2a51866926d97fb7150d139e70d649eb2"
-  integrity sha512-Cj8ZKTPEEdSoxiopFq0tB0rq/Wl90yWzAX1LEp9CGvzvauDUmC4BHIQXzcuT8/61naq/KmkR3A9VzqdZ9c6j1g==
+  version "2.0.11"
+  resolved "https://registry.yarnpkg.com/react-refresh-typescript/-/react-refresh-typescript-2.0.11.tgz#85496b9b9e52d26f90aa226f81cd7bb6288af6b3"
+  integrity sha512-u6afET6t6NDNcxD67wSVlgazX/CiRuC7qSqALZueMckjmPQnOBajmwibJr2TTU6MtttDNPjBhD8K3AB8i0opJg==
 
 react-refresh@^0.18.0:
   version "0.18.0"
