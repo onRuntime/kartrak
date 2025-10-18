@@ -1811,10 +1811,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/chrome@^0.0.323":
-  version "0.0.323"
-  resolved "https://registry.yarnpkg.com/@types/chrome/-/chrome-0.0.323.tgz#8e6d3ffaca47a9c8ce6f60d25634d26aba3c4cfb"
-  integrity sha512-ipiDwx41lmGeLnbiT6ENOayvWXdkqKqNwqDQWEuz6dujaX7slSkk1nbSt5Q5c6xnQ708+kuCFrC00VLltSbWVA==
+"@types/chrome@^0.1.0":
+  version "0.1.24"
+  resolved "https://registry.yarnpkg.com/@types/chrome/-/chrome-0.1.24.tgz#71c93111c40a057a8a45c4ab74eb7fe0aaf0048a"
+  integrity sha512-9iO9HL2bMeGS4C8m6gNFWUyuPE5HEUFk+rGh+7oriUjg+ata4Fc9PoVlu8xvGm7yoo3AmS3J6fAjoFj61NL2rw==
   dependencies:
     "@types/filesystem" "*"
     "@types/har-format" "*"
