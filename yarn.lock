@@ -7329,9 +7329,9 @@ style-loader@^4.0.0:
   integrity sha512-1V4WqhhZZgjVAVJyt7TdDPZoPBPNHbekX4fWnCJL1yQukhCeZhJySUL+gL9y6sNdN95uEOS83Y55SqHcP7MzLA==
 
 styled-components@^6.1.0:
-  version "6.3.3"
-  resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-6.3.3.tgz#430d44ac3e8e8b1c4d59ddfcb04f6b823a23c818"
-  integrity sha512-5jBZzBWCHeyEBF2+sBJZ2J9nFpYqB0hIuhvBz8WZ2rZpSvRCf9RlSRZ1RCJ/6613DUx8WD9x6RP5Qcs6hCXtCw==
+  version "6.3.5"
+  resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-6.3.5.tgz#9afa11f088bb95181d6d5f83057b14e79a78e170"
+  integrity sha512-f8jAunVw/r41o17+JlWVlMTsyBKyghCdQ84YCKPxgKSMOZJbK3CKPxeIhotz6hlXvHb0w62zG4yyOdGY0kaB3g==
   dependencies:
     "@emotion/is-prop-valid" "1.4.0"
     "@emotion/unitless" "0.10.0"
