@@ -2081,10 +2081,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/chrome@^0.0.323":
-  version "0.0.323"
-  resolved "https://registry.yarnpkg.com/@types/chrome/-/chrome-0.0.323.tgz#8e6d3ffaca47a9c8ce6f60d25634d26aba3c4cfb"
-  integrity sha512-ipiDwx41lmGeLnbiT6ENOayvWXdkqKqNwqDQWEuz6dujaX7slSkk1nbSt5Q5c6xnQ708+kuCFrC00VLltSbWVA==
+"@types/chrome@^0.1.0":
+  version "0.1.42"
+  resolved "https://registry.yarnpkg.com/@types/chrome/-/chrome-0.1.42.tgz#b13d3e711fb7ceafe67f95909455c22fe6253f7e"
+  integrity sha512-tdT2roFqGecZZDjA9fUEAINb2STxSPifHMDvY6EfRjNRCjdrs/0FwKt5RCIA9MKMd1arAYZZL3nwEkp6ZLZu2w==
   dependencies:
     "@types/filesystem" "*"
     "@types/har-format" "*"
