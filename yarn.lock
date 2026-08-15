@@ -7657,9 +7657,9 @@ style-loader@^4.0.0:
   integrity sha512-1V4WqhhZZgjVAVJyt7TdDPZoPBPNHbekX4fWnCJL1yQukhCeZhJySUL+gL9y6sNdN95uEOS83Y55SqHcP7MzLA==
 
 styled-components@^6.1.0:
-  version "6.5.1"
-  resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-6.5.1.tgz#fe52edbcb55224aea92bc83fd92bc8772297b362"
-  integrity sha512-6AsQEXcG7QhtdzjwJ4s5Amx5R9veYH9AP3+U6nF2BAMU0i1iM3cAXKJXuAKZCdv3Y2ntVMcL44cPx4cIDxgYFg==
+  version "6.5.2"
+  resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-6.5.2.tgz#c6c6dc0935b0554bf3b4716235fc8671a00927fb"
+  integrity sha512-49qBCjwsBmt08/UXIr3KYa1wdntVkhU5cxvQ4uqytl/fITQC85B0PI5EN1GWetRYOzyzcgxqukiitqFRemZ7pg==
   dependencies:
     "@emotion/is-prop-valid" "1.4.0"
     css-to-react-native "3.2.0"
