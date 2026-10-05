@@ -3457,17 +3457,17 @@ chrome-trace-event@^1.0.2:
   integrity sha512-rNjApaLzuwaOTjCiT8lSDdGN1APCiqkChLMJxJPWLunPAt5fy8xgU9/jNOchV84wfIxrA0lRQB7oCT8jrn/wrQ==
 
 chrome-webstore-upload-cli@^4.0.0:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/chrome-webstore-upload-cli/-/chrome-webstore-upload-cli-4.0.1.tgz#f18e9bf38cc0111165dfe547b68ea37c08de905b"
-  integrity sha512-UGmvbEGTqNCD+W9HDEoYnZwrbp++v5WcIyVVZWxK7AxFMfxtZF/yiNtxWCcAetNg4z0m/CNhf+Qt3b0aitDEWw==
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/chrome-webstore-upload-cli/-/chrome-webstore-upload-cli-4.0.2.tgz#a11d854f4d01e946c415d9e0934bfb7660f63e10"
+  integrity sha512-QYNV56V5YScHshPbGn6ljbq6zUMDHjutDPH5CtMtb7e3folTUiU4RBftP/yvGpiLsD6QSYGDpZVA9P3ZxFE3/A==
   dependencies:
     chrome-webstore-upload "^6.0.0"
     meow "^12.1.1"
 
 chrome-webstore-upload@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/chrome-webstore-upload/-/chrome-webstore-upload-6.0.0.tgz#d555c687922632d7beaf0af766e1a20b3159273a"
-  integrity sha512-wUPi8iwR2KPPPytHY8rstA5tbcLp2r8fMYnqMUIgci1q1A6QFYiyeiyG/aqAj35PzNuCTpZseD1VZ9y1b/Fkmw==
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/chrome-webstore-upload/-/chrome-webstore-upload-6.0.1.tgz#4d4aa8d1df43cdfda4910f148ba20b7bef910830"
+  integrity sha512-0Bi/SODOHPymx682lZsP947LeczSpH0pt72nHCVfwV3lrllmHkPS5P886+os1inQs/CvJLRCfiS5ulHe9mVmhQ==
   dependencies:
     junk "^4.0.1"
     yazl "^3.3.1"
